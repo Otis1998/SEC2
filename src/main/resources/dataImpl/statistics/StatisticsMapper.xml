@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nju.edu.cinema.data.statistics.StatisticsMapper">
+    <select id="selectMovieScheduleTimes" resultType="nju.edu.cinema.po.MovieScheduleTime">
+        select movie_id as movieId, count(*) as time,name from
+              (select * from schedule where start_time between #{date} and #{nextDate}) s,
+              movie where s.movie_id = movie.id group by movieId
+    </select>
+
+    <select id="selectMovieTotalBoxOffice" resultType="nju.edu.cinema.po.MovieTotalBoxOffice">
+        select movie.id as movieId, boxOffice,name from movie
+        left join
+          (select movie_id as movieId,sum(fare) as boxOffice from schedule
+          right join
+          (select schedule_id from ticket where state = 1) t
+          on schedule.id = t.schedule_id group by movie_id) s
+        on s.movieId = movie.id
+        order by boxOffice desc
+    </select>
+
+    <select id="selectAudiencePrice" resultType="nju.edu.cinema.po.AudiencePrice">
+        select user_id as userId, sum(fare) as totalPrice from schedule right join
+              (select * from ticket where schedule_id in
+              (select id from schedule where start_time between #{date} and #{nextDate}) and state = 1) t
+        on schedule.id = schedule_id group by user_id
+    </select>
+
+    <select id="selectAudienceNumber" resultType="nju.edu.cinema.po.MovieAudienceNumber">
+        select movie_id as movieId, count(*) as audienceNumber,name from
+            (select schedule.movie_id, ticket.id as ticket_id from schedule, ticket
+            where schedule.start_time between #{date} and #{nextDate}
+                  and ticket.schedule_id = schedule.id and ticket.state = 1) t,
+            movie where t.movie_id = movie.id group by movieId
+    </select>
+
+    <select id="selectSeatNumber" resultType="nju.edu.cinema.po.MovieSeatNumber">
+        select movie_id as movieId, sum(line*row) as seatNumber,name from
+            (select schedule.movie_id, hall.column as line, hall.row from schedule, hall
+            where schedule.start_time between #{date} and #{nextDate} and schedule.hall_id = hall.id) t,
+            movie where t.movie_id = movie.id group by movieId
+</select>
+    <select id="selectMovieRecentFare" resultType="nju.edu.cinema.po.MovieRecentFare">
+        select schedule.movie_id as movieId,movie.name,sum(fare) as RecentFare
+        from schedule left join movie on schedule.movie_id=movie.id where schedule.start_time between #{oldDate} and now() group by movie_id
+        order by RecentFare desc limit 0,#{movieNum}
+    </select>
+</mapper>
