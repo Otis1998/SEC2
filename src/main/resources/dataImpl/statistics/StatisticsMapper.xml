@@ -40,8 +40,8 @@
             movie where t.movie_id = movie.id group by movieId
 </select>
     <select id="selectMovieRecentFare" resultType="nju.edu.cinema.po.MovieRecentFare">
-        select schedule.movie_id as movieId,movie.name,sum(fare) as RecentFare
-        from schedule left join movie on schedule.movie_id=movie.id where schedule.start_time between #{oldDate} and now() group by movie_id
-        order by RecentFare desc limit 0,#{movieNum}
+        select movie_id,name,RecentFare from (select movie_id,sum(fare) as RecentFare 
+        from (select * from schedule where start_time between #{oldDate} and now()) s right join (select schedule_id from ticket where state=1) t on
+        t.schedule_id=s.id group by movie_id) m right join movie on m.movie_id=movie.id group by movie.id order by RecentFare desc limit 0,#{movieNum}
     </select>
 </mapper>
