@@ -8,11 +8,20 @@ import java.sql.Timestamp;
  */
 
 public class VIPCard {
-
-    public static final double price = 25;
-
-    public static final String description="满200送30";
-
+	/**
+	 * 会员卡价格
+	 */
+    private final static double price = 25;
+    /**
+     * 优惠描述
+     */
+    private String description;
+    private int full;
+    private int present;
+    /**
+     * 优惠id
+     */
+    private int descriptionId;
     /**
      * 用户id
      */
@@ -38,7 +47,27 @@ public class VIPCard {
 
     }
 
-
+    public double getPrice() {
+    	return price;
+    }
+    public String getDescription() {
+    	return description;
+    }
+    public void setDescription(String description) {
+		this.description=description;
+	}
+    public int getFull() {
+    	return full;
+    }
+    public void setFull(int full) {
+    	this.full=full;
+    }
+    public int getPresent() {
+    	return present;
+    }
+    public void setPresent(int present) {
+		this.present=present;
+	}
     public int getUserId() {
         return userId;
     }
@@ -75,4 +104,12 @@ public class VIPCard {
         return (int)(amount/200)*30+amount;
 
     }
+
+	public int getDescriptionId() {
+		return descriptionId;
+	}
+
+	public void setDescriptionId(int descriptionId) {
+		this.descriptionId = descriptionId;
+	}
 }

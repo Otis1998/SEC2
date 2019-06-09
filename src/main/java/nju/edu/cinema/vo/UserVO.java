@@ -8,15 +8,16 @@ import nju.edu.cinema.po.User;
  */
 public class UserVO {
     private Integer id;
+    private Integer Identity; 
     private String username;
     private String password;
 
     public UserVO(User user){
-        this.id = user.getId();
+    	this.id = user.getId();
+        this.Identity=user.getIdentity();
         this.username = user.getUsername();
         this.password = user.getPassword();
     }
-
     public Integer getId() {
         return id;
     }
@@ -40,4 +41,12 @@ public class UserVO {
     public void setPassword(String password) {
         this.password = password;
     }
+
+	public Integer getIdentity() {
+		return Identity;
+	}
+
+	public void setIdentity(Integer identity) {
+		Identity = identity;
+	}
 }

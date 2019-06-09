@@ -17,7 +17,7 @@ public interface AccountMapper {
      * @param password
      * @return
      */
-    public int createNewAccount(@Param("username") String username, @Param("password") String password);
+    public int createNewAccount(@Param("identity")int identity,@Param("username") String username, @Param("password") String password);
 
     /**
      * 根据用户名查找账号

@@ -24,7 +24,18 @@ public class ViewController {
     public String getAdminMovieManage() {
         return "adminMovieManage";
     }
-
+    @RequestMapping(value="/superAdmin/people/manage")
+    public String getSuperAdminPeopleManage() {
+    	return "superAdminPeopleManage";
+    }
+    @RequestMapping(value="/superAdmin/coupon/manage")
+    public String getSuperAdminCouponManage() {
+    	return "superAdminCouponManage";
+    }
+    @RequestMapping(value="/superAdmin/VIPCard/manage")
+    public String getSuperAdminVIPCardManage() {
+    	return "superAdminVIPCardManage";
+    }
     @RequestMapping(value = "/admin/session/manage")
     public String getAdminSessionManage() {
         return "adminScheduleManage";
@@ -40,7 +51,7 @@ public class ViewController {
         return "adminPromotionManage";
     }
 
-    @RequestMapping(value = "/admin/cinema/statistic")
+    @RequestMapping(value = "/superAdmin/cinema/statistic")
     public String getAdminCinemaStatistic() {
         return "adminCinemaStatistic";
     }

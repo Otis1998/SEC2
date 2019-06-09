@@ -24,10 +24,14 @@ $(document).ready(function () {
                 if (res.success) {
                     sessionStorage.setItem('username', formData.username);
                     sessionStorage.setItem('id', res.content.id);
-                    if (formData.username == "root") {
-                        sessionStorage.setItem('role', 'admin');
+                    if (res.content.identity == 2) {
+                        sessionStorage.setItem('role', 'manager');
                         window.location.href = "/admin/movie/manage"
-                    } else {
+                    } else if(res.content.identity == 3){
+                        sessionStorage.setItem('role', 'admin');
+                        window.location.href = "/superAdmin/people/manage"
+                    }
+                    else {
                         sessionStorage.setItem('role', 'user');
                         window.location.href = "/user/home"
                     }

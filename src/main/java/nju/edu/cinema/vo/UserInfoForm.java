@@ -1,10 +1,10 @@
 package nju.edu.cinema.vo;
 
-/**
- * @author huwen
- * @date 2019/3/23
- */
-public class UserForm {
+public class UserInfoForm {
+	/**
+	 * id
+	 */
+	private Integer id;
 	/**
 	 * 身份
 	 */
@@ -40,5 +40,13 @@ public class UserForm {
 
 	public void setIdentity(Integer identity) {
 		this.identity = identity;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 }

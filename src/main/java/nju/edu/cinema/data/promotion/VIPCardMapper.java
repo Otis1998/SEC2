@@ -10,13 +10,19 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface VIPCardMapper {
 
-    int insertOneCard(VIPCard vipCard);
+    int insertOneDescription(VIPCard vipCardInfo);
+
+	void updateCardInfo(@Param("price") double price,@Param("full") int full,@Param("present") int present,@Param("description") String description);
+
+	int insertOneCard(VIPCard vipCard);
 
     VIPCard selectCardById(int id);
 
     void updateCardBalance(@Param("id") int id,@Param("balance") double balance);
 
     VIPCard selectCardByUserId(int userId);
+
+	VIPCard selectDescriptionById(int descriptionId);
 
 
 

@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="nju.edu.cinema.data.user.AccountMapper">
     <insert id="createNewAccount" useGeneratedKeys="true" keyProperty="id">
-        insert into user(username,password)
-        values(#{username},#{password})
+        insert into user(identity,username,password)
+        values(#{identity},#{username},#{password})
     </insert>
     <select id="getAccountByName" resultMap="User">
         select * from user where username=#{username}
@@ -11,7 +11,6 @@
     <select id="getAccountById" resultMap="User">
         select * from user where id = #{userId}
     </select>
-
     <resultMap id="User" type="nju.edu.cinema.po.User">
     </resultMap>
 </mapper>
