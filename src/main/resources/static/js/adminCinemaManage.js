@@ -24,10 +24,14 @@ $(document).ready(function() {
         var hallDomStr = "";
         halls.forEach(function (hall) {
             var seat = "";
-            for(var i =0;i<hall.row;i++){
+            for(var i =0;i<hall.seats.length;i++){
                 var temp = ""
-                for(var j =0;j<hall.column;j++){
-                    temp+="<div class='cinema-hall-seat'></div>";
+                for(var j =0;j<hall.seats[0].length;j++){
+                    if (hall.seats[i][j] == 0){
+                        temp += "<div class='cinema-hall-seat'></div>";
+                    } else {
+                        temp += "<div class='cinema-hall-seat-unavailable'></div>";
+                    }
                 }
                 seat+= "<div>"+temp+"</div>";
             }
@@ -35,7 +39,7 @@ $(document).ready(function() {
                 "<div class='cinema-hall'>" +
                 "<div>" +
                 "<span class='cinema-hall-name'>"+ hall.name +"</span>" +
-                "<span class='cinema-hall-size'>"+ hall.column +'*'+ hall.row +"</span>" +
+                "<span class='cinema-hall-size'>"+ hall.seats[0].length +'*'+ hall.seats.length +"</span>" +
                 "</div>" +
                 "<div class='cinema-seat'>" + seat +
                 "</div>" +

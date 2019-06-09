@@ -1,6 +1,7 @@
 package nju.edu.cinema.blImpl.management.hall;
 
-import nju.edu.cinema.po.Hall;
+import nju.edu.cinema.vo.HallVO;
+
 /**
  * @author fjj
  * @date 2019/4/28 12:27 AM
@@ -11,5 +12,5 @@ public interface HallServiceForBl {
      * @param id
      * @return
      */
-    Hall getHallById(int id);
+    HallVO getHallById(int id);
 }

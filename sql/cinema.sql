@@ -147,6 +147,55 @@ INSERT INTO `hall` VALUES (1,'1号厅',10,5),(2,'2号厅',12,8);
 UNLOCK TABLES;
 
 --
+-- Table structure for table `seats`
+--
+
+DROP TABLE IF EXISTS `seats`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `seats` (
+                               `hall_id` int(11) NOT NULL,
+                               `column` int(11) NOT NULL,
+                               `row` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `seats`
+--
+
+LOCK TABLES `seats` WRITE;
+/*!40000 ALTER TABLE `seats` DISABLE KEYS */;
+INSERT INTO `seats` VALUES (1,1,1),(1,1,2),(1,1,3),(1,1,4),(1,1,5),(1,2,1),(1,2,2),(1,2,3),(1,2,4),(1,2,5),(1,3,1),(1,3,2),(1,3,3),(1,3,4),(1,3,5),(1,4,1),(1,4,2),(1,4,3),(1,4,4),(1,4,5),(1,5,1),(1,5,2),(1,5,3),(1,5,4),(1,5,5),(1,6,1),(1,6,2),(1,6,3),(1,6,4),(1,6,5),(1,7,1),(1,7,2),(1,7,3),(1,7,4),(1,7,5),(1,8,1),(1,8,2),(1,8,3),(1,8,4),(1,8,5),(1,9,1),(1,9,2),(1,9,3),(1,9,4),(1,9,5),(1,10,1),(1,10,2),(1,10,3),(1,10,4),(1,10,5),(2,1,1),(2,1,2),(2,1,3),(2,1,4),(2,1,5),(2,1,6),(2,1,7),(2,1,8),(2,2,1),(2,2,2),(2,2,3),(2,2,4),(2,2,5),(2,2,6),(2,2,7),(2,2,8),(2,3,1),(2,3,2),(2,3,3),(2,3,4),(2,3,5),(2,3,6),(2,3,7),(2,3,8),(2,4,1),(2,4,2),(2,4,3),(2,4,4),(2,4,5),(2,4,6),(2,4,7),(2,4,8),(2,5,1),(2,5,2),(2,5,3),(2,5,4),(2,5,5),(2,5,6),(2,5,7),(2,5,8),(2,6,1),(2,6,2),(2,6,3),(2,6,4),(2,6,5),(2,6,6),(2,6,7),(2,6,8),(2,7,1),(2,7,2),(2,7,3),(2,7,4),(2,7,5),(2,7,6),(2,7,7),(2,7,8),(2,8,1),(2,8,2),(2,8,3),(2,8,4),(2,8,5),(2,8,6),(2,8,7),(2,8,8),(2,9,1),(2,9,2),(2,9,3),(2,9,4),(2,9,5),(2,9,6),(2,9,7),(2,9,8),(2,10,1),(2,10,2),(2,10,3),(2,10,4),(2,10,5),(2,10,6),(2,10,7),(2,10,8),(2,11,1),(2,11,2),(2,11,3),(2,11,4),(2,11,5),(2,11,6),(2,11,7),(2,11,8),(2,12,1),(2,12,2),(2,12,3),(2,12,4),(2,12,5),(2,12,6),(2,12,7),(2,12,8);
+/*!40000 ALTER TABLE `seats` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `refund_strategy`
+--
+
+DROP TABLE IF EXISTS `refund_strategy`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `refund_strategy` (
+                         `id` int(11) NOT NULL AUTO_INCREMENT,
+                         `refundable` int(11) NOT NULL,
+                         `charge` double(5,2) NOT NULL,
+                         PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `refund_strategy`
+--
+
+LOCK TABLES `refund_strategy` WRITE;
+/*!40000 ALTER TABLE `refund_strategy` DISABLE KEYS */;
+INSERT INTO `refund_strategy` VALUES (1,0,0),(2,1,0.05);
+/*!40000 ALTER TABLE `refund_strategy` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `movie`
 --
 

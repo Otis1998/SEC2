@@ -7,7 +7,6 @@ import nju.edu.cinema.data.management.ScheduleMapper;
 import nju.edu.cinema.po.Movie;
 import nju.edu.cinema.po.ScheduleItem;
 import nju.edu.cinema.vo.*;
-import nju.edu.cinema.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

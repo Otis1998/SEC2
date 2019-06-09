@@ -1,5 +1,6 @@
 package nju.edu.cinema.bl.management;
 
+import nju.edu.cinema.vo.HallForm;
 import nju.edu.cinema.vo.ResponseVO;
 
 /**
@@ -12,4 +13,11 @@ public interface HallService {
      * @return
      */
     ResponseVO searchAllHall();
+
+    /**
+     * 添加影厅
+     * @param hallForm
+     * @return
+     */
+    ResponseVO addHall(HallForm hallForm);
 }

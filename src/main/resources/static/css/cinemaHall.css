@@ -34,6 +34,17 @@
     outline: none;
 }
 
+.cinema-hall-seat-unavailable {
+    background: url("../images/seatUnavailable.png");
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    margin: 3px;
+
+    border: none;
+    outline: none;
+}
+
 .cinema-hall-seat-lock {
     background: url("../images/seatLock.png");
     display: inline-block;

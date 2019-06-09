@@ -1,14 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="nju.edu.cinema.data.management.HallMapper">
+    <insert id="insertOneHall" parameterType="nju.edu.cinema.vo.HallForm"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into hall(name, row, `column`)
+        values(#{name}, #{row}, #{column})
+        <selectKey keyProperty="id" resultType="java.lang.Integer">
+            select LAST_INSERT_ID() as id from hall
+        </selectKey>
+    </insert>
+    <insert id="insertSeat" parameterType="nju.edu.cinema.po.Seat">
+        insert into seats(hall_id, `column`, row)
+        values(#{hallId}, #{column}, #{row})
+    </insert>
+
     <select id="selectAllHall" resultMap="Hall">
         select * from hall
     </select>
     <select id="selectHallById" resultMap="Hall">
         select * from hall where id = #{hallId}
     </select>
+    <select id="selectSeatsByHallId" resultMap="Seat">
+        select hall_id as hallId, row, `column` from seats where seats.hall_id = #{hallId}
+    </select>
 
     <resultMap id="Hall" type="nju.edu.cinema.po.Hall">
+    </resultMap>
+    <resultMap id="Seat" type="nju.edu.cinema.po.Seat">
     </resultMap>
 
 </mapper>
