@@ -444,6 +444,36 @@ INSERT INTO `vip_card` VALUES (1,15,1,'2019-04-21 13:54:38',500,50,550),(2,12,2,
 UNLOCK TABLES;
 
 --
+-- Table structure for table `order_form`
+--
+
+DROP TABLE IF EXISTS `order_form`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `order_form` (
+  `user_id` int(11) DEFAULT NULL,
+  `tickets_id` varchar(50) DEFAULT NULL,
+  `movie_id` int(11) DEFAULT NULL,
+  `cost` float DEFAULT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `purchase_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+
+--
+-- Dumping data for table `order_form`
+--
+
+LOCK TABLES `order_form` WRITE;
+/*!40000 ALTER TABLE `order_form` DISABLE KEYS */;
+INSERT INTO `order_form` VALUES (12,'1&2&3&4',10,8,1,'2019-04-23 13:50:52');
+/*!40000 ALTER TABLE `order_form` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+--
 -- Dumping events for database 'cinema'
 --
 
