@@ -321,6 +321,7 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `identity` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
@@ -335,8 +336,31 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'testname','123456'),(3,'test','123456'),(5,'test1','123456'),(7,'test121','123456'),(8,'root','123456'),(10,'roottt','123123'),(12,'zhourui','123456'),(13,'abc123','abc123'),(15,'dd','123');
+INSERT INTO `user` VALUES (1,0,'testname','123456'),(3,0,'test','123456'),(5,0,'test1','123456'),(7,0,'test121','123456'),(8,2,'root','123456'),(10,3,'roottt','123123'),(12,0,'zhourui','123456'),(13,0,'abc123','abc123'),(15,0,'dd','123');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `recharge_present`
+--
+DROP TABLE IF EXISTS `recharge_present`
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `recharge_present`(
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `target_amount` float DEFAULT NULL,
+  `present_amount` float DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `recharge_present`
+--
+LOCK TABLES `recharge_present` WRITE;
+/*!40000 ALTER TABLE `recharge_present` DISABLE KEYS */;
+INSERT INTO `recharge_present` VALUES (1,200,30),(2,300,40);
+/*!40000 ALTER TABLE `recharge_present` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
