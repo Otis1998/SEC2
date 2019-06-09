@@ -8,6 +8,7 @@ html {
 }
 body {
     height: 100%;
+    background: #e4e7ea;
 }
 input {
     width: 250px;
@@ -20,7 +21,7 @@ ul {
 .card {
     background: #fff;
     border-radius: 2px;
-    box-shadow: #ccc 1px 0 0 0;
+    box-shadow: #ccc 1px 1px 1px 1px;
 }
 .title {
     font-size: 24px;
@@ -75,11 +76,9 @@ ul {
     height: 100%;
 }
 .content-container {
-    flex: 1;
-    height: 100%;
-    background: #e4e7ea;
-    padding: 20px;
-    overflow-y: scroll;
+    /*flex: 1;*/
+    min-height: 100%;
+    padding: 100px 0 100px 0;
 }
 .content-item {
     margin-bottom: 30px;
@@ -102,6 +101,9 @@ ul {
     justify-content: space-around;
     border-bottom: 1px solid #ccc;
     border-top: 1px solid #ccc;
+    position: fixed;
+    top:0;
+    z-index: 100;
 }
 .nav-user-container {
     padding: 0px 5px 0px 5px;
@@ -129,3 +131,4 @@ ul {
     font-size: 12px;
 }
 
+/*宽度相关*/

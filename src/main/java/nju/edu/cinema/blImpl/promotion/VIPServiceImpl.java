@@ -82,5 +82,9 @@ public class VIPServiceImpl implements VIPService {
         }
     }
 
-
+    @Override
+    public ResponseVO getChargeRecord(int userId){
+        //TODO
+        return null;
+    }
 }

@@ -342,6 +342,35 @@ INSERT INTO `vip_card` VALUES (1,15,375,'2019-04-21 13:54:38'),(2,12,660,'2019-0
 UNLOCK TABLES;
 
 --
+-- Table structure for table `vip_card`
+--
+
+DROP TABLE IF EXISTS `vip_charge`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `vip_charge` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `vip_id` int(11) DEFAULT NULL,
+  `charge_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `charge_sum` float DEFAULT NULL,
+  `bonus_sum` float DEFAULT NULL,
+  `balance` float DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `vip_card`
+--
+
+LOCK TABLES `vip_charge` WRITE;
+/*!40000 ALTER TABLE `vip_card` DISABLE KEYS */;
+INSERT INTO `vip_card` VALUES (1,15,1,'2019-04-21 13:54:38',500,50,550),(2,12,2,'2019-04-17 18:47:42',200,10,210);
+/*!40000 ALTER TABLE `vip_card` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Dumping events for database 'cinema'
 --
 

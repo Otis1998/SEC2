@@ -77,4 +77,9 @@ public class ViewController {
     public String getUserMember() {
         return "userMember";
     }
+
+    @RequestMapping(value = "/user/chargeRecord")
+    public String getUserChargeRecord() {
+        return "userChargeRecord";
+    }
 }

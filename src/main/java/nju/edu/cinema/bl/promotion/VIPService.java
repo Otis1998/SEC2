@@ -21,5 +21,6 @@ public interface VIPService {
 
     ResponseVO getCardByUserId(int userId);
 
+    ResponseVO getChargeRecord(int userId);
 
 }

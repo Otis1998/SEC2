@@ -1,4 +1,6 @@
-let ticketList=[];
+let orderList=[];
+let numOfPage=0;
+let page=0;
 //初始化界面，展示所有订单
 $(document).ready(function () {
     $('#username').text(sessionStorage.getItem('username'));
@@ -9,8 +11,8 @@ $(document).ready(function () {
         getRequest(
             '/ticket/get/' + sessionStorage.getItem('id'),
             function (res) {
-                ticketList=res.content;
-                renderTicketList(res.content);
+                orderList=res.content;
+                renderTicketList(orderList);
             },
             function (error) {
                 alert(error);
@@ -18,67 +20,70 @@ $(document).ready(function () {
     }
 });
 
-//所有订单对应的方法，展示所有订单
-function renderAllTicket() {
-    renderTicketList(ticketList);
-}
-//展示某种状态的订单，state：0 未完成，1 已完成，2 已失效
-function renderTicket(state) {
-    let newList=[];
-    ticketList.forEach(function (ticket) {
-        if(ticket.state==state){
-            newList.push(ticket);
-        }
-    });
-    renderTicketList(newList);
-}
-
-//将传入的订单列表显示。需要显示：电影名称、影厅名、座位、放映时间、预计结束时间、状态
+//将传入的订单列表显示。需要显示：电影名称、电影海报、影厅名、座位、票的张数、放映时间、预计结束时间、票价、状态(分为可退和不可退)
 function renderTicketList(list) {
-    var ticketTableBody=$('#ticket-list');
-    ticketTableBody.empty();
-    if(list.length==0){
-        ticketTableBody.text("暂无电影票");
-    }else {
-        //ticket属性：id 电影票id，userId 用户id，scheduleId 排片id，columnIndex 列号，rowIndex 行号，state 状态，time 创建时间
-        for (var i in list) {
-            //1.根据list获取scheduleId 座位 状态（需要显示座位 状态）
-            var seat = (list[i].rowIndex + 1) + "排" + (list[i].columnIndex + 1) + "座";//座位
-            var state="";//状态
-            if (list[i].state == "1") {
-                state = "已完成";
-            } else {
-                state = "已失效";
-            }
-            // console.log(seat);
-            //2.根据scheduleId获取影厅号 放映起始时间 和电影名称（需要显示影厅名称 起始时间 电影名称） TODO 改为异步
-            getSynRequest(
-                '/schedule/' + list[i].scheduleId,
-                function (res) {
-                    //3.显示
-                    addInTBody(res.content,seat,state);
-                },
-                function (error) {
-                    alert(error)
-                },
-            );
-        }
+    var orderList=$('#order-list');
+    var pageBar=$('#page-bar');
+    var lastBtn=$('#last');
+    var nextBtn=$('#next');
+    var pagePara=$('#page');
+    orderList.empty();
+    page=0;
+    if(list.length==0){//没有电影票：显示暂无电影票，不显示页码
+        var pageStr= "<li class='movie-item card'><h4>暂无电影票</h4></li>";
+        orderList.append(pageStr);
+        pageBar.css("display","none");
+    }else{//超过五个订单：分页显示，显示页码
+        pageBar.css("display","");
+        numOfPage=list.length/5;
+        showFiveOrder();
     }
 }
 
-function addInTBody(schedule,seat,state) {// TODO 修改style
-    var ticketTableBody=$('#ticket-list');
-    var ticketDomStr=
-        '<tr>' +
-        '<td>'+schedule.movieName+'</td>' +
-        '<td>'+schedule.hallName+'</td>' +
-        '<td>'+seat+'</td>' +
-        '<td>'+formatTime(schedule.startTime)+'</td>' +
-        '<td>'+formatTime(schedule.endTime)+'</td>' +
-        '<td>'+state+'</td>' +
-        '</tr>';
+function showFiveOrder() {
+    var orderList=$('#order-list');
+    var lastBtn=$('#last');
+    var nextBtn=$('#next');
+    var pagePara=$('#page');
+    var orderStr="";
+    for(var i=page*5;i<orderList.length&&i<page*5+5;i++){
+        orderStr+="<li class='movie-item card'>" +
+        "<img class='movie-img' src='" + (movie.posterUrl || "../images/defaultAvatar.jpg") + "'/>" +
+        "<div class='movie-info'>" +
+        "<div class='movie-title'>" +
+        "<span class='primary-text'>" + movie.name + "</span>" +
+        "<span class='label "+(!movie.status ? 'primary-bg' : 'error-bg')+"'>" + (movie.status ? '已下架' : (new Date(movie.startDate)>=new Date()?'未上映':'热映中')) + "</span>" +
+        "<span class='movie-want'><i class='icon-heart error-text'></i>" + (movie.likeCount || 0) + "人想看</span>" +
+        "</div>" +
+        "<div class='movie-description dark-text'><span>" + movie.description + "</span></div>" +
+        "<div>类型：" + movie.type + "</div>" +
+        "<div style='display: flex'><span>导演：" + movie.director + "</span><span style='margin-left: 30px;'>主演：" + movie.starring + "</span>" +
+        "<div class='movie-operation'><a href='/user/movieDetail?id="+ movie.id +"'>详情</a></div></div>" +
+        "</div>"+
+        "</li>";
+    }
+    orderList.empty();
+    orderList.append(orderStr);
+    if(page==0){//第一页
+        lastBtn.css("display","none");
+    }
+    if(page==numOfPage){//最后一页
+        nextBtn.css("display","none");
+    }
+    if(page!=0&&page!=numOfPage){
+        lastBtn.css("display","");
+        nextBtn.css("display","");
+    }
+}
 
-    ticketTableBody.prepend(ticketDomStr);
+function lastClick() {
+    page-=1;
+    showFiveOrder();
+}
+
+function nextClick() {
+    page+=1;
+    showFiveOrder();
 }
 
 function formatTime(timeStr) {
@@ -90,4 +95,16 @@ function formatTime(timeStr) {
     var min=("0"+time.getMinutes()).slice(-2);
     var second=("0"+time.getSeconds()).slice(-2);
     return `${year}年${month}月${day}日 ${hour}:${min}:${second}`;
+}
+
+function cancelOrder(orderId) {
+    getRequest(
+        '',//退票的url
+        function (res) {
+            alert("退票成功");
+            location.reload();
+        },
+        function (error) {
+            alert(error);
+        });
 }
