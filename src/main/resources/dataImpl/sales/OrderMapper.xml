@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nju.edu.cinema.data.sales.OrderMapper">
+    <insert id="insertOrder" parameterType="nju.edu.cinema.po.Order"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into order_form(user_id,tickets_id,movie_id,cost)
+        values(#{userId},#{ticketsId},#{movieId},#{cost})
+    </insert>
+
+    <delete id="deleteOrderById">
+        delete from order_form where id=#{orderId}
+    </delete>
+
+    <select id="selectByOrderId" resultMap="Order">
+        select * from order_form where id=#{orderId}
+    </select>
+
+    <select id="selectByUserId" resultMap="Order">
+        select * from order_form where user_id=#{userId}
+    </select>
+
+    <select id="selectMaxId" resultType="int">
+        select last_insert_id();
+    </select>
+
+    <resultMap id="Order" type="nju.edu.cinema.po.Order">
+        <result column="id" property="orderId"></result>
+        <result column="user_id" property="userId"></result>
+        <result column="movie_id" property="movieId"></result>
+        <result column="cost" property="cost"></result>
+        <result column="purchase_time" property="time"></result>
+        <result column="tickets_id" property="ticketsId"></result>
+    </resultMap>
+
+</mapper>
