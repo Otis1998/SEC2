@@ -415,7 +415,7 @@ INSERT INTO `vip_card` VALUES (1,15,375,'2019-04-21 13:54:38'),(2,12,660,'2019-0
 UNLOCK TABLES;
 
 --
--- Table structure for table `vip_card`
+-- Table structure for table `vip_charge`
 --
 
 DROP TABLE IF EXISTS `vip_charge`;
@@ -434,13 +434,13 @@ CREATE TABLE `vip_charge` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `vip_card`
+-- Dumping data for table `vip_charge`
 --
 
 LOCK TABLES `vip_charge` WRITE;
-/*!40000 ALTER TABLE `vip_card` DISABLE KEYS */;
-INSERT INTO `vip_card` VALUES (1,15,1,'2019-04-21 13:54:38',500,50,550),(2,12,2,'2019-04-17 18:47:42',200,10,210);
-/*!40000 ALTER TABLE `vip_card` ENABLE KEYS */;
+/*!40000 ALTER TABLE `vip_charge` DISABLE KEYS */;
+INSERT INTO `vip_charge` VALUES (1,15,1,'2019-04-21 13:54:38',500,50,550),(2,12,2,'2019-04-17 18:47:42',200,10,210);
+/*!40000 ALTER TABLE `vip_charge` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
