@@ -343,7 +343,7 @@ UNLOCK TABLES;
 --
 -- Table structure for table `recharge_present`
 --
-DROP TABLE IF EXISTS `recharge_present`
+DROP TABLE IF EXISTS `recharge_present`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `recharge_present`(
