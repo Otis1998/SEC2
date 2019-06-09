@@ -1,6 +1,7 @@
 package nju.edu.cinema.bl.promotion;
 
 import nju.edu.cinema.vo.VIPCardForm;
+import nju.edu.cinema.vo.VIPInfoVO;
 import nju.edu.cinema.vo.ResponseVO;
 
 
@@ -21,5 +22,10 @@ public interface VIPService {
 
     ResponseVO getCardByUserId(int userId);
 
+    ResponseVO getChargeRecord(int userId);
+
+    ResponseVO changeCardInfo(VIPInfoVO vipInfoVO);
+    
+    ResponseVO addCardInfo(VIPInfoVO vipInfoVO);
 
 }

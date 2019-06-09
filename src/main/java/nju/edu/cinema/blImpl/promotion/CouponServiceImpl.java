@@ -4,7 +4,11 @@ import nju.edu.cinema.bl.promotion.CouponService;
 import nju.edu.cinema.data.promotion.CouponMapper;
 import nju.edu.cinema.po.Coupon;
 import nju.edu.cinema.vo.CouponForm;
+import nju.edu.cinema.vo.CouponVO;
 import nju.edu.cinema.vo.ResponseVO;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,9 +50,11 @@ public class CouponServiceImpl implements CouponService {
     }
 
     @Override
-    public ResponseVO issueCoupon(int couponId, int userId) {
+    public ResponseVO issueCoupon(int couponId, List<Integer> userIdList) {
         try {
-            couponMapper.insertCouponUser(couponId,userId);
+        	for (int userId : userIdList) {
+        		couponMapper.insertCouponUser(couponId,userId);
+			}
             return ResponseVO.buildSuccess();
         } catch (Exception e) {
             e.printStackTrace();
@@ -56,4 +62,22 @@ public class CouponServiceImpl implements CouponService {
         }
 
     }
+
+	@Override
+	public ResponseVO getAllCoupons() {
+		try {
+            return ResponseVO.buildSuccess(couponList2CouponVOList(couponMapper.selectAllCoupons()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseVO.buildFailure("失败");
+        }
+	}
+
+	private Object couponList2CouponVOList(List<Coupon> couponList) {
+		List<CouponVO> couponVOList = new ArrayList<>();
+        for(Coupon coupon : couponList){
+        	couponVOList.add(new CouponVO(coupon));
+        }
+        return couponVOList;
+	}
 }

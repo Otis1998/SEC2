@@ -42,34 +42,47 @@
             </ul>
         </div>
     </div>
-    <div class="content-container">
+    <div class="content-container col-md-10 col-lg-offset-1">
         <div class="filler-container card">
-            <div class="input-group" style="width: 800px">
+            <div class="input-group" style="width: 100%">
                 <h4>我的电影票</h4>
-                <button class="btn btn-default" id="all" type="button" onclick="renderAllTicket()">所有电影票</button>
-                <button class="btn btn-default" id="finished" type="button" onclick="renderTicket(1)">已完成电影票</button>
-                <button class="btn btn-default" id="failed" type="button" onclick="renderTicket(2)">已失效电影票</button>
             </div>
-            <div>
-                <table border="0" rules="all" id="ticket-table">
-                    <thead>
-                        <tr>
-                            <th>电影名称</th>
-                            <th>影厅名</th>
-                            <th>座位</th>
-                            <th>放映时间</th>
-                            <th>预计结束时间</th>
-                            <th>状态</th>
-                        </tr>
-                    </thead>
-                    <tbody id="ticket-list">
-                    </tbody>
-                </table>
+        </div>
+        <ul class="movie-on-list" id="order-list">
+        </ul>
+        <div class="filler-container card">
+            <div class="input-group" style="width: 100%">
+                <button class="btn btn-default" id="last" type="button" onclick="lastClick()">上一页</button>
+                <p id="page"></p>
+                <button class="btn btn-default" id="next" type="button" onclick="nextClick()">下一页</button>
             </div>
         </div>
     </div>
-
-<div class="content-container">
-</div>
+<!--    <div class="content-container">-->
+<!--        <div class="col-md-8 col-md-offset-2">-->
+<!--            <div class="input-group" >-->
+<!--                <h4>我的电影票</h4>-->
+<!--                <button class="btn btn-default" id="all" type="button" onclick="renderAllTicket()">所有电影票</button>-->
+<!--                <button class="btn btn-default" id="finished" type="button" onclick="renderTicket(1)">已完成电影票</button>-->
+<!--                <button class="btn btn-default" id="failed" type="button" onclick="renderTicket(2)">已失效电影票</button>-->
+<!--            </div>-->
+<!--            <div class="card">-->
+<!--                <table border="0" rules="all" id="ticket-table">-->
+<!--                    <thead>-->
+<!--                        <tr>-->
+<!--                            <th>电影名称</th>-->
+<!--                            <th>影厅名</th>-->
+<!--                            <th>座位</th>-->
+<!--                            <th>放映时间</th>-->
+<!--                            <th>预计结束时间</th>-->
+<!--                            <th>状态</th>-->
+<!--                        </tr>-->
+<!--                    </thead>-->
+<!--                    <tbody id="ticket-list">-->
+<!--                    </tbody>-->
+<!--                </table>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
 </body>
 </html>

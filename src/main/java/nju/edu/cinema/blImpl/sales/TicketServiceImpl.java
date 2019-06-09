@@ -174,8 +174,8 @@ public class TicketServiceImpl implements TicketService {
         try {
             List<Ticket> tickets = ticketMapper.selectTicketsBySchedule(scheduleId);
             ScheduleItem schedule=scheduleService.getScheduleItemById(scheduleId);
-            Hall hall=hallService.getHallById(schedule.getHallId());
-            int[][] seats=new int[hall.getRow()][hall.getColumn()];
+            HallVO hall=hallService.getHallById(schedule.getHallId());
+            int[][] seats=hall.getSeats();
             tickets.stream().forEach(ticket -> {
                 seats[ticket.getRowIndex()][ticket.getColumnIndex()]=1;
             });
@@ -292,6 +292,14 @@ public class TicketServiceImpl implements TicketService {
             ticketVOList.add(new TicketVO(t));
         }
         return ticketVOList;
+    }
+
+    Ticket getTicketById(int ticketId){
+        return ticketMapper.selectTicketById(ticketId);
+    }
+
+    void updateTicket(int ticketId,int state){
+        ticketMapper.updateTicketState(ticketId,state);
     }
 
 }

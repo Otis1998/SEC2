@@ -22,7 +22,10 @@ public class CouponController {
     public ResponseVO getCoupons(@PathVariable int userId){
         return couponService.getCouponsByUser(userId);
     }
-
+    @GetMapping("searchAllCoupons")
+    public ResponseVO searchAllCoupons() {
+    	return couponService.getAllCoupons();
+    }
 
 
 }

@@ -6,7 +6,13 @@
         insert into vip_card(user_id,balance)
         values(#{userId}, #{balance})
     </insert>
-
+    <insert id="insertOneDescription" parameterType="nju.edu.cinema.po.VIPCard" useGeneratedKeys="true" keyProperty="id">
+        insert into vip_card_info(price,full,present,description)
+        valus(#{price},#{full},#{present},#{description})
+    </insert>
+    <select id="selectDescriptionById" resultMap="VIPCardInfo">
+        select * from vip_card_info where id=#{id}
+    </select>
     <select id="selectCardById" resultMap="VIPCard">
         select * from vip_card where id=#{id}
     </select>
@@ -21,10 +27,20 @@
         <result column="user_id" property="userId"></result>
         <result column="balance" property="balance"></result>
     </resultMap>
-
+    <resultMap id="VIPCardInfo" type="nju.edu.cinema.po.VIPCard">
+        <result column="price" property="price"></result>
+        <result column="full" property="full"></result>
+        <result column="present" property="present"></result>
+        <result column="description" property="description"></result>
+    </resultMap>
     <update id="updateCardBalance" >
         update vip_card set balance = #{balance} where id=#{id}
     </update>
-
+    <update id="updateCardInfo">
+        update vip_card_info set price=#{price} and full=#{full}, 
+        present=#{present}, 
+        description=#{description} 
+        where description_id=#{descriptionId}
+    </update>
 
 </mapper>

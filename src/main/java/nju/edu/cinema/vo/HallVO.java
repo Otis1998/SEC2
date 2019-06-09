@@ -9,14 +9,12 @@ import nju.edu.cinema.po.Hall;
 public class HallVO {
     private Integer id;
     private String name;
-    private Integer row;
-    private Integer column;
+    private int[][] seats;
 
-    public HallVO(Hall hall){
+    public HallVO(Hall hall, int[][] seats){
         this.id = hall.getId();
         this.name = hall.getName();
-        this.row = hall.getRow();
-        this.column = hall.getColumn();
+        this.seats = seats;
     }
 
     public Integer getId() {
@@ -36,18 +34,18 @@ public class HallVO {
     }
 
     public Integer getRow() {
-        return row;
-    }
-
-    public void setRow(Integer row) {
-        this.row = row;
+        return seats.length;
     }
 
     public Integer getColumn() {
-        return column;
+        return seats[0].length;
     }
 
-    public void setColumn(Integer column) {
-        this.column = column;
+    public int[][] getSeats() {
+        return seats;
+    }
+
+    public void setSeats(int[][] seats) {
+        this.seats = seats;
     }
 }

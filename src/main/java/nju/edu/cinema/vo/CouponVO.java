@@ -6,6 +6,14 @@ import java.sql.Timestamp;
 
 public class CouponVO {
     /**
+     * 优惠券id
+     */
+    private int id;
+	/**
+     * 优惠券名称
+     */
+    private String name;
+    /**
      * 优惠券使用门槛
      */
     private double targetAmount;
@@ -23,6 +31,8 @@ public class CouponVO {
     private Timestamp endTime;
 
     public CouponVO(Coupon coupon){
+    	this.id=coupon.getId();
+    	this.name=coupon.getName();
         this.discountAmount=coupon.getDiscountAmount();
         this.targetAmount=coupon.getTargetAmount();
         this.startTime=coupon.getStartTime();
@@ -60,4 +70,20 @@ public class CouponVO {
     public void setTargetAmount(double targetAmount) {
         this.targetAmount = targetAmount;
     }
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 }

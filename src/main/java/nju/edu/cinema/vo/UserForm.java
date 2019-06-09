@@ -5,6 +5,10 @@ package nju.edu.cinema.vo;
  * @date 2019/3/23
  */
 public class UserForm {
+	/**
+	 * 身份
+	 */
+	private Integer identity;
     /**
      * 用户名，不可重复
      */
@@ -29,4 +33,12 @@ public class UserForm {
     public void setPassword(String password) {
         this.password = password;
     }
+
+	public Integer getIdentity() {
+		return identity;
+	}
+
+	public void setIdentity(Integer identity) {
+		this.identity = identity;
+	}
 }

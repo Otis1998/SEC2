@@ -45,8 +45,9 @@ public class VIPServiceImpl implements VIPService {
     @Override
     public ResponseVO getVIPInfo() {
         VIPInfoVO vipInfoVO = new VIPInfoVO();
-        vipInfoVO.setDescription(VIPCard.description);
-        vipInfoVO.setPrice(VIPCard.price);
+        VIPCard card=new VIPCard();
+        vipInfoVO.setDescription(card.getDescription());
+        vipInfoVO.setPrice(card.getPrice());
         return ResponseVO.buildSuccess(vipInfoVO);
     }
 
@@ -82,5 +83,37 @@ public class VIPServiceImpl implements VIPService {
         }
     }
 
+    @Override
+    public ResponseVO getChargeRecord(int userId){
+        //TODO
+        return null;
+    }
+    
+    @Override
+    public ResponseVO addCardInfo(VIPInfoVO vipInfoVO) {
+    	VIPCard vipCardInfo = new VIPCard();
+    	vipCardInfo.setDescriptionId(vipInfoVO.getDescriptionId());
+    	vipCardInfo.setDescription(vipInfoVO.getDescription());
+    	vipCardInfo.setFull(vipInfoVO.getFull());
+    	vipCardInfo.setPresent(vipInfoVO.getPresent());
+    	try {
+    		int id = vipCardMapper.insertOneDescription(vipCardInfo);
+			return ResponseVO.buildSuccess(vipCardMapper.selectDescriptionById(id));
+		} catch (Exception e) {
+			e.printStackTrace();
+            return ResponseVO.buildFailure("失败");
+		}
+    }
+    @Override
+    public ResponseVO changeCardInfo(VIPInfoVO vipInfoVO) {
+    	VIPCard vipCardInfo = vipCardMapper.selectDescriptionById(vipInfoVO.getDescriptionId());
+		try {
+			vipCardMapper.updateCardInfo(vipCardInfo.getPrice(), vipCardInfo.getFull(), vipCardInfo.getPresent(), vipCardInfo.getDescription());
+			return ResponseVO.buildSuccess(vipCardInfo);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseVO.buildFailure("失败");
+		}
+	}
 
 }

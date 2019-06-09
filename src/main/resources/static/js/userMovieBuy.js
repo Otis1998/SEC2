@@ -52,6 +52,10 @@ function renderSchedule(schedule, seats) {
             if (seats[i][j] == 0) {
                 // 未选
                 temp += "<button class='cinema-hall-seat-choose' id='" + id + "' onclick='seatClick(\"" + id + "\"," + i + "," + j + ")'></button>";
+            }
+            else if (seats[i][j] == -1) {
+                // 不可用
+                temp += "<button class='cinema-hall-seat-unavailable'></button>";
             } else {
                 // 已选中
                 temp += "<button class='cinema-hall-seat-lock'></button>";
