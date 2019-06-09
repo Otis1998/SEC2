@@ -147,6 +147,55 @@ INSERT INTO `hall` VALUES (1,'1号厅',10,5),(2,'2号厅',12,8);
 UNLOCK TABLES;
 
 --
+-- Table structure for table `seats`
+--
+
+DROP TABLE IF EXISTS `seats`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `seats` (
+                               `hall_id` int(11) NOT NULL,
+                               `column` int(11) NOT NULL,
+                               `row` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `seats`
+--
+
+LOCK TABLES `seats` WRITE;
+/*!40000 ALTER TABLE `seats` DISABLE KEYS */;
+INSERT INTO `seats` VALUES (1,1,1),(1,1,2),(1,1,3),(1,1,4),(1,1,5),(1,2,1),(1,2,2),(1,2,3),(1,2,4),(1,2,5),(1,3,1),(1,3,2),(1,3,3),(1,3,4),(1,3,5),(1,4,1),(1,4,2),(1,4,3),(1,4,4),(1,4,5),(1,5,1),(1,5,2),(1,5,3),(1,5,4),(1,5,5),(1,6,1),(1,6,2),(1,6,3),(1,6,4),(1,6,5),(1,7,1),(1,7,2),(1,7,3),(1,7,4),(1,7,5),(1,8,1),(1,8,2),(1,8,3),(1,8,4),(1,8,5),(1,9,1),(1,9,2),(1,9,3),(1,9,4),(1,9,5),(1,10,1),(1,10,2),(1,10,3),(1,10,4),(1,10,5),(2,1,1),(2,1,2),(2,1,3),(2,1,4),(2,1,5),(2,1,6),(2,1,7),(2,1,8),(2,2,1),(2,2,2),(2,2,3),(2,2,4),(2,2,5),(2,2,6),(2,2,7),(2,2,8),(2,3,1),(2,3,2),(2,3,3),(2,3,4),(2,3,5),(2,3,6),(2,3,7),(2,3,8),(2,4,1),(2,4,2),(2,4,3),(2,4,4),(2,4,5),(2,4,6),(2,4,7),(2,4,8),(2,5,1),(2,5,2),(2,5,3),(2,5,4),(2,5,5),(2,5,6),(2,5,7),(2,5,8),(2,6,1),(2,6,2),(2,6,3),(2,6,4),(2,6,5),(2,6,6),(2,6,7),(2,6,8),(2,7,1),(2,7,2),(2,7,3),(2,7,4),(2,7,5),(2,7,6),(2,7,7),(2,7,8),(2,8,1),(2,8,2),(2,8,3),(2,8,4),(2,8,5),(2,8,6),(2,8,7),(2,8,8),(2,9,1),(2,9,2),(2,9,3),(2,9,4),(2,9,5),(2,9,6),(2,9,7),(2,9,8),(2,10,1),(2,10,2),(2,10,3),(2,10,4),(2,10,5),(2,10,6),(2,10,7),(2,10,8),(2,11,1),(2,11,2),(2,11,3),(2,11,4),(2,11,5),(2,11,6),(2,11,7),(2,11,8),(2,12,1),(2,12,2),(2,12,3),(2,12,4),(2,12,5),(2,12,6),(2,12,7),(2,12,8);
+/*!40000 ALTER TABLE `seats` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `refund_strategy`
+--
+
+DROP TABLE IF EXISTS `refund_strategy`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `refund_strategy` (
+                         `id` int(11) NOT NULL AUTO_INCREMENT,
+                         `refundable` int(11) NOT NULL,
+                         `charge` double(5,2) NOT NULL,
+                         PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `refund_strategy`
+--
+
+LOCK TABLES `refund_strategy` WRITE;
+/*!40000 ALTER TABLE `refund_strategy` DISABLE KEYS */;
+INSERT INTO `refund_strategy` VALUES (1,0,0),(2,1,0.05);
+/*!40000 ALTER TABLE `refund_strategy` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `movie`
 --
 
@@ -272,6 +321,7 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `identity` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
@@ -286,8 +336,31 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'testname','123456'),(3,'test','123456'),(5,'test1','123456'),(7,'test121','123456'),(8,'root','123456'),(10,'roottt','123123'),(12,'zhourui','123456'),(13,'abc123','abc123'),(15,'dd','123');
+INSERT INTO `user` VALUES (1,0,'testname','123456'),(3,0,'test','123456'),(5,0,'test1','123456'),(7,0,'test121','123456'),(8,2,'root','123456'),(10,3,'roottt','123123'),(12,0,'zhourui','123456'),(13,0,'abc123','abc123'),(15,0,'dd','123');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `recharge_present`
+--
+DROP TABLE IF EXISTS `recharge_present`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `recharge_present`(
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `target_amount` float DEFAULT NULL,
+  `present_amount` float DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `recharge_present`
+--
+LOCK TABLES `recharge_present` WRITE;
+/*!40000 ALTER TABLE `recharge_present` DISABLE KEYS */;
+INSERT INTO `recharge_present` VALUES (1,200,30),(2,300,40);
+/*!40000 ALTER TABLE `recharge_present` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -338,6 +411,63 @@ CREATE TABLE `vip_card` (
 LOCK TABLES `vip_card` WRITE;
 /*!40000 ALTER TABLE `vip_card` DISABLE KEYS */;
 INSERT INTO `vip_card` VALUES (1,15,375,'2019-04-21 13:54:38'),(2,12,660,'2019-04-17 18:47:42');
+/*!40000 ALTER TABLE `vip_card` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `order_form`
+--
+
+DROP TABLE IF EXISTS `order_form`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `order_form` (
+  `user_id` int(11) DEFAULT NULL,
+  `tickets_id` varchar(255) DEFAULT NULL,
+  `movie_id` int(11) DEFAULT NULL,
+  `cost` float DEFAULT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `purchase_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `vip_card`
+--
+
+LOCK TABLES `order_form` WRITE;
+/*!40000 ALTER TABLE `order_form` DISABLE KEYS */;
+INSERT INTO `order_form` VALUES (12,'1&2&3&4',10,8,1,'2019-04-23 13:50:52');
+/*!40000 ALTER TABLE `order_form` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `vip_card`
+--
+
+DROP TABLE IF EXISTS `vip_charge`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `vip_charge` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `vip_id` int(11) DEFAULT NULL,
+  `charge_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `charge_sum` float DEFAULT NULL,
+  `bonus_sum` float DEFAULT NULL,
+  `balance` float DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `vip_card`
+--
+
+LOCK TABLES `vip_charge` WRITE;
+/*!40000 ALTER TABLE `vip_card` DISABLE KEYS */;
+INSERT INTO `vip_card` VALUES (1,15,1,'2019-04-21 13:54:38',500,50,550),(2,12,2,'2019-04-17 18:47:42',200,10,210);
 /*!40000 ALTER TABLE `vip_card` ENABLE KEYS */;
 UNLOCK TABLES;
 
