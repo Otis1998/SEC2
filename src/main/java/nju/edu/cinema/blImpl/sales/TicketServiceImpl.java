@@ -294,4 +294,12 @@ public class TicketServiceImpl implements TicketService {
         return ticketVOList;
     }
 
+    Ticket getTicketById(int ticketId){
+        return ticketMapper.selectTicketById(ticketId);
+    }
+
+    void updateTicket(int ticketId,int state){
+        ticketMapper.updateTicketState(ticketId,state);
+    }
+
 }
