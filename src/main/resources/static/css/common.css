@@ -76,9 +76,11 @@ ul {
     height: 100%;
 }
 .content-container {
-    /*flex: 1;*/
-    min-height: 100%;
-    padding: 100px 0 100px 0;
+    flex: 1;
+    height: 100%;
+    background: #e4e7ea;
+    padding: 20px;
+    overflow-y: scroll;
 }
 .content-item {
     margin-bottom: 30px;
