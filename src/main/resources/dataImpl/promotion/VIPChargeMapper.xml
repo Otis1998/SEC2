@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nju.edu.cinema.data.promotion.VIPChargeMapper">
+    <insert id="insertChargeRecord" parameterType="nju.edu.cinema.po.ChargeRecord"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into vip_charge(user_id,vip_id,charge_sum,bonus_sum,balance)
+        values(#{userId}, #{vipId},#{chargeSum},#{bonusSum},#{balance} )
+    </insert>
+    <select id="selectChargeRecordByUser" resultMap="ChargeRecord">
+        select * from vip_charge where user_id=#{userId}
+    </select>
+
+    <resultMap id="ChargeRecord" type="nju.edu.cinema.po.ChargeRecord">
+        <result column="id" property="id"></result>
+        <result column="user_id" property="userId"></result>
+        <result column="vip_id" property="vipId"></result>
+        <result column="charge_time" property="chargeTime"></result>
+        <result column="charge_sum" property="chargeSum"></result>
+        <result column="bonus_sum" property="bonusSum"></result>
+        <result column="balance" property="balance"></result>
+    </resultMap>
+</mapper>
