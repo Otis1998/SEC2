@@ -22,25 +22,25 @@ public class ChargeRecord {
     /*
     * 充值金额
      */
-    private float chargeSum;
+    private double chargeSum;
     /*
     * 优惠金额
      */
-    private float bonusSum;
+    private double bonusSum;
     /*
     * 余额
      */
-    private float balance;
+    private double balance;
 
     public ChargeRecord(){
 
     }
 
-    public float getChargeSum() {
+    public double getChargeSum() {
         return chargeSum;
     }
 
-    public float getBonusSum() {
+    public double getBonusSum() {
         return bonusSum;
     }
 
@@ -48,7 +48,7 @@ public class ChargeRecord {
         return id;
     }
 
-    public float getBalance() {
+    public double getBalance() {
         return balance;
     }
 
@@ -64,15 +64,15 @@ public class ChargeRecord {
         return chargeTime;
     }
 
-    public void setBonusSum(float bonusSum) {
-        this.bonusSum = bonusSum;
+    public void setBonusSum(double d) {
+        this.bonusSum = d;
     }
 
-    public void setBalance(float balance) {
-        this.balance = balance;
+    public void setBalance(double d) {
+        this.balance = d;
     }
 
-    public void setChargeSum(float chargeSum) {
+    public void setChargeSum(double chargeSum) {
         this.chargeSum = chargeSum;
     }
 

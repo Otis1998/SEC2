@@ -19,24 +19,12 @@ public class RechargePresentServiceImpl implements RechargePresentService,Rechar
 	private RechargePresentMapper rechargePresentMapper;
 
 	@Override
-	public ResponseVO searchPresentById(int id) {
-		try {
-			List<Present> present=rechargePresentMapper.selectPresentById(id);
-			List<PresentVO> presentVO=new ArrayList<>();
-			for(Present pr:present) {
-				presentVO.add(new PresentVO(pr));
-			}
-            return ResponseVO.buildSuccess(presentVO);
-		} catch (Exception e) {
-			e.printStackTrace();
-            return ResponseVO.buildFailure("失败");
-		}
-	}
-
-	@Override
 	public ResponseVO publishPresent(PresentForm presentForm) {
 		try {
-			rechargePresentMapper.insertOnePresent(presentForm);
+			Present present=new Present();
+			present.setTargetAmount(presentForm.getTargetAmount());
+			present.setPresentAmount(presentForm.getPresentAmount());
+			rechargePresentMapper.insertOnePresent(present);
             return ResponseVO.buildSuccess();
         } catch (Exception e) {
             e.printStackTrace();
@@ -58,7 +46,11 @@ public class RechargePresentServiceImpl implements RechargePresentService,Rechar
 	@Override
 	public ResponseVO updatePresent(PresentForm presentForm) {
 		try {
-            rechargePresentMapper.updatePresent(presentForm);
+			Present present=new Present();
+			present.setId(presentForm.getId());
+			present.setTargetAmount(presentForm.getTargetAmount());
+			present.setPresentAmount(presentForm.getPresentAmount());
+            rechargePresentMapper.updatePresent(present);
             return ResponseVO.buildSuccess();
         }catch (Exception e) {
             e.printStackTrace();
@@ -79,6 +71,32 @@ public class RechargePresentServiceImpl implements RechargePresentService,Rechar
             e.printStackTrace();
             return ResponseVO.buildFailure("失败");
         }
+	}
+
+	@Override
+	public String getPresentDescription() {
+		String description="";
+		List<Present> present=rechargePresentMapper.selectAllPresent();
+		for(Present pr:present) {
+			description=description+"满"+String.format("%.2f", pr.getTargetAmount())+"送"+String.format("%.2f",pr.getPresentAmount())+"<br />";
+		}
+		return description;
+	}
+
+	@Override
+	public double calculate(int amount) {
+		double balance=0;
+		double Amount=amount;
+		List<Present> presents=rechargePresentMapper.selectAllPresent();
+		for(Present present:presents) {
+			if(amount>=present.getTargetAmount()) {
+				while (Amount>=present.getTargetAmount()) {
+					Amount=Amount-present.getTargetAmount();
+					balance=balance+present.getPresentAmount();
+				}
+			}
+		}
+		return balance+amount;
 	}
 	
 }

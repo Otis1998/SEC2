@@ -1,13 +1,15 @@
 package nju.edu.cinema.blImpl.management.rechargePresent;
 
-import nju.edu.cinema.vo.ResponseVO;
 
 public interface RechargePresentServiceForBl {
 	/**
-	 * 根据充值优惠id查询策略
-	 * @param id
+	 * 获得优惠策略描述
 	 * @return
 	 */
-	public ResponseVO searchPresentById(int id);
-	
+	String getPresentDescription();
+	/**
+	 * 计算赠送金额
+	 * @return
+	 */
+	double calculate(int amount);
 }

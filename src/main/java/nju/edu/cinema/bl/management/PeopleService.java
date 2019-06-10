@@ -2,7 +2,6 @@ package nju.edu.cinema.bl.management;
 
 import nju.edu.cinema.vo.ResponseVO;
 import nju.edu.cinema.vo.UserForm;
-import nju.edu.cinema.vo.UserInfoForm;
 
 public interface PeopleService {
 	/**
@@ -21,7 +20,7 @@ public interface PeopleService {
 	 * @userInfo
 	 * @return
 	 */
-	ResponseVO updatePeople(UserInfoForm userInfoForm);
+	ResponseVO updatePeople(UserForm userForm);
 	/**
 	 * 删除人员信息
 	 * @id

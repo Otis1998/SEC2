@@ -1,9 +1,11 @@
 package nju.edu.cinema.blImpl.promotion;
 
 import nju.edu.cinema.bl.promotion.VIPService;
+import nju.edu.cinema.blImpl.management.rechargePresent.RechargePresentServiceForBl;
 import nju.edu.cinema.data.promotion.VIPCardMapper;
 import nju.edu.cinema.data.promotion.VIPChargeMapper;
 import nju.edu.cinema.vo.VIPCardForm;
+import nju.edu.cinema.po.ChargeRecord;
 import nju.edu.cinema.po.VIPCard;
 import nju.edu.cinema.vo.ResponseVO;
 import nju.edu.cinema.vo.VIPInfoVO;
@@ -20,6 +22,9 @@ public class VIPServiceImpl implements VIPService {
     VIPCardMapper vipCardMapper;
     @Autowired
     VIPChargeMapper vipChargeMapper;
+    @Autowired
+    private RechargePresentServiceForBl rechargePresentServiceForBl;
+    
 
     @Override
     public ResponseVO addVIPCard(int userId) {
@@ -49,7 +54,7 @@ public class VIPServiceImpl implements VIPService {
     public ResponseVO getVIPInfo() {
         VIPInfoVO vipInfoVO = new VIPInfoVO();
         VIPCard card=new VIPCard();
-        vipInfoVO.setDescription(card.getDescription());
+        vipInfoVO.setDescription(rechargePresentServiceForBl.getPresentDescription());
         vipInfoVO.setPrice(card.getPrice());
         return ResponseVO.buildSuccess(vipInfoVO);
     }
@@ -60,7 +65,7 @@ public class VIPServiceImpl implements VIPService {
         if (vipCard == null) {
             return ResponseVO.buildFailure("会员卡不存在");
         }
-        double balance = vipCard.calculate(vipCardForm.getAmount());
+        double balance = rechargePresentServiceForBl.calculate(vipCardForm.getAmount());
         vipCard.setBalance(vipCard.getBalance() + balance);
         try {
             //TODO
@@ -70,6 +75,13 @@ public class VIPServiceImpl implements VIPService {
             //根据充值金额和赠送金额修改余额
             //插入一条新的充值记录
             vipCardMapper.updateCardBalance(vipCardForm.getVipId(), vipCard.getBalance());
+            ChargeRecord chargeRecord=new ChargeRecord();
+            chargeRecord.setUserId(vipCard.getUserId());
+            chargeRecord.setVipId(vipCardForm.getVipId());
+            chargeRecord.setChargeSum(vipCardForm.getAmount());
+            chargeRecord.setBonusSum(balance-vipCardForm.getAmount());
+            chargeRecord.setBalance(vipCard.getBalance());
+            vipChargeMapper.insertChargeRecord(chargeRecord);
             return ResponseVO.buildSuccess(vipCard);
         } catch (Exception e) {
             e.printStackTrace();

@@ -56,18 +56,18 @@ function updateUser(id){
             });
         $('#user-edit-form-btn').click(function(){
         //验证通过后修改用户信息
-        var userInfoForm={
+        var userForm={
             id:id,
             identity:$('#edit-identity').val(),
             username:$('#user-edit-username-input').val(),
             password:$('#user-edit-password-input').val()
         };
-        if(!validateUserInfo(userInfoForm)){
+        if(!validateUserInfo(userForm)){
             return;
         }
         postRequest(
             '/people/update',
-            userInfoForm,
+            userForm,
             function(res){
                 $("#userEditModal").modal('hide');
                 if(res.success){
@@ -97,7 +97,6 @@ function deleteUser(id){
                 }
             },
             function(error){
-                console.log(error);
                 alert(error)
             });
     }

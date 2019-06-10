@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="nju.edu.cinema.data.management.RechargePresentMapper">
-    <insert id="insertOnePresent" parameterType="nju.edu.cinema.vo.PresentForm" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertOnePresent" parameterType="nju.edu.cinema.po.Present" useGeneratedKeys="true" keyProperty="id">
         insert into recharge_present(target_amount,present_amount)
         values(#{targetAmount},#{presentAmount})
     </insert>
     <select id="selectAllPresent" resultMap="Present">
-        select * from recharge_present order by id asc
+        select * from recharge_present order by target_amount desc
     </select>
     <select id="selectPresentById" resultMap="Present">
         select * from recharge_present where id=#{id}
@@ -14,7 +14,7 @@
     <delete id="deleteOnePresent">
         delete from recharge_present where id=#{id}
     </delete>
-    <update id="updatePresent" parameterType="nju.edu.cinema.vo.PresentForm">
+    <update id="updatePresent" parameterType="nju.edu.cinema.po.Present">
         update recharge_present set target_amount=#{targetAmount},present_amount=#{presentAmount}
         where id = #{id}
     </update>

@@ -36,8 +36,7 @@ function getVIP() {
         function (res) {
             if (res.success) {
                 $("#member-buy-price").text(res.content.price);
-                $("#member-buy-description").text("充值优惠：" + res.content.description + "。永久有效");
-                $("#member-description").text(res.content.description);
+                $("#member-description").html(res.content.description);
             } else {
                 alert(res.content);
             }

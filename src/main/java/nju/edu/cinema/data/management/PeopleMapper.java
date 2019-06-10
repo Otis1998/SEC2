@@ -6,8 +6,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import nju.edu.cinema.po.User;
-import nju.edu.cinema.vo.UserForm;
-import nju.edu.cinema.vo.UserInfoForm;
 
 
 
@@ -23,7 +21,7 @@ public interface PeopleMapper {
 	 * @param userInfo
 	 * @return
 	 */
-	int insertOneUser(UserForm userInfo);
+	int insertOneUser(User userInfo);
 	/**
 	 * 删除一条人员信息
 	 * @param id
@@ -35,7 +33,7 @@ public interface PeopleMapper {
 	 * @param userInfo
 	 * @return
 	 */
-	int updatePeople(UserInfoForm userInfoForm);
+	int updatePeople(User userForm);
 	/**
 	 * 根据id查找人员信息
 	 * @param id

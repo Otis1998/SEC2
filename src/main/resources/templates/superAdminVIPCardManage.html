@@ -41,8 +41,68 @@
             
         </tbody>
     </table>
-    <button type="button" class="btn btn-primary" id="add-btn" data-backdrop="static" data-toggle="modal" data-target="#presentAddModal"><span>发布新优惠</span></button>
+    <button type="button" class="btn btn-primary" id="add-btn" data-backdrop="static" data-toggle="modal" data-target="#presentAddModal"><span>发布新优惠策略</span></button>
 </div>
+</div>
+<div class="modal fade" id="presentAddModal" tabindex="-1" role="dialog" aria-labelledby="presentAddMoalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="presentAddMoalLabel">发布新优惠策略</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="present-add-targetAmount-input"><span class="error-text">*</span>满:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="present-add-targetAmount-input" placeholder="请输入金额">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="present-add-present-input"><span class="error-text">*</span>送:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="present-add-presentAmount-input" placeholder="请输入赠送金额">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="present-add-form-btn">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="presentEditModal" tabindex="-1" role="dialog" aria-labelledby="presentEditMoalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="presentEditMoalLabel">修改优惠策略</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="present-edit-targetAmount-input"><span class="error-text">*</span>满:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="present-edit-targetAmount-input" placeholder="请输入金额">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="present-edit-present-input"><span class="error-text">*</span>送:</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="present-edit-presentAmount-input" placeholder="请输入赠送金额">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="present-edit-form-btn">确认</button>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>

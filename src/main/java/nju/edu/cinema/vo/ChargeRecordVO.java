@@ -12,15 +12,15 @@ public class ChargeRecordVO {
     /*
     * 充值金额
      */
-    private float chargeSum;
+    private double chargeSum;
     /*
     * 赠送金额
      */
-    private float bonusSum;
+    private double bonusSum;
     /*
     * 余额
      */
-    private float balance;
+    private double balance;
 
     public ChargeRecordVO(){
 
@@ -37,15 +37,15 @@ public class ChargeRecordVO {
         return chargeTime;
     }
 
-    public float getBalance() {
+    public double getBalance() {
         return balance;
     }
 
-    public float getBonusSum() {
+    public double getBonusSum() {
         return bonusSum;
     }
 
-    public float getChargeSum() {
+    public double getChargeSum() {
         return chargeSum;
     }
 

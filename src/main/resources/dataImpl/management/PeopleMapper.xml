@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="nju.edu.cinema.data.management.PeopleMapper">
-    <insert id="insertOneUser" parameterType="nju.edu.cinema.vo.UserForm" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertOneUser" parameterType="nju.edu.cinema.po.User" useGeneratedKeys="true" keyProperty="id">
         insert into user(identity,username,password)
         values(#{identity},#{username}, #{password})
     </insert>
@@ -14,7 +14,7 @@
      <delete id="deleteOneUser">
         delete from user where id=#{id}
     </delete>
-    <update id="updatePeople" parameterType="nju.edu.cinema.vo.UserInfoForm">
+    <update id="updatePeople" parameterType="nju.edu.cinema.po.User">
         update user set identity=#{identity},username=#{username},password=#{password}
         where id = #{id}
     </update>

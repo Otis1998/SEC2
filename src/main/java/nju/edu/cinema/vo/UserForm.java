@@ -6,6 +6,10 @@ package nju.edu.cinema.vo;
  */
 public class UserForm {
 	/**
+	 * id
+	 */
+	private Integer id;
+	/**
 	 * 身份
 	 */
 	private Integer identity;
@@ -40,5 +44,13 @@ public class UserForm {
 
 	public void setIdentity(Integer identity) {
 		this.identity = identity;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 }

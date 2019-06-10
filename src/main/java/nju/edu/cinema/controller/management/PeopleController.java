@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 import nju.edu.cinema.bl.management.PeopleService;
 import nju.edu.cinema.vo.ResponseVO;
 import nju.edu.cinema.vo.UserForm;
-import nju.edu.cinema.vo.UserInfoForm;
 
 @RestController
 public class PeopleController {
@@ -27,8 +26,8 @@ public class PeopleController {
 		return peopleService.addPeople(userInfo);
 	}
 	@RequestMapping(value = "/people/update", method = RequestMethod.POST)
-	public ResponseVO updatePeople(@RequestBody UserInfoForm userInfoForm) {
-		return peopleService.updatePeople(userInfoForm);
+	public ResponseVO updatePeople(@RequestBody UserForm userForm) {
+		return peopleService.updatePeople(userForm);
 	}
 	@RequestMapping(value = "/people/delete", method = RequestMethod.POST)
 	public ResponseVO deletePeople(@RequestParam Integer id) {

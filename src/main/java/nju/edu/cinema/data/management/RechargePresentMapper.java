@@ -18,12 +18,12 @@ public interface RechargePresentMapper {
 	 * 插入一条充值优惠信息
 	 * @return
 	 */
-	int insertOnePresent(PresentForm presentForm);
+	int insertOnePresent(Present present);
 	/**
 	 * 更新充值优惠信息
 	 * @return
 	 */
-	int updatePresent(PresentForm presentForm);
+	int updatePresent(Present present);
 	/**
 	 * 删除充值优惠信息
 	 * @return

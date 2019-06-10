@@ -1,6 +1,9 @@
 package nju.edu.cinema.data.promotion;
 
+
 import nju.edu.cinema.po.VIPCard;
+
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -20,10 +23,6 @@ public interface VIPCardMapper {
 
     void updateCardBalance(@Param("id") int id,@Param("balance") double balance);
 
-    VIPCard selectCardByUserId(int userId);
-
-	VIPCard selectDescriptionById(int descriptionId);
-
-
+	VIPCard selectCardByUserId(@Param("userId") int userId);
 
 }

@@ -10,7 +10,6 @@ import nju.edu.cinema.data.management.PeopleMapper;
 import nju.edu.cinema.po.User;
 import nju.edu.cinema.vo.ResponseVO;
 import nju.edu.cinema.vo.UserForm;
-import nju.edu.cinema.vo.UserInfoForm;
 import nju.edu.cinema.vo.UserVO;
 
 @Service
@@ -30,7 +29,11 @@ public class PeopleServiceImpl implements PeopleService{
 	@Override
 	public ResponseVO addPeople(UserForm userInfo) {
 		try {
-            peopleMapper.insertOneUser(userInfo);
+			User user=new User();
+			user.setIdentity(userInfo.getIdentity());
+			user.setUsername(userInfo.getUsername());
+			user.setPassword(userInfo.getPassword());
+            peopleMapper.insertOneUser(user);
             return ResponseVO.buildSuccess();
         } catch (Exception e) {
             e.printStackTrace();
@@ -39,9 +42,14 @@ public class PeopleServiceImpl implements PeopleService{
 	}
 
 	@Override
-	public ResponseVO updatePeople(UserInfoForm userInfoForm) {
+	public ResponseVO updatePeople(UserForm userForm) {
 		try {
-            peopleMapper.updatePeople(userInfoForm);
+			User user=new User();
+			user.setId(userForm.getId());
+			user.setIdentity(userForm.getIdentity());
+			user.setUsername(userForm.getUsername());
+			user.setPassword(userForm.getPassword());
+            peopleMapper.updatePeople(user);
             return ResponseVO.buildSuccess();
         }catch (Exception e) {
             e.printStackTrace();
