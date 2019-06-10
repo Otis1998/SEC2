@@ -1,6 +1,5 @@
 package nju.edu.cinema.bl.promotion;
 
-import java.util.List;
 
 import nju.edu.cinema.vo.CouponForm;
 import nju.edu.cinema.vo.ResponseVO;
@@ -14,7 +13,7 @@ public interface CouponService {
 
     ResponseVO addCoupon(CouponForm couponForm);
 
-    ResponseVO issueCoupon(int couponId,List<Integer> userIdList);
+    ResponseVO issueCoupon(int couponId,int userId);
 
 	ResponseVO getAllCoupons();
 

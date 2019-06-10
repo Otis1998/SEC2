@@ -29,9 +29,25 @@
         </ul>
     </div>
 <div class="content-container">
+    <div>
+    <input type="text" class="form-control" id="user-targetAmount" placeholder="请输入用户最低消费总额">
+    <button type="button" class="btn btn-primary" id="user-targetAmount-btn">查询</button>
+    </div>
     <select id="select-coupon">
 
     </select>
+    <table border="1" rules="all" id="user-cumulative-table">
+        <thead>
+            <tr>
+                <th>用户ID</th>
+                <th>消费总额</th>
+                <th>操 作</th>
+            </tr>
+        </thead>
+        <tbody id="user-cumulative-list">
+            
+        </tbody>
+    </table>
 </div>
 </div>
 </body>

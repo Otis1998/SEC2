@@ -11,7 +11,7 @@
     <script src="/js/jquery.js"></script>
     <script src="/js/bootstrap.js"></script>
     <script src="/js/request.js"></script>
-    <script src=""></script>
+    <script src="/js/superAdminVIPCardManage.js"></script>
 
 </head>
 <body>
@@ -29,7 +29,19 @@
         </ul>
     </div>
 <div class="content-container">
-
+    <table border="1" rules="all" id="present-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>优惠策略</th>
+                <th colspan="2">操作</th>
+            </tr>
+        </thead>
+        <tbody id="present-list">
+            
+        </tbody>
+    </table>
+    <button type="button" class="btn btn-primary" id="add-btn" data-backdrop="static" data-toggle="modal" data-target="#presentAddModal"><span>发布新优惠</span></button>
 </div>
 </div>
 </body>
