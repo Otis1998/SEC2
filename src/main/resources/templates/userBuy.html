@@ -46,11 +46,14 @@
         <div class="filler-container card">
             <div class="input-group" style="width: 100%">
                 <h4>我的电影票</h4>
+                <button class="btn btn-default" id="all" type="button" onclick="renderAllTicket()">所有订单</button>
+                <button class="btn btn-default" id="finished" type="button" onclick="renderTicket(1)">已完成</button>
+                <button class="btn btn-default" id="failed" type="button" onclick="renderTicket(0)">即将开始</button>
             </div>
         </div>
         <ul class="movie-on-list" id="order-list">
         </ul>
-        <div class="filler-container card">
+        <div class="filler-container card" id="page-bar" style="display: none">
             <div class="input-group" style="width: 100%">
                 <button class="btn btn-default" id="last" type="button" onclick="lastClick()">上一页</button>
                 <p id="page"></p>

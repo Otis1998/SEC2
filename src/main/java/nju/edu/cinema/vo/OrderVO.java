@@ -4,6 +4,10 @@ import java.util.Date;
 import java.util.List;
 
 public class OrderVO {
+    /*
+    * 订单id
+     */
+    private int orderId;
     /**
      * 电影名
      */
@@ -112,5 +116,13 @@ public class OrderVO {
 
     public void setState(int state) {
         this.state = state;
+    }
+
+    public int getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
     }
 }

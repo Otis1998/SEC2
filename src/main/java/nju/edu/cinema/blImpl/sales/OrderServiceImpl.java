@@ -86,6 +86,7 @@ public class OrderServiceImpl implements OrderService {
             orderVO.setEndTime(scheduleItem.getEndTime());
             int numOfTicket = ticketsId.length;
             orderVO.setNumOfTicket(numOfTicket);
+            orderVO.setOrderId(it.next().getOrderId());
             orderVO.setCost(it.next().getCost());
             List<SeatForm> seatForms = new ArrayList<>();
             for(int i = 0;i<ticketsId.length;i++){
