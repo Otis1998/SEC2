@@ -1,5 +1,6 @@
 package nju.edu.cinema.data.sales;
 
+import nju.edu.cinema.po.Cumulative;
 import nju.edu.cinema.po.Order;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -17,4 +18,6 @@ public interface OrderMapper {
     List<Order> selectByUserId(int UserId);
 
     int selectMaxId();
+
+	List<Cumulative> selectTargetUserByCumulative(double cumulative);
 }

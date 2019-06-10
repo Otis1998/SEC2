@@ -4,10 +4,12 @@ import nju.edu.cinema.bl.sales.OrderService;
 import nju.edu.cinema.blImpl.management.schedule.MovieServiceForBl;
 import nju.edu.cinema.blImpl.management.schedule.ScheduleServiceForBl;
 import nju.edu.cinema.data.sales.OrderMapper;
+import nju.edu.cinema.po.Cumulative;
 import nju.edu.cinema.po.Movie;
 import nju.edu.cinema.po.Order;
 import nju.edu.cinema.po.ScheduleItem;
 import nju.edu.cinema.po.Ticket;
+import nju.edu.cinema.vo.CumulativeVO;
 import nju.edu.cinema.vo.OrderVO;
 import nju.edu.cinema.vo.ResponseVO;
 import nju.edu.cinema.vo.SeatForm;
@@ -133,4 +135,19 @@ public class OrderServiceImpl implements OrderService {
     public void addOrder(Order order) {
         orderMapper.insertOrder(order);
     }
+
+	@Override
+	public ResponseVO getTargetUserByCumulative(double cumulative) {
+		try{
+            List<Cumulative> cumulatives = orderMapper.selectTargetUserByCumulative(cumulative);
+            List<CumulativeVO> cumulativeVOs=new ArrayList<>();
+            for(Cumulative cum:cumulatives) {
+            	cumulativeVOs.add(new CumulativeVO(cum));
+            }
+            return ResponseVO.buildSuccess(cumulativeVOs);
+        }catch(Exception e){
+            e.printStackTrace();
+            return ResponseVO.buildFailure("失败");
+        }
+	}
 }

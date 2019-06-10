@@ -22,4 +22,6 @@ public interface OrderService {
 
     void addOrder(Order order);
 
+	ResponseVO getTargetUserByCumulative(double cumulative);
+
 }

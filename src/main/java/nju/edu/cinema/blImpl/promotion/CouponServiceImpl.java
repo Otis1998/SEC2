@@ -50,11 +50,9 @@ public class CouponServiceImpl implements CouponService {
     }
 
     @Override
-    public ResponseVO issueCoupon(int couponId, List<Integer> userIdList) {
+    public ResponseVO issueCoupon(int couponId, int userId) {
         try {
-        	for (int userId : userIdList) {
-        		couponMapper.insertCouponUser(couponId,userId);
-			}
+        	couponMapper.insertCouponUser(couponId,userId);
             return ResponseVO.buildSuccess();
         } catch (Exception e) {
             e.printStackTrace();
