@@ -142,8 +142,7 @@ function addInTbody(id,identity,username,password){
         '<td>'+identity+'</td>' +
         '<td>'+username+'</td>' +
         '<td>'+password+'</td>' +
-        '<td>'+'<button type="button" class="btn btn-primary" id="modify-btn" onclick="updateUser('+id+')" data-backdrop="static" data-toggle="modal" data-target="#userEditModal"><span>修 改</span></button>'+'</td>'+
-        '<td>'+'<button type="button" class="btn btn-danger" onclick="deleteUser('+id+')">删 除</button>'+'</td>'
+        '<td>'+'<button type="button" class="btn btn-primary" id="modify-btn" onclick="updateUser('+id+')" data-backdrop="static" data-toggle="modal" data-target="#userEditModal"><span>修 改</span></button>'+'<button type="button" class="btn btn-danger" onclick="deleteUser('+id+')">删 除</button>'+'</td>'
         '</tr>';
     UserTableBody.append(UserDomStr);
     return;

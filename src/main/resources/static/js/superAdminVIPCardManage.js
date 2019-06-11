@@ -92,8 +92,8 @@ function renderUserList(list){
         var presentTBody=$('#present-list');
         var presentDomStr='<tr>'+'<td>'+id+'</td>'+
                             '<td>'+present+'</td>'+
-                            '<td>'+'<button type="button" class="btn btn-primary" id="modify-btn" onclick="updatePresent('+id+')" data-backdrop="static" data-toggle="modal" data-target="#presentEditModal"><span>修 改</span></button>'+'</td>'+
-        '<td>'+'<button type="button" class="btn btn-danger" onclick="deletePresent('+id+')">删 除</button>'+'</td>'+
+                            '<td>'+'<button type="button" class="btn btn-primary" id="modify-btn" onclick="updatePresent('+id+')" data-backdrop="static" data-toggle="modal" data-target="#presentEditModal"><span>修 改</span></button>'+
+                            '<button type="button" class="btn btn-danger" onclick="deletePresent('+id+')">删 除</button>'+'</td>'+
                             '</tr>';
         presentTBody.append(presentDomStr);
     }

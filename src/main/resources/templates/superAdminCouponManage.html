@@ -29,14 +29,18 @@
         </ul>
     </div>
 <div class="content-container">
-    <div>
+    <div class="input-group col-lg-3" style="float:right;">
+					<span class="input-group-btn">
+						<label>选择优惠券：</label>
+					</span>
+					<select class="form-control" id="select-coupon">
+                    </select>
+				</div>
+    <div class="col-lg-2">
     <input type="text" class="form-control" id="user-targetAmount" placeholder="请输入用户最低消费总额">
-    <button type="button" class="btn btn-primary" id="user-targetAmount-btn">查询</button>
     </div>
-    <select id="select-coupon">
-
-    </select>
-    <table border="1" rules="all" id="user-cumulative-table">
+    <button type="button" class="btn btn-primary" id="user-targetAmount-btn">查询</button>
+    <table class="table table-hover" id="user-cumulative-table">
         <thead>
             <tr>
                 <th>用户ID</th>
