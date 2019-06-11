@@ -7,14 +7,16 @@ public class RefundStrategyForm {
     private String name;
     private int refundable;
     private Time availableTime;
-    private double charge;
+    private int charge;
+    private int state;
 
-    public RefundStrategyForm(int id, String name, int refundable, Time availableTime, double charge) {
+    public RefundStrategyForm(int id, String name, int refundable, Time availableTime, int charge, int state) {
         this.id = id;
         this.name = name;
         this.refundable = refundable;
         this.availableTime = availableTime;
         this.charge = charge;
+        this.state = state;
     }
 
     public int getId() {
@@ -49,11 +51,19 @@ public class RefundStrategyForm {
         this.availableTime = availableTime;
     }
 
-    public double getCharge() {
+    public int getCharge() {
         return charge;
     }
 
-    public void setCharge(double charge) {
+    public void setCharge(int charge) {
         this.charge = charge;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
     }
 }

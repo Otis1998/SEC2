@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="nju.edu.cinema.data.management.ScheduleMapper">
+<mapper namespace="nju.edu.cinema.data.management.RefundMapper">
     <insert id="insertRefundStrategy" parameterType="nju.edu.cinema.po.RefundStrategy"
             useGeneratedKeys="true" keyProperty="id">
-        insert into refund_strategy(refundable, name, available_time, charge)
-        values(#{refundable}, #{name}, #{availableTime}, #{charge})
+        insert into refund_strategy(refundable, name, available_time, charge, state)
+        values(#{refundable}, #{name}, #{availableTime}, #{charge}, #{state})
     </insert>
 
     <select id="selectAllStrategies" resultMap="Strategy">
@@ -13,11 +13,17 @@
     <select id="selectStrategyById" resultMap="Strategy">
         select * from refund_strategy where id = #{hallId}
     </select>
+    <select id="selectCurrentStrategy" resultMap="Strategy">
+        select * from refund_strategy where state = 1
+    </select>
 
-    <update id="updateRefundStrategy" parameterType="Strategy">
+    <update id="updateRefundStrategy" parameterType="nju.edu.cinema.po.RefundStrategy">
         update refund_strategy set `refundable` = #{refundable},
         `available_time` = #{availableTime}, `name` = #{name}, charge = #{charge}
         where id = #{id}
+    </update>
+    <update id="updateCurrentStrategy">
+        update refund_strategy set state = case id when #{id} then 1 else 0 end
     </update>
 
     <delete id="deleteStrategy">

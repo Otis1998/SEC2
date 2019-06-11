@@ -3,6 +3,9 @@ package nju.edu.cinema.bl.management;
 import nju.edu.cinema.vo.RefundStrategyForm;
 import nju.edu.cinema.vo.ResponseVO;
 
+/**
+ * @author wyx
+ */
 public interface RefundService {
 
     /**
@@ -26,6 +29,18 @@ public interface RefundService {
     ResponseVO searchStrategyById(Integer strategyId);
 
     /**
+     * 获取当前退票策略
+     * @return
+     */
+    ResponseVO getCurrentStrategy();
+
+    /**
+     * 设置当前退票策略
+     * @return
+     */
+    ResponseVO setCurrentStrategy(Integer strategyId);
+
+    /**
      * 更新退票策略
      * @param strategy
      * @return
@@ -37,5 +52,5 @@ public interface RefundService {
      * @param strategyId
      * @return
      */
-    ResponseVO deleteStrayegy(Integer strategyId);
+    ResponseVO deleteStrategy(Integer strategyId);
 }

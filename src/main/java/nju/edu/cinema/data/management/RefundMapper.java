@@ -1,8 +1,11 @@
 package nju.edu.cinema.data.management;
 
 import nju.edu.cinema.po.RefundStrategy;
+import org.apache.ibatis.annotations.Mapper;
+
 import java.util.List;
 
+@Mapper
 public interface RefundMapper {
 
     /**
@@ -24,6 +27,17 @@ public interface RefundMapper {
      * @return
      */
     RefundStrategy selectStrategyById(int id);
+
+    /**
+     * 查询当前的退票策略
+     * @return
+     */
+    RefundStrategy selectCurrentStrategy();
+
+    /**
+     * 设置当前退票策略
+     */
+    void updateCurrentStrategy(int id);
 
     /**
      * 更新退票策略
