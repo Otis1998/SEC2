@@ -36,31 +36,31 @@
             <span class="gray-text" style="vertical-align: middle" id="username">用户A&nbsp;<span class="caret"></span></span>
         </button>
         <ul class="dropdown-menu">
-            <li><a href="#">电影票</a></li>
+            <li><a href="/user/buy">电影票</a></li>
             <li><a href="/user/member">卡包</a></li>
             <li id="logout"><a href="#">登出</a></li>
         </ul>
     </div>
 </div>
 <div class="content-container content-container-padding-justify">
-    <div>
+    <div class="filler-container card col-md-10 col-md-offset-1">
         <div class="input-group" style="width: 100%">
             <h4>我的充值记录</h4>
         </div>
-        <div class="card col-md-8 col-md-offset-2">
-            <table border="0" rules="all" id="record-table">
-                <thead>
-                <tr>
-                    <th>充值时间</th>
-                    <th>充值金额</th>
-                    <th>赠送金额</th>
-                    <th>余额</th>
-                </tr>
-                </thead>
-                <tbody id="ticket-list">
-                </tbody>
-            </table>
-        </div>
+    </div>
+    <div class="card col-md-10 col-md-offset-1" style="margin-top: 20px">
+        <table border="0" rules="all" id="record-table">
+            <thead>
+            <tr>
+                <th>充值时间</th>
+                <th>充值金额</th>
+                <th>赠送金额</th>
+                <th>余额</th>
+            </tr>
+            </thead>
+            <tbody id="record-list">
+            </tbody>
+        </table>
     </div>
 </div>
 </body>

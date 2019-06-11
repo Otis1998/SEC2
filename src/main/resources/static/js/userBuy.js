@@ -30,7 +30,7 @@ function showAllOrder() {
 function showSomeOrder(state) {
     listToShow=[];
     orderList.forEach(function (order) {
-        if(order.state=state){
+        if(order.state==state){
             listToShow.push(order);
         }
     });
@@ -44,13 +44,14 @@ function renderOrderList() {
     page=0;
     pageBar.css("display","none");
     if(listToShow.length==0){//没有电影票：显示暂无电影票，不显示页码
-        var pageStr= "<li class='movie-item card'><h4>暂无电影票</h4></li>";
-        orderUl.append(pageStr);
-    }else{//超过五个订单：分页显示，显示页码
+        var noOrder= "<li class='movie-item card' style='padding: 20px'><h4>暂无电影票</h4></li>";
+        orderUl.append(noOrder);
+        return;
+    }else if(listToShow.length>5){//超过五个订单：分页显示，显示页码
         pageBar.css("display","");
-        numOfPage=listToShow.length/5;
-        showFiveOrder();
     }
+    numOfPage=(listToShow.length-listToShow.length%5)/5;
+    showFiveOrder();
 }
 
 //将传入的订单列表显示。需要显示：电影名称、电影海报、影厅名、座位、票的张数、放映时间、预计结束时间、票价、状态(分为可退和不可退)
@@ -59,29 +60,30 @@ function showFiveOrder() {
     var lastBtn=$('#last');
     var nextBtn=$('#next');
     var pagePara=$('#page');
-    var orderStr="";
+    orderUl.empty();
     for(var i=page*5;i<listToShow.length&&i<page*5+5;i++){
         var seatStr="";
-        for(var item in listToShow[i].seatFormList){
-            seatStr+=listToShow[i][item].rowIndex+"排"+listToShow[i][item].columnIndex+"座 ";
+        var seatFormList=listToShow[i].seatFormList;
+        for(var item in seatFormList){
+            seatStr+=seatFormList[item].rowIndex+"排"+seatFormList[item].columnIndex+"座 ";
         }
-        orderStr+="<li class='movie-item card'>" +
+        var display=listToShow[i].state?'':'none';
+        var orderDomStr="<li class='movie-item card'>" +
         "<img class='movie-img' src='" + (listToShow[i].posterUrl || "../images/defaultAvatar.jpg") + "'/>" +
         "<div class='movie-info'>" +
         "<div class='movie-title'>" +
-        "<span class='primary-text'>" + listToShow[i].name + "</span>" +
+        "<span class='primary-text'>" + listToShow[i].movieName + "</span>" +
         "<span class='label'></span>" +
         "<span class='movie-want'></span>" +
         "</div>" +
         "<div class='movie-description dark-text'><span>" + listToShow[i].hallId + "号厅 "+seatStr+"</span></div>" +
         "<div>票数：" + listToShow[i].numOfTicket + " 总价："+listToShow[i].cost+"</div>" +
         "<div style='display: flex'><span>开始时间：" + formatTime(listToShow[i].startTime) + "</span><span style='margin-left: 30px;'>结束时间：" + formatTime(listToShow[i].endTime) + "</span>" +
-        "<div class='movie-operation' style='display: "+listToShow[i].state?'':'none'+"'><a onclick='"+cancelOrder(listToShow[i].orderId)+"'>退票</a></div></div>" +
-        "</div>"+
-        "</li>";
+        "<div class='movie-operation' style='display: "+display+"'><a onclick='cancelOrder("+listToShow[i].orderId+")'>退票</a></div></div>" +
+            "</div>"+
+            "</li>";
+        orderUl.append(orderDomStr);
     }
-    orderUl.empty();
-    orderUl.append(orderStr);
     if(page==0){//第一页
         lastBtn.css("display","none");
     }
@@ -120,7 +122,7 @@ function formatTime(timeStr) {
 
 function cancelOrder(orderId) {
     getRequest(
-        '',//退票的url
+        '/order/cancel/'+orderId,//退票的url
         function (res) {
             alert("退票成功");
             location.reload();

@@ -17,20 +17,22 @@ $(document).ready(function () {
 
 //list中元素为ChargeRecordVO：chargeTime充值时间、chargeSum充值金额、bonusSum赠送金额、balance余额
 function renderChargeRecord(list) {
-    recordTable.empty();
     var recordTable=$("#record-table");
+    var recordList=$("#record-list");
+    recordList.empty();
     if(list.length==0){
+        recordTable.empty();
         recordTable.text("暂无充值记录");
     }else{
         for(var item in list){
             var recordDomStr=
             '<tr>' +
-            '<td>'+formatDate(list[item].chargeTime)+'</td>' +
-            '<td>'+list[item].chargeSum.slice(2)+'</td>' +
-            '<td>'+list[item].bonusSum.slice(2)+'</td>' +
-            '<td>'+list[item].balance.slice(2)+'</td>' +
+            '<td>'+formatTime(list[item].chargeTime)+'</td>' +
+            '<td>'+list[item].chargeSum+'</td>' +
+            '<td>'+list[item].bonusSum+'</td>' +
+            '<td>'+list[item].balance+'</td>' +
             '</tr>';
-            recordTable.append(recordDomStr)
+            recordList.append(recordDomStr)
         }
     }
 }

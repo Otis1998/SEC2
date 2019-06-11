@@ -4,6 +4,7 @@ import nju.edu.cinema.bl.promotion.VIPService;
 import nju.edu.cinema.blImpl.management.rechargePresent.RechargePresentServiceForBl;
 import nju.edu.cinema.data.promotion.VIPCardMapper;
 import nju.edu.cinema.data.promotion.VIPChargeMapper;
+import nju.edu.cinema.vo.ChargeRecordVO;
 import nju.edu.cinema.vo.VIPCardForm;
 import nju.edu.cinema.po.ChargeRecord;
 import nju.edu.cinema.po.VIPCard;
@@ -11,6 +12,10 @@ import nju.edu.cinema.vo.ResponseVO;
 import nju.edu.cinema.vo.VIPInfoVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 
 /**
@@ -68,10 +73,6 @@ public class VIPServiceImpl implements VIPService {
         double balance = rechargePresentServiceForBl.calculate(vipCardForm.getAmount());
         vipCard.setBalance(vipCard.getBalance() + balance);
         try {
-            //TODO
-            //获取当前优惠政策
-            //判断当前充值金额是否满足某一优惠政策
-            //根据优惠政策判断赠送金额
             //根据充值金额和赠送金额修改余额
             //插入一条新的充值记录
             vipCardMapper.updateCardBalance(vipCardForm.getVipId(), vipCard.getBalance());
@@ -110,7 +111,12 @@ public class VIPServiceImpl implements VIPService {
             if(vipCard==null){
                 return ResponseVO.buildFailure("用户卡不存在");
             }
-            return ResponseVO.buildSuccess(vipChargeMapper.selectChargeRecordByUser(userId));
+            List<ChargeRecord> chargeRecords=vipChargeMapper.selectChargeRecordByUser(userId);
+            ArrayList<ChargeRecordVO> chargeRecordVOS=new ArrayList<>();
+            for(Iterator<ChargeRecord> it=chargeRecords.iterator();it.hasNext();){
+                chargeRecordVOS.add(new ChargeRecordVO(it.next()));
+            }
+            return ResponseVO.buildSuccess(chargeRecordVOS);
         }catch (Exception e){
             e.printStackTrace();
             return ResponseVO.buildFailure("失败");

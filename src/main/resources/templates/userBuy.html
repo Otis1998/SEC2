@@ -42,18 +42,18 @@
             </ul>
         </div>
     </div>
-    <div class="content-container col-md-10 col-lg-offset-1 content-container-padding-justify">
-        <div class="filler-container card">
+    <div class="content-container content-container-padding-justify">
+        <div class="filler-container card col-md-10 col-lg-offset-1">
             <div class="input-group" style="width: 100%">
                 <h4>我的电影票</h4>
-                <button class="btn btn-default" id="all" type="button" onclick="renderAllTicket()">所有订单</button>
-                <button class="btn btn-default" id="finished" type="button" onclick="renderTicket(1)">已完成</button>
-                <button class="btn btn-default" id="failed" type="button" onclick="renderTicket(0)">即将开始</button>
+                <button class="btn btn-default" id="all" type="button" onclick="showAllOrder()">所有订单</button>
+                <button class="btn btn-default" id="finished" type="button" onclick="showSomeOrder(1)">已完成</button>
+                <button class="btn btn-default" id="failed" type="button" onclick="showSomeOrder(0)">即将开始</button>
             </div>
         </div>
-        <ul class="movie-on-list" id="order-list">
+        <ul class="movie-on-list col-md-10 col-lg-offset-1" id="order-list">
         </ul>
-        <div class="filler-container card" id="page-bar" style="display: none">
+        <div class="filler-container card col-md-10 col-lg-offset-1" id="page-bar" style="display: none">
             <div class="input-group" style="width: 100%">
                 <button class="btn btn-default" id="last" type="button" onclick="lastClick()">上一页</button>
                 <p id="page"></p>

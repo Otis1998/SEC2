@@ -10,5 +10,5 @@ import java.util.List;
 public interface VIPChargeMapper {
     int insertChargeRecord(ChargeRecord chargeRecord);
 
-    List<ChargeRecord> selectChargeRecordByUser(@Param("user_id")int userId);
+    List<ChargeRecord> selectChargeRecordByUser(@Param("userId")int userId);
 }

@@ -34,7 +34,7 @@ public class VIPCardController {
         return vipService.charge(vipCardForm);
     }
 
-    @PostMapping("/getChargeRecord/{userId}")
+    @RequestMapping("/getChargeRecord/{userId}")
     public ResponseVO getChargeRecord(@PathVariable int userId){
         return vipService.getChargeRecord(userId);
     }
