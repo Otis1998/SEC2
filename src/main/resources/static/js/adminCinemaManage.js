@@ -5,8 +5,26 @@ $(document).ready(function() {
 
     var canSeeDate = 0;
 
+    initUser();
     getCanSeeDayNum();
     getCinemaHalls();
+
+    function initUser() {
+        if (sessionStorage.getItem("role") === "admin") {
+            $("#left-container-bar").html(
+                "<div class=\"nav-user-container\" style=\"margin-bottom: 50px;\">\n" +
+                "    <img class=\"avatar-lg\" src=\"/images/defaultAvatar.jpg\" />\n" +
+                "    <p class=\"title\">SuperAdmin</p>\n" +
+                "</div>\n" +
+                "<ul class=\"nav nav-pills nav-stacked\">\n" +
+                "    <li role=\"presentation\"><a href=\"/superAdmin/people/manage\"><i class=\"icon-user\"></i> 人员管理</a></li>\n" +
+                "    <li role=\"presentation\"><a href=\"/superAdmin/VIPCard/manage\"><i class=\"icon-credit-card\"></i> 会员卡优惠管理</a></li>\n" +
+                "    <li role=\"presentation\"><a href=\"/superAdmin/coupon/manage\"><i class=\"icon-tag\"></i> 优惠券管理</a></li>\n" +
+                "    <li role=\"presentation\"  class=\"active\"><a href=\"#\"><i class=\"icon-cogs\"></i> 影院管理</a></li>" +
+                "    <li role=\"presentation\"><a href=\"/superAdmin/cinema/statistic\"><i class=\"icon-bar-chart\"></i> 影院统计</a></li>\n" +
+                "</ul>")
+        }
+    }
 
     function getCinemaHalls() {
         var halls = [];
@@ -25,33 +43,47 @@ $(document).ready(function() {
     function renderHall(halls){
         $('#hall-card').empty();
 
-        //TODO：角色待修改
-        if (sessionStorage.getItem("role") === "manager" && $("#add-hall-button".length === 0)) {
+        var hallDomStr = "";
+        if (sessionStorage.getItem("role") === "admin" ) {
+            $("#add-hall-button").remove();
             $("#hall-card-title").after(
                 "<button type=\"button\" class=\"btn btn-primary hall-item\" id=\"add-hall-button\" " +
                 "style=\"float: right\" data-backdrop=\"static\" data-toggle=\"modal\" " +
                 "data-target=\"#hallModal\" >" +
                 "<i class=\"icon-plus-sign\"></i> 添加影厅</button>")
 
+            halls.forEach(function (hall) {
+                var seat = renderSeatFromHall(hall);
+                var hallDom =
+                    "<div class='cinema-hall'>" +
+                    "<div>" +
+                    "<span class='cinema-hall-name'>"+ hall.name +"</span>" +
+                    "<span class='cinema-hall-size' id='cinema-hall-size-text'>"+ hall.seats[0].length +'*'+ hall.seats.length +"</span>" +
+                    "<button type=\"button\" class=\"btn btn-primary hall-edit-item\" data-hall='"+JSON.stringify(hall)+"' " +
+                    "id='hall-"+ hall.id +"' style=\"float: right\" data-backdrop=\"static\" data-toggle=\"modal\"> " +
+                    "<i class=\"icon-plus-sign\"></i> 修改影厅</button>" +
+                    "</div>" +
+                    "<div class='cinema-seat'>" + seat +
+                    "</div>" +
+                    "</div>";
+                hallDomStr+=hallDom;
+            });
+        } else {
+            halls.forEach(function (hall) {
+                var seat = renderSeatFromHall(hall);
+                var hallDom =
+                    "<div class='cinema-hall'>" +
+                    "<div>" +
+                    "<span class='cinema-hall-name'>"+ hall.name +"</span>" +
+                    "<span class='cinema-hall-size' id='cinema-hall-size-text'>"+ hall.seats[0].length +'*'+ hall.seats.length +"</span>" +
+                    "</div>" +
+                    "<div class='cinema-seat'>" + seat +
+                    "</div>" +
+                    "</div>";
+                hallDomStr+=hallDom;
+            });
         }
 
-        var hallDomStr = "";
-        halls.forEach(function (hall) {
-            var seat = renderSeatFromHall(hall);
-            var hallDom =
-                "<div class='cinema-hall'>" +
-                "<div>" +
-                "<span class='cinema-hall-name'>"+ hall.name +"</span>" +
-                "<span class='cinema-hall-size' id='cinema-hall-size-text'>"+ hall.seats[0].length +'*'+ hall.seats.length +"</span>" +
-                "<button type=\"button\" class=\"btn btn-primary hall-edit-item\" data-hall='"+JSON.stringify(hall)+"' " +
-                "id='hall-"+ hall.id +"' style=\"float: right\" data-backdrop=\"static\" data-toggle=\"modal\"> " +
-                "<i class=\"icon-plus-sign\"></i> 修改影厅</button>" +
-                "</div>" +
-                "<div class='cinema-seat'>" + seat +
-                "</div>" +
-                "</div>";
-            hallDomStr+=hallDom;
-        });
         $('#hall-card').append(hallDomStr);
     }
 

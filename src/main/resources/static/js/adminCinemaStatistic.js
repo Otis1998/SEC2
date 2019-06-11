@@ -18,7 +18,7 @@ $(document).ready(function () {
 
     function initUser() {
         if (sessionStorage.getItem("role") === "manager") {
-            $("#left-container-text").html("<div class=\"nav-user-container\" style=\"margin-bottom: 50px;\">\n" +
+            $("#left-container-bar").html("<div class=\"nav-user-container\" style=\"margin-bottom: 50px;\">\n" +
                 "            <img class=\"avatar-lg\" src=\"/images/defaultAvatar.jpg\" />\n" +
                 "            <p class=\"title\">Admin</p>\n" +
                 "        </div>\n" +
