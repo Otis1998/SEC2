@@ -71,38 +71,40 @@ public class OrderServiceImpl implements OrderService {
     List<OrderVO> getOrderVOList(int userId){
         List<OrderVO> orderVOList = new ArrayList<OrderVO>();
         List<Order> orders = orderMapper.selectByUserId(userId);
-        int movieId = orders.get(0).getMovieId();
-        for(Iterator<Order> it=orders.iterator();it.hasNext();){
-            OrderVO orderVO = new OrderVO();
-            Movie movie = movieServiceForBl.getMovieById(movieId);
-            orderVO.setMovieName(movie.getName());
-            orderVO.setPosterURL(movie.getPosterUrl());
-            String[] ticketsId = it.next().getTicketsId().split("&");
-            TicketServiceImpl ticketService = new TicketServiceImpl();
-            int scheduleId = ticketService.getTicketById(Integer.parseInt(ticketsId[0])).getScheduleId();
-            ScheduleItem scheduleItem = scheduleServiceForBl.getScheduleItemById(scheduleId);
-            orderVO.setHallId(scheduleItem.getHallId());
-            orderVO.setStartTime(scheduleItem.getStartTime());
-            orderVO.setEndTime(scheduleItem.getEndTime());
-            int numOfTicket = ticketsId.length;
-            orderVO.setNumOfTicket(numOfTicket);
-            orderVO.setOrderId(it.next().getOrderId());
-            orderVO.setCost(it.next().getCost());
-            List<SeatForm> seatForms = new ArrayList<>();
-            for(int i = 0;i<ticketsId.length;i++){
-                SeatForm seatForm = new SeatForm();
-                Ticket ticket = ticketService.getTicketById(Integer.parseInt(ticketsId[i]));
-                seatForm.setColumnIndex(ticket.getColumnIndex());
-                seatForm.setRowIndex(ticket.getRowIndex());
-                int state = ticket.getState();
-                if(state > 0 && state < 3){
-                    orderVO.setState(0);
-                }else{
-                    orderVO.setState(1);
+        if(orders.size() > 0) {
+            int movieId = orders.get(0).getMovieId();
+            for (Iterator<Order> it = orders.iterator(); it.hasNext(); ) {
+                OrderVO orderVO = new OrderVO();
+                Movie movie = movieServiceForBl.getMovieById(movieId);
+                orderVO.setMovieName(movie.getName());
+                orderVO.setPosterURL(movie.getPosterUrl());
+                String[] ticketsId = it.next().getTicketsId().split("&");
+                TicketServiceImpl ticketService = new TicketServiceImpl();
+                int scheduleId = ticketService.getTicketById(Integer.parseInt(ticketsId[0])).getScheduleId();
+                ScheduleItem scheduleItem = scheduleServiceForBl.getScheduleItemById(scheduleId);
+                orderVO.setHallId(scheduleItem.getHallId());
+                orderVO.setStartTime(scheduleItem.getStartTime());
+                orderVO.setEndTime(scheduleItem.getEndTime());
+                int numOfTicket = ticketsId.length;
+                orderVO.setNumOfTicket(numOfTicket);
+                orderVO.setOrderId(it.next().getOrderId());
+                orderVO.setCost(it.next().getCost());
+                List<SeatForm> seatForms = new ArrayList<>();
+                for (int i = 0; i < ticketsId.length; i++) {
+                    SeatForm seatForm = new SeatForm();
+                    Ticket ticket = ticketService.getTicketById(Integer.parseInt(ticketsId[i]));
+                    seatForm.setColumnIndex(ticket.getColumnIndex());
+                    seatForm.setRowIndex(ticket.getRowIndex());
+                    int state = ticket.getState();
+                    if (state > 0 && state < 3) {
+                        orderVO.setState(0);
+                    } else {
+                        orderVO.setState(1);
+                    }
+                    seatForms.add(seatForm);
                 }
-                seatForms.add(seatForm);
+                orderVO.setSeatFormList(seatForms);
             }
-            orderVO.setSeatFormList(seatForms);
         }
         return orderVOList;
     }
