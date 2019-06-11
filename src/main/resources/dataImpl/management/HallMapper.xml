@@ -5,9 +5,6 @@
             useGeneratedKeys="true" keyProperty="id">
         insert into hall(name, row, `column`)
         values(#{name}, #{row}, #{column})
-        <selectKey keyProperty="id" resultType="java.lang.Integer">
-            select LAST_INSERT_ID() as id from hall
-        </selectKey>
     </insert>
     <insert id="insertSeat" parameterType="nju.edu.cinema.po.Seat">
         insert into seats(hall_id, `column`, row)
@@ -24,6 +21,17 @@
         select hall_id as hallId, row, `column` from seats where seats.hall_id = #{hallId}
     </select>
 
+    <update id="updateOneHall" parameterType="nju.edu.cinema.vo.HallForm">
+        update hall set `column` = #{column}, row = #{row}, name = #{name}
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHall">
+        delete from hall where #{hallId} = id
+    </delete>
+    <delete id="deleteSeatByHallId">
+        delete from seats where #{hallId} = hall_id
+    </delete>
     <resultMap id="Hall" type="nju.edu.cinema.po.Hall">
     </resultMap>
     <resultMap id="Seat" type="nju.edu.cinema.po.Seat">

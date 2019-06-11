@@ -20,4 +20,18 @@ public interface HallService {
      * @return
      */
     ResponseVO addHall(HallForm hallForm);
+
+    /**
+     * 更新影厅信息
+     * @param hallForm
+     * @return
+     */
+    ResponseVO modifyHall(HallForm hallForm);
+
+    /**
+     * 删除影厅
+     * @param hallId
+     * @return
+     */
+    ResponseVO deleteHall(Integer hallId);
 }
