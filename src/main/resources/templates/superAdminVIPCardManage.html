@@ -29,19 +29,22 @@
         </ul>
     </div>
 <div class="content-container">
-    <table border="1" rules="all" id="present-table">
+    <div class="content-header">
+        <span class="title gray-text">会员优惠策略管理</span>
+        <button type="button" class="btn btn-primary" id="add-btn" data-backdrop="static" data-toggle="modal" data-target="#presentAddModal" style="float:right;"><i class="icon-plus-sign"></i><span> 发布新优惠策略</span></button>
+    </div>
+    <table class="table table-hover" id="present-table">
         <thead>
             <tr>
                 <th>ID</th>
                 <th>优惠策略</th>
-                <th colspan="2">操作</th>
+                <th>操作</th>
             </tr>
         </thead>
         <tbody id="present-list">
             
         </tbody>
     </table>
-    <button type="button" class="btn btn-primary" id="add-btn" data-backdrop="static" data-toggle="modal" data-target="#presentAddModal"><span>发布新优惠策略</span></button>
 </div>
 </div>
 <div class="modal fade" id="presentAddModal" tabindex="-1" role="dialog" aria-labelledby="presentAddMoalLabel">
