@@ -21,6 +21,9 @@ import java.util.List;
  */
 @Service
 public class HallServiceImpl implements HallService, HallServiceForBl {
+    private static final String WRONG_COLUMN_NUMBER_ERROR_MESSAGE = "列数必须为正数";
+    private static final String WRONG_ROW_NUMBER_ERROR_MESSAGE = "行数必须为正数";
+
     @Autowired
     private HallMapper hallMapper;
 
@@ -50,19 +53,64 @@ public class HallServiceImpl implements HallService, HallServiceForBl {
     @Override
     public ResponseVO addHall(HallForm hallForm) {
         try {
-            int hallId = hallMapper.insertOneHall(hallForm);
-            List<SeatForm> seatForms = hallForm.getSeats();
-            for (SeatForm seatForm : seatForms) {
-                Seat seat = new Seat();
-                seat.setColumn(seatForm.getColumnIndex());
-                seat.setRow(seatForm.getRowIndex());
-                seat.setHallId(hallId);
-                hallMapper.insertSeat(seat);
+            ResponseVO responseVO = preCheck(hallForm);
+            if(!responseVO.getSuccess()){
+                return responseVO;
             }
+            hallMapper.insertOneHall(hallForm);
+            addSeats(hallForm.getSeats(), hallForm.getId());
             return ResponseVO.buildSuccess();
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseVO.buildFailure("失败");
+        }
+    }
+
+    @Override
+    public ResponseVO modifyHall(HallForm hallForm) {
+        try {
+            ResponseVO responseVO = preCheck(hallForm);
+            if(!responseVO.getSuccess()){
+                return responseVO;
+            }
+            hallMapper.updateOneHall(hallForm);
+            hallMapper.deleteSeatByHallId(hallForm.getId());
+            addSeats(hallForm.getSeats(), hallForm.getId());
+            return ResponseVO.buildSuccess();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseVO.buildFailure("失败");
+        }
+    }
+
+    @Override
+    public ResponseVO deleteHall(Integer hallId) {
+        try {
+            hallMapper.deleteHall(hallId);
+            hallMapper.deleteSeatByHallId(hallId);
+            return ResponseVO.buildSuccess();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseVO.buildFailure("失败");
+        }
+    }
+
+    /**
+     * 前置检查，行数和列数必须为正数
+     * @param hallForm
+     * @return
+     */
+    ResponseVO preCheck(HallForm hallForm){
+        if (hallForm.getColumn() <= 0) {
+            return ResponseVO.buildFailure(WRONG_COLUMN_NUMBER_ERROR_MESSAGE);
+        }
+
+        else if (hallForm.getRow() <= 0) {
+            return ResponseVO.buildFailure(WRONG_ROW_NUMBER_ERROR_MESSAGE);
+        }
+
+        else {
+            return ResponseVO.buildSuccess();
         }
     }
 
@@ -85,5 +133,15 @@ public class HallServiceImpl implements HallService, HallServiceForBl {
         List<Seat> availableSeats = hallMapper.selectSeatsByHallId(hall.getId());
         availableSeats.forEach(seat -> seats[seat.getRow()-1][seat.getColumn()-1] = 0);
         return seats;
+    }
+
+    private void addSeats(List<SeatForm> seatForms, int hallId){
+        for (SeatForm seatForm : seatForms) {
+            Seat seat = new Seat();
+            seat.setColumn(seatForm.getColumnIndex());
+            seat.setRow(seatForm.getRowIndex());
+            seat.setHallId(hallId);
+            hallMapper.insertSeat(seat);
+        }
     }
 }

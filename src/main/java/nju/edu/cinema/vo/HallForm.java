@@ -4,10 +4,19 @@ import java.util.List;
 
 public class HallForm {
 
+    private Integer id;
     private String name;
     private List<SeatForm> seats;
     private Integer column;
     private Integer row;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

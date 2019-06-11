@@ -46,4 +46,23 @@ public interface HallMapper {
      * @return
      */
     int insertSeat(Seat seat);
+
+    /**
+     * 更新影厅信息
+     * @param updateHall
+     * @return
+     */
+    void updateOneHall(HallForm updateHall);
+
+    /**
+     * 删除影厅
+     * @param hallId
+     */
+    void deleteHall(Integer hallId);
+
+    /**
+     * 根据影厅id删除座位
+     * @param hallId
+     */
+    void deleteSeatByHallId(Integer hallId);
 }

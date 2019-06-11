@@ -51,7 +51,7 @@ public class ViewController {
         return "adminPromotionManage";
     }
 
-    @RequestMapping(value = "/superAdmin/cinema/statistic")
+    @RequestMapping(value = {"/superAdmin/cinema/statistic", "/admin/cinema/statistic"})
     public String getAdminCinemaStatistic() {
         return "adminCinemaStatistic";
     }

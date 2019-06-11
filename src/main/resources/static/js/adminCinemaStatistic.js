@@ -2,6 +2,8 @@ $(document).ready(function () {
 
     var placingRateDate = formatDate(new Date());
 
+    initUser();
+
     getScheduleRate();
 
     getBoxOffice();
@@ -13,6 +15,22 @@ $(document).ready(function () {
     getPlacingRate();
 
     getPopularMovie();
+
+    function initUser() {
+        if (sessionStorage.getItem("role") === "manager") {
+            $("#left-container-text").html("<div class=\"nav-user-container\" style=\"margin-bottom: 50px;\">\n" +
+                "            <img class=\"avatar-lg\" src=\"/images/defaultAvatar.jpg\" />\n" +
+                "            <p class=\"title\">Admin</p>\n" +
+                "        </div>\n" +
+                "        <ul class=\"nav nav-pills nav-stacked\">\n" +
+                "            <li role=\"presentation\"><a href=\"/admin/movie/manage\"><i class=\"icon-film\"></i> 电影管理</a></li>\n" +
+                "            <li role=\"presentation\"><a href=\"/admin/session/manage\"><i class=\"icon-calendar\"></i> 排片管理</a></li>\n" +
+                "            <li role=\"presentation\"><a href=\"/admin/promotion/manage\"><i class=\"icon-gift\"></i> 活动管理</a></li>\n" +
+                "            <li role=\"presentation\"><a href=\"/admin/cinema/manage\"><i class=\"icon-cogs\"></i> 影院管理</a></li>\n" +
+                "            <li role=\"presentation\"  class=\"active\"><a href=\"#\"><i class=\"icon-bar-chart\"></i> 影院统计</a></li>\n" +
+                "        </ul>")
+        }
+    }
 
     function initDate() {
         $('#place-rate-date-input').val(placingRateDate);
