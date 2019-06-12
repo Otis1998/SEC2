@@ -8,13 +8,15 @@
     </insert>
 
     <select id="selectAllStrategies" resultMap="Strategy">
-        select * from refund_strategy
+        select id, refundable, available_hour as availableHour, charge, name, state from refund_strategy
     </select>
     <select id="selectStrategyById" resultMap="Strategy">
-        select * from refund_strategy where id = #{hallId}
+        select id, refundable, available_hour as availableHour, charge, name, state from refund_strategy
+        where id = #{hallId}
     </select>
     <select id="selectCurrentStrategy" resultMap="Strategy">
-        select * from refund_strategy where state = 1
+        select id, refundable, available_hour as availableHour, charge, name, state from refund_strategy
+        where state = 1
     </select>
 
     <update id="updateRefundStrategy" parameterType="nju.edu.cinema.po.RefundStrategy">

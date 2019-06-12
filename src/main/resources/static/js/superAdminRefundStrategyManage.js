@@ -35,7 +35,8 @@ $(document).ready(function () {
                 "           <span class='title'>"+strategy.name+"</span>" +  refundable+ " | " + state +
                 "       </div>" +
                 "       <div class='strategy-line'>" +
-                "           <span>手续费：" +strategy.charge+ " 元</span>" +
+                "           <span>手续费：" +strategy.charge+ " 元&#160;&#160;|&#160;&#160;</span>" +
+                "           <span>可退票时间：电影开始前" + strategy.availableHour + " 小时</span>" +
                 "           <button type=\"button\" class=\"btn btn-danger strategy-enable-btn\" style='margin-left: auto' data-strategy-id='"+strategy.id+"'>" +
                 "           <i class='icon-ok'></i> 生效</button>" +
                 "           <button type=\"button\" class=\"btn btn-primary strategy-edit-btn\" data-strategy='"+JSON.stringify(strategy)+"' " +
@@ -53,7 +54,7 @@ $(document).ready(function () {
         if ($("#refundable-edit-select").find("option:selected").text() === "是") {
             refundable = 1;
         }
-        let strategyForm = {"id": Number($('#refundEditModal')[0].dataset.id), "name": $("#refund-name-edit-input").val(), "refundable": refundable, "availableHour":0, "charge": $("#refund-charge-edit-input").val(), "state":0};
+        let strategyForm = {"id": Number($('#refundEditModal')[0].dataset.id), "name": $("#refund-name-edit-input").val(), "refundable": refundable, "availableHour":$("#refund-hour-edit-input").val(), "charge": $("#refund-charge-edit-input").val(), "state":0};
 
         postRequest(
             '/refund-strategy/update',
@@ -77,7 +78,7 @@ $(document).ready(function () {
         if ($("#refundable-select").find("option:selected").text() === "是") {
             refundable = 1;
         }
-        let strategyForm = {"name": $("#refund-name-input").val(), "refundable": refundable, "availableHour":0, "charge": $("#refund-charge-input").val(), "state":0};
+        let strategyForm = {"name": $("#refund-name-input").val(), "refundable": refundable, "availableHour":$("#refund-hour-input").val(), "charge": $("#refund-charge-input").val(), "state":0};
 
         postRequest(
             '/refund-strategy/add',
@@ -105,6 +106,7 @@ $(document).ready(function () {
             $("#refundable-edit-select").get(0).selectedIndex = 1;
         }
 
+        $("#refund-hour-edit-input").val(strategy.availableHour);
         $("#refund-name-edit-input").val(strategy.name);
         $("#refund-charge-edit-input").val(strategy.charge);
         $('#refundEditModal').modal('show');
