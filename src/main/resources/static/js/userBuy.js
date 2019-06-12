@@ -90,7 +90,7 @@ function showFiveOrder() {
         "<div class='movie-description dark-text'><span>" + listToShow[i].hallId + "号厅 "+seatStr+"</span></div>" +
         "<div>票数：" + listToShow[i].numOfTicket + " 总价："+listToShow[i].cost+"</div>" +
         "<div style='display: flex'><span>开始时间：" + formatTime(listToShow[i].startTime) + "</span><span style='margin-left: 30px;'>结束时间：" + formatTime(listToShow[i].endTime) + "</span>" +
-        "<div class='movie-operation' style='display: "+display+"'><a onclick='cancelOrder("+listToShow[i].orderId+")'>退票</a></div></div>" +
+        "<div class='movie-operation' style='display: "+display+"'><a onclick='cancelOrder("+listToShow[i].orderId+")'>退票</a><a onclick='printOrder("+listToShow[i].orderId+")'>出票</a></div></div>" +
             "</div>"+
             "</li>";
         orderUl.append(orderDomStr);
@@ -136,6 +136,18 @@ function cancelOrder(orderId) {
         '/order/cancel/'+orderId,//退票的url
         function (res) {
             alert("退票成功");
+            location.reload();
+        },
+        function (error) {
+            alert(error);
+        });
+}
+
+function printOrder(orderId) {
+    getRequest(
+        '/order/print/'+orderId,
+        function (res) {
+            alert("出票成功");
             location.reload();
         },
         function (error) {
