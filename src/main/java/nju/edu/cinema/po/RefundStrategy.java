@@ -38,11 +38,11 @@ public class RefundStrategy {
         this.charge = charge;
     }
 
-    public int getavailableHour() {
+    public int getAvailableHour() {
         return availableHour;
     }
 
-    public void setavailableHour(int availableHour) {
+    public void setAvailableHour(int availableHour) {
         this.availableHour = availableHour;
     }
 

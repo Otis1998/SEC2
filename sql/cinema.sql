@@ -183,6 +183,7 @@ CREATE TABLE `refund_strategy` (
                          `refundable` tinyint(4) NOT NULL,
                          `available_hour` int(11) NOT NULL default 0,
                          `charge` int(11) NOT NULL,
+                         `state` tinyint(1) NOT NULL default 0,
                          PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -193,7 +194,7 @@ CREATE TABLE `refund_strategy` (
 
 LOCK TABLES `refund_strategy` WRITE;
 /*!40000 ALTER TABLE `refund_strategy` DISABLE KEYS */;
-INSERT INTO `refund_strategy` VALUES (1,'用户无法退票',0,0,0), (2,'退票策略1',1,0,5), (3,'退票策略2',1,24,5);
+INSERT INTO `refund_strategy` VALUES (1,'用户无法退票',0,0,0,0), (2,'退票策略1',1,0,5,1), (3,'退票策略2',1,24,5,0);
 /*!40000 ALTER TABLE `refund_strategy` ENABLE KEYS */;
 UNLOCK TABLES;
 

@@ -42,11 +42,11 @@ public class RefundStrategyForm {
         this.refundable = refundable;
     }
 
-    public int getavailableHour() {
+    public int getAvailableHour() {
         return availableHour;
     }
 
-    public void setavailableHour(int availableHour) {
+    public void setAvailableHour(int availableHour) {
         this.availableHour = availableHour;
     }
 

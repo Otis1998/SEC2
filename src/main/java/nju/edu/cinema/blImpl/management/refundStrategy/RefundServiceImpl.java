@@ -130,7 +130,7 @@ public class RefundServiceImpl implements RefundService, RefundServiceForBl {
             return ResponseVO.buildFailure(WRONG_CHARGE_NUMBER_ERROR_MESSAGE);
         }
 
-        /*else if (strategy.getavailableHour().getTime() < new Time(0).getTime()) {
+        /*else if (strategy.getAvailableHour().getTime() < new Time(0).getTime()) {
             return ResponseVO.buildFailure(WRONG_TIME_ERROR_MESSAGE);
         }*/
 
@@ -142,7 +142,7 @@ public class RefundServiceImpl implements RefundService, RefundServiceForBl {
     private RefundStrategy refundStrategyForm2RefundStrategy(RefundStrategyForm strategy) {
         RefundStrategy strategy1 = new RefundStrategy();
         strategy1.setId(strategy.getId());
-        strategy1.setavailableHour(strategy.getavailableHour());
+        strategy1.setAvailableHour(strategy.getAvailableHour());
         strategy1.setCharge(strategy.getCharge());
         strategy1.setName(strategy.getName());
         strategy1.setRefundable(strategy.getRefundable());
@@ -154,7 +154,7 @@ public class RefundServiceImpl implements RefundService, RefundServiceForBl {
         List<RefundStrategyForm> strategyList1 = new ArrayList<>();
         for (RefundStrategy strategy : strategyList){
             strategyList1.add(new RefundStrategyForm(strategy.getId(), strategy.getName(),
-                    strategy.getRefundable(), strategy.getavailableHour(), strategy.getCharge(), strategy.getState()));
+                    strategy.getRefundable(), strategy.getAvailableHour(), strategy.getCharge(), strategy.getState()));
         }
         return strategyList1;
     }

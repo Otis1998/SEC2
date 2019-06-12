@@ -45,9 +45,8 @@ public class OrderServiceImpl implements OrderService {
         try{
             Order order = orderMapper.selectByOrderId(orderId);
             RefundStrategy refundStrategy = refundServiceForBl.getCurrentStrategyForBl();
-            String[] time = refundStrategy.getAvailableTime().toString().split(":");
-            int availableTime = Integer.parseInt(time[0])*60 + Integer.parseInt(time[1]);
-            ResponseVO responseVO = preCheck(order,availableTime);
+            int availableHour = refundStrategy.getAvailableHour();
+            ResponseVO responseVO = preCheck(order,availableHour);
             if(responseVO.getSuccess()){
                 double refundedMoney = order.getCost() - refundStrategy.getCharge();
                 List<Integer> ticketsIdList = order.getTicketsIdList();
@@ -70,7 +69,7 @@ public class OrderServiceImpl implements OrderService {
     Date getAfterTime(Date date, int time){
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
-        cal.add(Calendar.MINUTE, time);
+        cal.add(Calendar.HOUR, time);
         Date afterTime = cal.getTime();
         return afterTime;
     }
@@ -80,10 +79,9 @@ public class OrderServiceImpl implements OrderService {
         try{
             List<Order> orders = orderMapper.selectByUserId(userId);
             RefundStrategy refundStrategy = refundServiceForBl.getCurrentStrategyForBl();
-            String[] time = refundStrategy.getAvailableTime().toString().split(":");
-            int availableTime = Integer.parseInt(time[0])*60 + Integer.parseInt(time[1]);
+            int availableHour = refundStrategy.getAvailableHour();
             for(Iterator<Order> it=orders.iterator();it.hasNext();){
-                preCheck(it.next(),availableTime);
+                preCheck(it.next(),availableHour);
             }
             List<OrderVO> orderVOs = getOrderVOList(userId);
             return ResponseVO.buildSuccess(orderVOs);
@@ -139,14 +137,14 @@ public class OrderServiceImpl implements OrderService {
      * @param order
      * @return
      */
-    ResponseVO preCheck(Order order,int availableTime){
+    ResponseVO preCheck(Order order,int availableHour){
         List<Integer> movieIds = new ArrayList<>();
         movieIds.add(order.getMovieId());
         List<ScheduleItem> scheduleItems = scheduleServiceForBl.getScheduleByMovieIdList(movieIds);
         String[] ticketIds = order.getTicketsId().split("&");
         Date now = new Date();
         ResponseVO responseVO = ResponseVO.buildSuccess();
-        Date targetDate = getAfterTime(now,availableTime);
+        Date targetDate = getAfterTime(now,availableHour);
         if(scheduleItems.get(0).getStartTime().before(targetDate)){
             for(int i = 0; i < ticketIds.length; i++){
                 Ticket t = new Ticket();
