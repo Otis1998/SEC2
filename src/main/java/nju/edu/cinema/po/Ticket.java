@@ -33,7 +33,7 @@ public class Ticket {
 
     /**
      * 订单状态：
-     * 0：未完成 1：已完成 2:已失效
+     * 0：未完成 1：已完成 2:已失效 3:不可退
      */
     private int state;
 
@@ -69,6 +69,9 @@ public class Ticket {
             case 2:
                 stateString = "已失效";
                 break;
+            case 3:
+                stateString = "不可退";
+                break;
             default:
                 stateString = "未完成";
         }
@@ -93,6 +96,9 @@ public class Ticket {
                 break;
             case 2:
                 stateString = "已失效";
+                break;
+            case 3:
+                stateString = "不可退";
                 break;
             default:
                 stateString = "未完成";

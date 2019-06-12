@@ -3,8 +3,8 @@
 <mapper namespace="nju.edu.cinema.data.sales.OrderMapper">
     <insert id="insertOrder" parameterType="nju.edu.cinema.po.Order"
             useGeneratedKeys="true" keyProperty="id">
-        insert into order_form(user_id,tickets_id,movie_id,cost)
-        values(#{userId},#{ticketsId},#{movieId},#{cost})
+        insert into order_form(user_id,tickets_id,movie_id,cost,payment_mode,state)
+        values(#{userId},#{ticketsId},#{movieId},#{cost},#{paymentMode},#{state})
     </insert>
 
     <delete id="deleteOrderById">
@@ -22,10 +22,16 @@
     <select id="selectMaxId" resultType="int">
         select last_insert_id();
     </select>
+
     <select id="selectTargetUserByCumulative" resultType="nju.edu.cinema.po.Cumulative">
         select * from (select user_id as userId,sum(cost) as cumulative from order_form group by user_id)t
         where t.cumulative>=#{cumulative} order by t.cumulative desc
     </select>
+
+    <update id="updateOrderState">
+        update order_form set state = #{state} where id=#{orderId}
+    </update>
+
     <resultMap id="Order" type="nju.edu.cinema.po.Order">
         <result column="id" property="orderId"></result>
         <result column="user_id" property="userId"></result>
@@ -33,6 +39,7 @@
         <result column="cost" property="cost"></result>
         <result column="purchase_time" property="time"></result>
         <result column="tickets_id" property="ticketsId"></result>
+        <result column="payment_mode" property="paymentMode"></result>
     </resultMap>
 
 </mapper>

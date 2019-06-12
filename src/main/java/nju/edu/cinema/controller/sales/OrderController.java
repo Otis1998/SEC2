@@ -31,4 +31,8 @@ public class OrderController {
     public ResponseVO cancelOrder(@PathVariable int orderId){
         return orderService.cancelOrder(orderId);
     }
+    @GetMapping("/print/{orderId}")
+    public ResponseVO printOrder(@PathVariable int orderId){
+        return orderService.printOrder(orderId);
+    }
 }

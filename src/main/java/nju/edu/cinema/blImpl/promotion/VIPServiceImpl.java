@@ -2,6 +2,7 @@ package nju.edu.cinema.blImpl.promotion;
 
 import nju.edu.cinema.bl.promotion.VIPService;
 import nju.edu.cinema.blImpl.management.rechargePresent.RechargePresentServiceForBl;
+import nju.edu.cinema.blImpl.sales.VIPServiceForBl;
 import nju.edu.cinema.data.promotion.VIPCardMapper;
 import nju.edu.cinema.data.promotion.VIPChargeMapper;
 import nju.edu.cinema.vo.ChargeRecordVO;
@@ -22,7 +23,7 @@ import java.util.List;
  * Created by liying on 2019/4/14.
  */
 @Service
-public class VIPServiceImpl implements VIPService {
+public class VIPServiceImpl implements VIPService, VIPServiceForBl {
     @Autowired
     VIPCardMapper vipCardMapper;
     @Autowired
@@ -121,6 +122,20 @@ public class VIPServiceImpl implements VIPService {
             e.printStackTrace();
             return ResponseVO.buildFailure("失败");
         }
+    }
+
+    /**
+     * 退票之后更新会员卡余额
+     * @author Wang Youxin
+     * @param userId
+     * @param refundedMoney
+     */
+
+    @Override
+    public void updateVIPCardBalance(int userId,double refundedMoney){
+        VIPCard vipCard = vipCardMapper.selectCardById(userId);
+        double balance = vipCard.getBalance()+ refundedMoney;
+        vipCardMapper.updateCardBalance(userId,balance);
     }
 
 }

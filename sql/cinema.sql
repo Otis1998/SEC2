@@ -183,9 +183,8 @@ CREATE TABLE `refund_strategy` (
                          `refundable` tinyint(4) NOT NULL,
                          `available_time` time NOT NULL default 0,
                          `charge` int(11) NOT NULL,
-                         `state` tinyint(1) NOT NULL,
                          PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -194,7 +193,7 @@ CREATE TABLE `refund_strategy` (
 
 LOCK TABLES `refund_strategy` WRITE;
 /*!40000 ALTER TABLE `refund_strategy` DISABLE KEYS */;
-INSERT INTO `refund_strategy` VALUES (1,'用户无法退票',0,0,0,0), (2,'退票策略1',1,0,5,1), (3,'退票策略2',1,'24:00:00',5,0);
+INSERT INTO `refund_strategy` VALUES (1,'用户无法退票',0,0,0),(2,'退票策略1',1,'24:00:00',5);
 /*!40000 ALTER TABLE `refund_strategy` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -458,6 +457,8 @@ CREATE TABLE `order_form` (
   `tickets_id` varchar(50) DEFAULT NULL,
   `movie_id` int(11) DEFAULT NULL,
   `cost` float DEFAULT NULL,
+  `payment_mode` tinyint(2) DEFAULT NULL,
+  `state` tinyint(4) DEFAULT NULL,
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `purchase_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
@@ -471,7 +472,7 @@ CREATE TABLE `order_form` (
 
 LOCK TABLES `order_form` WRITE;
 /*!40000 ALTER TABLE `order_form` DISABLE KEYS */;
-INSERT INTO `order_form` VALUES (12,'1&2&3&4',10,8,1,'2019-04-23 13:50:52');
+INSERT INTO `order_form` VALUES (12,'1&2&3&4',10,8,0,0,1,'2019-04-23 13:50:52');
 /*!40000 ALTER TABLE `order_form` ENABLE KEYS */;
 UNLOCK TABLES;
 

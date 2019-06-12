@@ -2,6 +2,7 @@ package nju.edu.cinema.blImpl.management.refundStrategy;
 
 import nju.edu.cinema.bl.management.RefundService;
 
+import nju.edu.cinema.blImpl.sales.RefundServiceForBl;
 import nju.edu.cinema.data.management.RefundMapper;
 import nju.edu.cinema.po.RefundStrategy;
 import nju.edu.cinema.vo.RefundStrategyForm;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class RefundServiceImpl implements RefundService {
+public class RefundServiceImpl implements RefundService, RefundServiceForBl {
 
     private static final String WRONG_CHARGE_NUMBER_ERROR_MESSAGE = "手续费必须为正数";
     private static final String WRONG_TIME_ERROR_MESSAGE = "时间不能为负数";
@@ -64,6 +65,16 @@ public class RefundServiceImpl implements RefundService {
             e.printStackTrace();
             return ResponseVO.buildFailure("失败");
         }
+    }
+
+    /**
+     * @author Wang Youxin
+     * @Date 2019/06/12 14:00
+     * @return
+     */
+    @Override
+    public RefundStrategy getCurrentStrategyForBl(){
+        return refundMapper.selectCurrentStrategy();
     }
 
     @Override

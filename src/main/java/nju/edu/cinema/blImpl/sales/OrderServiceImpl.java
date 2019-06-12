@@ -4,11 +4,8 @@ import nju.edu.cinema.bl.sales.OrderService;
 import nju.edu.cinema.blImpl.management.schedule.MovieServiceForBl;
 import nju.edu.cinema.blImpl.management.schedule.ScheduleServiceForBl;
 import nju.edu.cinema.data.sales.OrderMapper;
-import nju.edu.cinema.po.Cumulative;
-import nju.edu.cinema.po.Movie;
-import nju.edu.cinema.po.Order;
-import nju.edu.cinema.po.ScheduleItem;
-import nju.edu.cinema.po.Ticket;
+import nju.edu.cinema.data.sales.TicketMapper;
+import nju.edu.cinema.po.*;
 import nju.edu.cinema.vo.CumulativeVO;
 import nju.edu.cinema.vo.OrderVO;
 import nju.edu.cinema.vo.ResponseVO;
@@ -16,10 +13,7 @@ import nju.edu.cinema.vo.SeatForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -28,9 +22,17 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     OrderMapper orderMapper;
     @Autowired
+    TicketMapper ticketMapper;
+    @Autowired
     ScheduleServiceForBl scheduleServiceForBl;
     @Autowired
     MovieServiceForBl movieServiceForBl;
+    @Autowired
+    RefundServiceForBl refundServiceForBl;
+    @Autowired
+    VIPServiceForBl vipServiceForBl;
+
+
     /**
      * TODO:完成退票（根据购票的订单号进行退票）
      * @author Wang Youxin
@@ -42,9 +44,21 @@ public class OrderServiceImpl implements OrderService {
     public ResponseVO cancelOrder(int orderId){
         try{
             Order order = orderMapper.selectByOrderId(orderId);
-            ResponseVO responseVO = preCheck(order);
+            RefundStrategy refundStrategy = refundServiceForBl.getCurrentStrategyForBl();
+            String[] time = refundStrategy.getAvailableTime().toString().split(":");
+            int availableTime = Integer.parseInt(time[0])*60 + Integer.parseInt(time[1]);
+            ResponseVO responseVO = preCheck(order,availableTime);
             if(responseVO.getSuccess()){
-
+                double refundedMoney = order.getCost() - refundStrategy.getCharge();
+                List<Integer> ticketsIdList = order.getTicketsIdList();
+                for(Iterator<Integer> it = ticketsIdList.iterator();it.hasNext();){
+                    ticketMapper.deleteTicket(it.next());
+                }
+                orderMapper.deleteOrderById(orderId);
+                int userId = order.getUserId();
+                if(order.getPaymentMode()==1){
+                    vipServiceForBl.updateVIPCardBalance(userId,refundedMoney);
+                }
             }
             return responseVO;
         }catch(Exception e){
@@ -53,12 +67,23 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
+    Date getAfterTime(Date date, int time){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.MINUTE, time);
+        Date afterTime = cal.getTime();
+        return afterTime;
+    }
+
     @Override
     public ResponseVO getOrderByUser(int userId){
         try{
             List<Order> orders = orderMapper.selectByUserId(userId);
+            RefundStrategy refundStrategy = refundServiceForBl.getCurrentStrategyForBl();
+            String[] time = refundStrategy.getAvailableTime().toString().split(":");
+            int availableTime = Integer.parseInt(time[0])*60 + Integer.parseInt(time[1]);
             for(Iterator<Order> it=orders.iterator();it.hasNext();){
-                preCheck(it.next());
+                preCheck(it.next(),availableTime);
             }
             List<OrderVO> orderVOs = getOrderVOList(userId);
             return ResponseVO.buildSuccess(orderVOs);
@@ -96,7 +121,7 @@ public class OrderServiceImpl implements OrderService {
                     seatForm.setColumnIndex(ticket.getColumnIndex());
                     seatForm.setRowIndex(ticket.getRowIndex());
                     int state = ticket.getState();
-                    if (state > 0 && state < 3) {
+                    if (state == 1) {
                         orderVO.setState(0);
                     } else {
                         orderVO.setState(1);
@@ -114,14 +139,15 @@ public class OrderServiceImpl implements OrderService {
      * @param order
      * @return
      */
-    ResponseVO preCheck(Order order){
+    ResponseVO preCheck(Order order,int availableTime){
         List<Integer> movieIds = new ArrayList<>();
         movieIds.add(order.getMovieId());
         List<ScheduleItem> scheduleItems = scheduleServiceForBl.getScheduleByMovieIdList(movieIds);
         String[] ticketIds = order.getTicketsId().split("&");
         Date now = new Date();
         ResponseVO responseVO = ResponseVO.buildSuccess();
-        if(scheduleItems.get(0).getStartTime().before(now)){
+        Date targetDate = getAfterTime(now,availableTime);
+        if(scheduleItems.get(0).getStartTime().before(targetDate)){
             for(int i = 0; i < ticketIds.length; i++){
                 Ticket t = new Ticket();
                 t.setId(Integer.parseInt(ticketIds[i]));
@@ -134,10 +160,6 @@ public class OrderServiceImpl implements OrderService {
         return responseVO;
     }
 
-    @Override
-    public void addOrder(Order order) {
-        orderMapper.insertOrder(order);
-    }
 
 	@Override
 	public ResponseVO getTargetUserByCumulative(double cumulative) {
@@ -153,4 +175,9 @@ public class OrderServiceImpl implements OrderService {
             return ResponseVO.buildFailure("失败");
         }
 	}
+	@Override
+    public ResponseVO printOrder(int orderId){
+        orderMapper.updateOrderState(orderId,1);
+        return ResponseVO.buildSuccess();
+    }
 }

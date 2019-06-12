@@ -1,5 +1,7 @@
 package nju.edu.cinema.blImpl.sales;
 
+import com.sun.org.apache.xpath.internal.operations.Or;
+import nju.edu.cinema.bl.sales.OrderService;
 import nju.edu.cinema.bl.sales.TicketService;
 import nju.edu.cinema.blImpl.management.hall.HallServiceForBl;
 import nju.edu.cinema.blImpl.management.schedule.ScheduleServiceForBl;
@@ -7,6 +9,7 @@ import nju.edu.cinema.data.management.ScheduleMapper;
 import nju.edu.cinema.data.promotion.ActivityMapper;
 import nju.edu.cinema.data.promotion.CouponMapper;
 import nju.edu.cinema.data.promotion.VIPCardMapper;
+import nju.edu.cinema.data.sales.OrderMapper;
 import nju.edu.cinema.data.sales.TicketMapper;
 import nju.edu.cinema.po.*;
 import nju.edu.cinema.vo.*;
@@ -32,6 +35,8 @@ public class TicketServiceImpl implements TicketService {
     TicketMapper ticketMapper;
     @Autowired
     CouponMapper couponMapper;
+    @Autowired
+    OrderMapper orderMapper;
     @Autowired
     ScheduleServiceForBl scheduleService;
     @Autowired
@@ -77,6 +82,7 @@ public class TicketServiceImpl implements TicketService {
         try {
             List<Integer> ticketId = orderForm.getTicketId();
             int couponId = orderForm.getCouponId();
+            String ticketsId = getTicketsId(ticketId);
             int userId = ticketMapper.selectTicketById(ticketId.get(0)).getUserId();
             int scheduleId = ticketMapper.selectTicketById(ticketId.get(0)).getScheduleId();
             ScheduleItem scheduleItem = scheduleMapper.selectScheduleById(scheduleId);
@@ -111,12 +117,30 @@ public class TicketServiceImpl implements TicketService {
                 if(isCouponCanUse){
                     couponMapper.deleteCouponUser(couponId,userId);
                 }
+                //添加Order对象
+                Order order = new Order();
+                order.setUserId(userId);
+                order.setMovieId(movieId);
+                order.setTicketsId(ticketsId);
+                order.setCost(totalPrice);
+                order.setPaymentMode(0);
+                order.setState(0);
+                orderMapper.insertOrder(order);
                 return ResponseVO.buildSuccess(giveCoupons(movieId, userId));
             }
         }catch(Exception e){
             e.printStackTrace();
             return ResponseVO.buildFailure("失败");
         }
+    }
+
+    String getTicketsId(List<Integer> ticketsId){
+        StringBuilder s = new StringBuilder();
+        for(Iterator<Integer> it = ticketsId.iterator();it.hasNext();){
+            s.append(String.valueOf(it.next())).append("&");
+        }
+        String result = s.toString();
+        return s.substring(0,s.length()-1);
     }
 
     /**
@@ -214,6 +238,7 @@ public class TicketServiceImpl implements TicketService {
         try{
             List<Integer> ticketId = orderForm.getTicketId();
             int couponId = orderForm.getCouponId();
+            String ticketsId = getTicketsId(ticketId);
             int userId = ticketMapper.selectTicketById(ticketId.get(0)).getUserId();
             int scheduleId = ticketMapper.selectTicketById(ticketId.get(0)).getScheduleId();
             ScheduleItem scheduleItem = scheduleMapper.selectScheduleById(scheduleId);
@@ -256,6 +281,15 @@ public class TicketServiceImpl implements TicketService {
                     if (isCouponCanUse) {
                         couponMapper.deleteCouponUser(couponId, userId);
                     }
+                    //添加Order对象
+                    Order order = new Order();
+                    order.setUserId(userId);
+                    order.setMovieId(movieId);
+                    order.setTicketsId(ticketsId);
+                    order.setCost(totalPrice);
+                    order.setPaymentMode(1);
+                    order.setState(0);
+                    orderMapper.insertOrder(order);
                     return ResponseVO.buildSuccess(giveCoupons(movieId, userId));
                 }
             }
@@ -294,12 +328,11 @@ public class TicketServiceImpl implements TicketService {
         return ticketVOList;
     }
 
-    Ticket getTicketById(int ticketId){
-        return ticketMapper.selectTicketById(ticketId);
-    }
-
     void updateTicket(int ticketId,int state){
         ticketMapper.updateTicketState(ticketId,state);
     }
 
+    public Ticket getTicketById(int ticketId){
+        return ticketMapper.selectTicketById(ticketId);
+    }
 }

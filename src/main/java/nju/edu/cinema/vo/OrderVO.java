@@ -41,7 +41,7 @@ public class OrderVO {
      */
     private double cost;
     /**
-     * 订单是否的状态
+     * 订单是否可退的状态
      * 0: 可退  1：不可退
      */
     private int state;

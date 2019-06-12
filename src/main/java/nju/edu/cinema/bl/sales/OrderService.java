@@ -20,7 +20,12 @@ public interface OrderService {
      */
     ResponseVO getOrderByUser(int userId);
 
-    void addOrder(Order order);
+    /**
+     * 出票（模拟打印订单）
+     * @param orderId
+     * @return
+     */
+    ResponseVO printOrder(int orderId);
 
 	ResponseVO getTargetUserByCumulative(double cumulative);
 
