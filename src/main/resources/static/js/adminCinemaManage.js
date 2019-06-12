@@ -22,6 +22,7 @@ $(document).ready(function() {
                 "    <li role=\"presentation\"><a href=\"/superAdmin/coupon/manage\"><i class=\"icon-tag\"></i> 优惠券管理</a></li>\n" +
                 "    <li role=\"presentation\"  class=\"active\"><a href=\"#\"><i class=\"icon-cogs\"></i> 影院管理</a></li>" +
                 "    <li role=\"presentation\"><a href=\"/superAdmin/cinema/statistic\"><i class=\"icon-bar-chart\"></i> 影院统计</a></li>\n" +
+                "    <li role=\"presentation\"><a href=\"/superAdmin/refund/manage\"><i class=\"icon-backward\"></i> 退票策略管理</a></li>" +
                 "</ul>")
         }
     }
@@ -61,7 +62,7 @@ $(document).ready(function() {
                     "<span class='cinema-hall-size' id='cinema-hall-size-text'>"+ hall.seats[0].length +'*'+ hall.seats.length +"</span>" +
                     "<button type=\"button\" class=\"btn btn-primary hall-edit-item\" data-hall='"+JSON.stringify(hall)+"' " +
                     "id='hall-"+ hall.id +"' style=\"float: right\" data-backdrop=\"static\" data-toggle=\"modal\"> " +
-                    "<i class=\"icon-plus-sign\"></i> 修改影厅</button>" +
+                    "<i class=\"icon-edit-sign\"></i> 修改影厅</button>" +
                     "</div>" +
                     "<div class='cinema-seat'>" + seat +
                     "</div>" +
@@ -181,7 +182,7 @@ $(document).ready(function() {
     });
 
     $("#hall-edit-remove-btn").click(function () {
-        var r=confirm("确认要删除该影厅吗")
+        var r=confirm("确认要删除该影厅吗");
         if (r) {
             deleteRequest(
                 '/hall/delete/' + $('#hallEditModal')[0].dataset.id,

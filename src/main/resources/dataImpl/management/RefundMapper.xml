@@ -3,8 +3,8 @@
 <mapper namespace="nju.edu.cinema.data.management.RefundMapper">
     <insert id="insertRefundStrategy" parameterType="nju.edu.cinema.po.RefundStrategy"
             useGeneratedKeys="true" keyProperty="id">
-        insert into refund_strategy(refundable, name, available_time, charge, state)
-        values(#{refundable}, #{name}, #{availableTime}, #{charge}, #{state})
+        insert into refund_strategy(refundable, name, available_hour, charge, state)
+        values(#{refundable}, #{name}, #{availableHour}, #{charge}, #{state})
     </insert>
 
     <select id="selectAllStrategies" resultMap="Strategy">
@@ -19,7 +19,7 @@
 
     <update id="updateRefundStrategy" parameterType="nju.edu.cinema.po.RefundStrategy">
         update refund_strategy set `refundable` = #{refundable},
-        `available_time` = #{availableTime}, `name` = #{name}, charge = #{charge}
+        `available_hour` = #{availableHour}, `name` = #{name}, charge = #{charge}
         where id = #{id}
     </update>
     <update id="updateCurrentStrategy">

@@ -41,7 +41,7 @@ public class RefundServiceImpl implements RefundService, RefundServiceForBl {
     @Override
     public ResponseVO searchAllStrategies() {
         try {
-            return ResponseVO.buildSuccess(refundStrategyList2RefundStrategyFormList(refundMapper.selectAllStrategies()));
+            return ResponseVO.buildSuccess(refundMapper.selectAllStrategies());
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseVO.buildFailure("失败");
@@ -50,7 +50,13 @@ public class RefundServiceImpl implements RefundService, RefundServiceForBl {
 
     @Override
     public ResponseVO searchStrategyById(Integer strategyId) {
-        return null;
+        try {
+            return ResponseVO.buildSuccess(refundMapper.selectStrategyById(strategyId));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseVO.buildFailure("失败");
+        }
     }
 
     @Override
@@ -90,12 +96,28 @@ public class RefundServiceImpl implements RefundService, RefundServiceForBl {
 
     @Override
     public ResponseVO updateStrategy(RefundStrategyForm strategy) {
-        return null;
+        try {
+            ResponseVO responseVO = preCheck(strategy);
+            if (!responseVO.getSuccess()) {
+                return responseVO;
+            }
+            refundMapper.updateRefundStrategy(refundStrategyForm2RefundStrategy(strategy));
+            return ResponseVO.buildSuccess();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseVO.buildFailure("失败");
+        }
     }
 
     @Override
     public ResponseVO deleteStrategy(Integer strategyId) {
-        return null;
+        try {
+            refundMapper.deleteStrategy(strategyId);
+            return ResponseVO.buildSuccess();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseVO.buildFailure("失败");
+        }
     }
 
     /**
@@ -108,9 +130,9 @@ public class RefundServiceImpl implements RefundService, RefundServiceForBl {
             return ResponseVO.buildFailure(WRONG_CHARGE_NUMBER_ERROR_MESSAGE);
         }
 
-        else if (strategy.getAvailableTime().getTime() < new Time(0).getTime()) {
+        /*else if (strategy.getavailableHour().getTime() < new Time(0).getTime()) {
             return ResponseVO.buildFailure(WRONG_TIME_ERROR_MESSAGE);
-        }
+        }*/
 
         else {
             return ResponseVO.buildSuccess();
@@ -120,7 +142,7 @@ public class RefundServiceImpl implements RefundService, RefundServiceForBl {
     private RefundStrategy refundStrategyForm2RefundStrategy(RefundStrategyForm strategy) {
         RefundStrategy strategy1 = new RefundStrategy();
         strategy1.setId(strategy.getId());
-        strategy1.setAvailableTime(strategy.getAvailableTime());
+        strategy1.setavailableHour(strategy.getavailableHour());
         strategy1.setCharge(strategy.getCharge());
         strategy1.setName(strategy.getName());
         strategy1.setRefundable(strategy.getRefundable());
@@ -132,7 +154,7 @@ public class RefundServiceImpl implements RefundService, RefundServiceForBl {
         List<RefundStrategyForm> strategyList1 = new ArrayList<>();
         for (RefundStrategy strategy : strategyList){
             strategyList1.add(new RefundStrategyForm(strategy.getId(), strategy.getName(),
-                    strategy.getRefundable(), strategy.getAvailableTime(), strategy.getCharge(), strategy.getState()));
+                    strategy.getRefundable(), strategy.getavailableHour(), strategy.getCharge(), strategy.getState()));
         }
         return strategyList1;
     }

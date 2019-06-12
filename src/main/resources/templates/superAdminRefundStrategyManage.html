@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>退票策略管理</title>
+    <link rel="stylesheet" type="text/css" href="/css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/superAdminRefund.css"/>
+
+    <script src="/js/jquery.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script src="/js/request.js"></script>
+    <script src="/js/superAdminRefundStrategyManage.js"></script>
+</head>
+<body>
+<div class="main-container">
+    <div class="nav-left-container" id="left-container-bar">
+        <div class="nav-user-container" style="margin-bottom: 50px;">
+            <img class="avatar-lg" src="/images/defaultAvatar.jpg" />
+            <p class="title">SuperAdmin</p>
+        </div>
+        <ul class="nav nav-pills nav-stacked">
+            <li role="presentation"><a href="/superAdmin/people/manage"><i class="icon-user"></i> 人员管理</a></li>
+            <li role="presentation"><a href="/superAdmin/VIPCard/manage"><i class="icon-credit-card"></i> 会员卡优惠管理</a></li>
+            <li role="presentation"><a href="/superAdmin/coupon/manage"><i class="icon-tag"></i> 优惠券管理</a></li>
+            <li role="presentation"><a href="/admin/cinema/manage"><i class="icon-cogs"></i> 影院管理</a></li>
+            <li role="presentation"><a href="/superAdmin/cinema/statistic"><i class="icon-bar-chart"></i> 影院统计</a></li>
+            <li role="presentation"  class="active"><a href="#"><i class="icon-backward"></i> 退票策略管理</a></li>
+        </ul>
+    </div>
+    <div class="content-container">
+        <div class="content-item">
+            <span class="title gray-text" id="refund-strategy-card-title"> 退票策略管理</span>
+            <button type="button" class="btn btn-primary refund-item" id="add-refund-button" style="float: right"
+                    data-backdrop="static" data-toggle="modal" data-target="#refundModal" ><i class="icon-plus-sign">
+            </i> 添加退票策略</button>
+            <div class="content-refund content-card card" id="refund-strategy-card">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="refundModal" tabindex="-1" role="dialog" aria-labelledby="refundModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="refundModalLabel">新增退票策略</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="refund-name-input"><span class="error-text">*</span>退票策略名称</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="refund-name-input" placeholder="请输入退票策略名称">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="refundable-select">是否可以退票</label>
+                        <div class="col-sm-10">
+                            <select id="refundable-select" class="form-control">
+                                <option value="yes">是</option>
+                                <option value="no">否</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group" id="charge-input">
+                        <label class="col-sm-2 control-label" for="refund-charge-input">手续费</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" id="refund-charge-input" placeholder="请输入手续费">
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="refund-form-btn">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="refundEditModal" tabindex="-1" role="dialog" aria-labelledby="refundEditModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="refundEditModalLabel">修改影厅</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="refund-name-edit-input"><span class="error-text">*</span>退票策略名称</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="refund-name-edit-input" placeholder="请输入退票策略名称">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="refundable-edit-select">是否可以退票</label>
+                        <div class="col-sm-10">
+                            <select id="refundable-edit-select" class="form-control">
+                                <option value="yes">是</option>
+                                <option value="no">否</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group" id="charge-edit-input">
+                        <label class="col-sm-2 control-label" for="refund-charge-edit-input">手续费</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" id="refund-charge-edit-input" placeholder="请输入手续费">
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="refund-form-remove-btn">删除</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="refund-edit-form-btn">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

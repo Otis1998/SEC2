@@ -1,12 +1,12 @@
 package nju.edu.cinema.po;
 
-import java.sql.Time;
+
 
 public class RefundStrategy {
     private int id;
     private String name;
     private int refundable;
-    private Time availableTime;
+    private int availableHour;
     private int charge;
     private int state;
 
@@ -38,12 +38,12 @@ public class RefundStrategy {
         this.charge = charge;
     }
 
-    public Time getAvailableTime() {
-        return availableTime;
+    public int getavailableHour() {
+        return availableHour;
     }
 
-    public void setAvailableTime(Time availableTime) {
-        this.availableTime = availableTime;
+    public void setavailableHour(int availableHour) {
+        this.availableHour = availableHour;
     }
 
     public String getName() {

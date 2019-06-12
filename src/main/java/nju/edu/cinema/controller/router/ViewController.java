@@ -36,6 +36,10 @@ public class ViewController {
     public String getSuperAdminVIPCardManage() {
     	return "superAdminVIPCardManage";
     }
+    @RequestMapping(value = "/superAdmin/refund/manage")
+    public String getSuperAdminRefundStrategyManage() {
+        return "superAdminRefundStrategyManage";
+    }
     @RequestMapping(value = "/admin/session/manage")
     public String getAdminSessionManage() {
         return "adminScheduleManage";
