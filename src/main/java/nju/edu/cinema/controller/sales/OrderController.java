@@ -27,4 +27,8 @@ public class OrderController {
     public ResponseVO getTargetUserByCumulative(@RequestParam double cumulative){
     	return orderService.getTargetUserByCumulative(cumulative);
     }
+    @GetMapping("/cancel/{orderId}")
+    public ResponseVO cancelOrder(@PathVariable int orderId){
+        return orderService.cancelOrder(orderId);
+    }
 }

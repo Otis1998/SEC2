@@ -11,7 +11,7 @@ public interface OrderService {
      * @param orderId
      * @return
      */
-    ResponseVO refundTicket(int orderId);
+    ResponseVO cancelOrder(int orderId);
 
     /**
      * 获得用户已支付订单

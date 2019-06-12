@@ -39,7 +39,7 @@ public class OrderServiceImpl implements OrderService {
      * @return
      */
     @Override
-    public ResponseVO refundTicket(int orderId){
+    public ResponseVO cancelOrder(int orderId){
         try{
             Order order = orderMapper.selectByOrderId(orderId);
             ResponseVO responseVO = preCheck(order);
