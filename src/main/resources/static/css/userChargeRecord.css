@@ -1,0 +1,19 @@
+th{
+    height: 50px;
+    text-align: left;
+    vertical-align: center;
+    font-size: 20px;
+    color: #1caf9a;
+}
+td{
+    text-align: left;
+    vertical-align: center;
+}
+h4{
+    margin: 20px;
+    font-size: 24px;
+}
+.table-div{
+    margin-top: 20px;
+    padding: 20px;
+}

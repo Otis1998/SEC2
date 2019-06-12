@@ -13,8 +13,7 @@ $(document).ready(function () {
             '/order/get/' + sessionStorage.getItem('id'),
             function (res) {
                 orderList=res.content;
-                listToShow=orderList;
-                renderOrderList();
+                showAllOrder();
             },
             function (error) {
                 alert(error);
@@ -24,6 +23,9 @@ $(document).ready(function () {
 
 function showAllOrder() {
     listToShow=orderList;
+    $("#ready").css("background-color","#ffffff");
+    $("#all").css("background-color","rgba(173,173,173,0.5)");
+    $("#finished").css("background-color","#ffffff");
     renderOrderList();
 }
 
@@ -34,6 +36,15 @@ function showSomeOrder(state) {
             listToShow.push(order);
         }
     });
+    if(state==0){
+        $("#ready").css("background-color","rgba(173,173,173,0.5)");
+        $("#all").css("background-color","#ffffff");
+        $("#finished").css("background-color","#ffffff");
+    }else{
+        $("#ready").css("background-color","#ffffff");
+        $("#all").css("background-color","#ffffff");
+        $("#finished").css("background-color","rgba(173,173,173,0.5)");
+    }
     renderOrderList();
 }
 
