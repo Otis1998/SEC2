@@ -332,7 +332,8 @@ public class TicketServiceImpl implements TicketService {
         ticketMapper.updateTicketState(ticketId,state);
     }
 
-    public Ticket getTicketById(int ticketId){
-        return ticketMapper.selectTicketById(ticketId);
-    }
+//    public Ticket getTicketById(int ticketId){
+//        Ticket t = ticketMapper.selectTicketById(ticketId);
+//        return  t;
+//    }
 }

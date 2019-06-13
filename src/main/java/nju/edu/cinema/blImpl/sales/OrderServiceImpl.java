@@ -18,7 +18,6 @@ import java.util.*;
 @Service
 public class OrderServiceImpl implements OrderService {
     private static final String AFTER_THE_START_TIME = "当前时间晚于电影开始时间";
-
     @Autowired
     OrderMapper orderMapper;
     @Autowired
@@ -95,27 +94,27 @@ public class OrderServiceImpl implements OrderService {
         List<OrderVO> orderVOList = new ArrayList<OrderVO>();
         List<Order> orders = orderMapper.selectByUserId(userId);
         if(orders.size() > 0) {
-            int movieId = orders.get(0).getMovieId();
             for (Iterator<Order> it = orders.iterator(); it.hasNext(); ) {
+                Order order = it.next();
+                int movieId = order.getMovieId();
                 OrderVO orderVO = new OrderVO();
                 Movie movie = movieServiceForBl.getMovieById(movieId);
                 orderVO.setMovieName(movie.getName());
                 orderVO.setPosterURL(movie.getPosterUrl());
-                String[] ticketsId = it.next().getTicketsId().split("&");
-                TicketServiceImpl ticketService = new TicketServiceImpl();
-                int scheduleId = ticketService.getTicketById(Integer.parseInt(ticketsId[0])).getScheduleId();
+                String[] ticketsId = order.getTicketsId().split("&");
+                int scheduleId = ticketMapper.selectTicketById(Integer.parseInt(ticketsId[0])).getScheduleId();
                 ScheduleItem scheduleItem = scheduleServiceForBl.getScheduleItemById(scheduleId);
                 orderVO.setHallId(scheduleItem.getHallId());
                 orderVO.setStartTime(scheduleItem.getStartTime());
                 orderVO.setEndTime(scheduleItem.getEndTime());
                 int numOfTicket = ticketsId.length;
                 orderVO.setNumOfTicket(numOfTicket);
-                orderVO.setOrderId(it.next().getOrderId());
-                orderVO.setCost(it.next().getCost());
+                orderVO.setOrderId(order.getOrderId());
+                orderVO.setCost(order.getCost());
                 List<SeatForm> seatForms = new ArrayList<>();
                 for (int i = 0; i < ticketsId.length; i++) {
                     SeatForm seatForm = new SeatForm();
-                    Ticket ticket = ticketService.getTicketById(Integer.parseInt(ticketsId[i]));
+                    Ticket ticket = ticketMapper.selectTicketById(Integer.parseInt(ticketsId[i]));
                     seatForm.setColumnIndex(ticket.getColumnIndex());
                     seatForm.setRowIndex(ticket.getRowIndex());
                     int state = ticket.getState();
@@ -127,6 +126,7 @@ public class OrderServiceImpl implements OrderService {
                     seatForms.add(seatForm);
                 }
                 orderVO.setSeatFormList(seatForms);
+                orderVOList.add(orderVO);
             }
         }
         return orderVOList;
@@ -138,21 +138,21 @@ public class OrderServiceImpl implements OrderService {
      * @return
      */
     ResponseVO preCheck(Order order,int availableHour){
-        List<Integer> movieIds = new ArrayList<>();
-        movieIds.add(order.getMovieId());
-        List<ScheduleItem> scheduleItems = scheduleServiceForBl.getScheduleByMovieIdList(movieIds);
-        String[] ticketIds = order.getTicketsId().split("&");
+        List<Integer> ticketsId = order.getTicketsIdList();
+        Ticket ticket = ticketMapper.selectTicketById(ticketsId.get(0));
+        ScheduleItem scheduleItem = scheduleServiceForBl.getScheduleItemById(ticket.getScheduleId());
         Date now = new Date();
         ResponseVO responseVO = ResponseVO.buildSuccess();
         Date targetDate = getAfterTime(now,availableHour);
-        if(scheduleItems.get(0).getStartTime().before(targetDate)){
-            for(int i = 0; i < ticketIds.length; i++){
+        if(scheduleItem.getStartTime().before(targetDate)){
+            for(int i = 0; i < ticketsId.size(); i++){
                 Ticket t = new Ticket();
-                t.setId(Integer.parseInt(ticketIds[i]));
+                t.setId(ticketsId.get(i));
                 t.setState(3);
-                TicketServiceImpl ticketService = new TicketServiceImpl();
-                ticketService.updateTicket(t.getId(),t.getState());
+                ticketMapper.updateTicketState(t.getId(),t.getState());
             }
+            order.setState(1);
+            orderMapper.updateOrderState(order.getOrderId(),order.getState());
             responseVO = ResponseVO.buildFailure(AFTER_THE_START_TIME);
         }
         return responseVO;
