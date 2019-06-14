@@ -37,7 +37,7 @@ $(document).ready(function () {
                 "       <div class='strategy-line'>" +
                 "           <span>手续费：" +strategy.charge+ " 元&#160;&#160;|&#160;&#160;</span>" +
                 "           <span>可退票时间：电影开始前" + strategy.availableHour + " 小时</span>" +
-                "           <button type=\"button\" class=\"btn btn-danger strategy-enable-btn\" style='margin-left: auto' data-strategy-id='"+strategy.id+"'>" +
+                "           <button type=\"button\" class=\"btn btn-success strategy-enable-btn\" style='margin-left: auto' data-strategy-id='"+strategy.id+"'>" +
                 "           <i class='icon-ok'></i> 生效</button>" +
                 "           <button type=\"button\" class=\"btn btn-primary strategy-edit-btn\" data-strategy='"+JSON.stringify(strategy)+"' " +
                 "               style='float:right' data-backdrop=\"static\" data-toggle=\"modal\"> " +

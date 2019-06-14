@@ -63,9 +63,9 @@ public class ViewController {
     @RequestMapping(value = "/admin/movieDetail")
     public String getAdminMovieDetail(@RequestParam int id) { return "adminMovieDetail"; }
 
-    @RequestMapping(value = "/user/home")
-    public String getUserHome() {
-        return "userHome";
+    @RequestMapping(value = "/signIn")
+    public String getSignIn() {
+        return "signIn";
     }
 
     @RequestMapping(value = "/user/selfPage")
@@ -88,13 +88,4 @@ public class ViewController {
         return "userMovie";
     }
 
-    @RequestMapping(value = "/user/member")
-    public String getUserMember() {
-        return "userMember";
-    }
-
-    @RequestMapping(value = "/user/chargeRecord")
-    public String getUserChargeRecord() {
-        return "userChargeRecord";
-    }
 }
