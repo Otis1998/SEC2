@@ -63,9 +63,9 @@ public class ViewController {
     @RequestMapping(value = "/admin/movieDetail")
     public String getAdminMovieDetail(@RequestParam int id) { return "adminMovieDetail"; }
 
-    @RequestMapping(value = "/user/home")
-    public String getUserHome() {
-        return "userHome";
+    @RequestMapping(value = "/signIn")
+    public String getSignIn() {
+        return "signIn";
     }
 
     @RequestMapping(value = "/user/buy")

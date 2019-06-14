@@ -24,11 +24,16 @@ public class AccountServiceImpl implements AccountService, AccountServiceForBl {
     @Override
     public ResponseVO registerAccount(UserForm userForm) {
         try {
-            accountMapper.createNewAccount(0,userForm.getUsername(), getMD5(userForm.getPassword()));
+            User user = new User();
+            user.setIdentity(0);
+            user.setUsername(userForm.getUsername());
+            user.setPassword(getMD5(userForm.getPassword()));
+            accountMapper.createNewAccount(user);
+            user.setPassword("");
+            return ResponseVO.buildSuccess(user);
         } catch (Exception e) {
             return ResponseVO.buildFailure(ACCOUNT_EXIST);
         }
-        return ResponseVO.buildSuccess();
     }
 
     @Override

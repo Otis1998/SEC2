@@ -50,8 +50,12 @@ $(document).ready(function(){
     }
 
     function getMovie() {
+        var uid = userId;
+        if (userId == null) {
+            uid = 0;
+        }
         getRequest(
-            '/movie/'+movieId + '/' + userId,
+            '/movie/'+movieId + '/' + uid,
             function(res){
                 var data = res.content;
                 isLike = data.islike;
@@ -86,17 +90,24 @@ $(document).ready(function(){
 
     // user界面才有
     $('#like-btn').click(function () {
-        var url = isLike ?'/movie/'+ movieId +'/unlike?userId='+ userId :'/movie/'+ movieId +'/like?userId='+ userId;
-        postRequest(
-             url,
-            null,
-            function (res) {
-                 isLike = !isLike;
-                getMovie();
-            },
-            function (error) {
-                alert(error);
-            });
+        if (userId == null) {
+            var r=alert("请先登录");
+            sessionStorage.setItem('curUrl', window.location.pathname + '?id=' + movieId);
+            $(window).attr('location','/signIn');
+        }else {
+            var url = isLike ?'/movie/'+ movieId +'/unlike?userId='+ userId :'/movie/'+ movieId +'/like?userId='+ userId;
+            postRequest(
+                url,
+                null,
+                function (res) {
+                    isLike = !isLike;
+                    getMovie();
+                },
+                function (error) {
+                    alert(error);
+                });
+        }
+
     });
 
     // admin界面才有

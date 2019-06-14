@@ -21,8 +21,11 @@ function register() {
         formData,
         function (res) {
             if (res.success) {
+                sessionStorage.setItem('role', 'user');
+                sessionStorage.setItem('username', formData.username);
+                sessionStorage.setItem('id', res.content.id);
                 alert("注册成功");
-                window.location.href = "/index";
+                window.location.href = sessionStorage.getItem('curUrl');
             } else {
                 alert(res.message);
             }

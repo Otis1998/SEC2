@@ -17,7 +17,7 @@ public interface AccountService {
     public ResponseVO registerAccount(UserForm userForm);
 
     /**
-     * 用户登录，登录成功会将用户信息保存再session中
+     * 用户登录，登录成功会将用户信息保存在session中
      * @return
      */
     public UserVO login(UserForm userForm);

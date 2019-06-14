@@ -63,7 +63,7 @@ public class Movie {
     /**
      * 是否想看,0:未标记想看，1：已标记想看
      */
-    private Integer islike;
+    private Integer islike = 0;
     /**
      * 想看人数
      * @return
