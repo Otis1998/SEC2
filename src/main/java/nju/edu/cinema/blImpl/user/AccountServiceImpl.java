@@ -9,6 +9,8 @@ import nju.edu.cinema.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.security.MessageDigest;
+
 /**
  * @author huwen
  * @date 2019/3/23
@@ -22,7 +24,7 @@ public class AccountServiceImpl implements AccountService, AccountServiceForBl {
     @Override
     public ResponseVO registerAccount(UserForm userForm) {
         try {
-            accountMapper.createNewAccount(0,userForm.getUsername(), userForm.getPassword());
+            accountMapper.createNewAccount(0,userForm.getUsername(), getMD5(userForm.getPassword()));
         } catch (Exception e) {
             return ResponseVO.buildFailure(ACCOUNT_EXIST);
         }
@@ -32,7 +34,7 @@ public class AccountServiceImpl implements AccountService, AccountServiceForBl {
     @Override
     public UserVO login(UserForm userForm) {
         User user = accountMapper.getAccountByName(userForm.getUsername());
-        if (null == user || !user.getPassword().equals(userForm.getPassword())) {
+        if (null == user || !getMD5(userForm.getPassword()).equals(user.getPassword())) {
             return null;
         }
         return new UserVO(user);
@@ -47,6 +49,31 @@ public class AccountServiceImpl implements AccountService, AccountServiceForBl {
         }
         return new UserVO(user);
 
+    }
+
+    /**
+     * 采用MD5对用户存入数据库中的密码进行加密
+     * @param password
+     * @return
+     */
+
+    private String getMD5(String password){
+        //盐，用于混交md5
+        String slat = "&%5123***&&%%$$#@";
+        String result = "";
+        try {
+            String dataStr = password + slat;
+            MessageDigest m = MessageDigest.getInstance("MD5");
+            m.update(dataStr.getBytes("UTF8"));
+            byte s[] = m.digest();
+            for (int i = 0; i < s.length; i++) {
+                result += Integer.toHexString((0x000000FF & s[i]) | 0xFFFFFF00).substring(6);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("密码转换MD5失败");
+        }
+        return result;
     }
 
 }
