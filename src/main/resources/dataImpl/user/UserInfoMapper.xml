@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nju.edu.cinema.data.user.UserInfoMapper">
+    <insert id="insertUserInfo">
+        insert into user_info(id)
+        values(#{userId})
+    </insert>
+    <select id="getUserInfo" resultMap="UserInfoForm">
+        select * from user_info where id=#{userId}
+    </select>
+    <update id="updateUserInfo" parameterMap="UserInfoForm">
+        update user_info set profile_picture = #{profilePicture} and name = #{name} where id = #{userId}
+    </update>
+    <parameterMap id="UserInfoForm" type="nju.edu.cinema.vo.UserInfoForm"></parameterMap>
+    <resultMap id="UserInfoForm" type="nju.edu.cinema.vo.UserInfoForm"></resultMap>
+</mapper>

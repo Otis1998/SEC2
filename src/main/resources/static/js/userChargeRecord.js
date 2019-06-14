@@ -1,19 +1,42 @@
-$(document).ready(function () {
-    $('#username').text(sessionStorage.getItem('username'));
+var chargeRecordReady=0;
 
-    getChargeRecord();
-
-    function getChargeRecord() {
+function showChargeRecord(){
+    if(chargeRecordReady==0) {
+        var chargeRecordDomStr="<div id='charge-record-div'>\n" +
+            "        <table border=\"0\" rules=\"rows\" id=\"record-table\" class=\"table\">\n" +
+            "            <thead>\n" +
+            "                <tr>\n" +
+            "                    <th>充值时间</th>\n" +
+            "                    <th>充值金额</th>\n" +
+            "                    <th>赠送金额</th>\n" +
+            "                    <th>余额</th>\n" +
+            "                </tr>\n" +
+            "            </thead>\n" +
+            "            <tbody id=\"record-list\">\n" +
+            "            </tbody>\n" +
+            "        </table>\n" +
+            "    </div>";
+        $("#charge-record-a").after(chargeRecordDomStr);
         getRequest(
-            '/vip/getChargeRecord/' + sessionStorage.getItem('id'),
+            '/vip/getChargeRecord/' + id,
             function (res) {
+                chargeRecordReady = 1;
                 renderChargeRecord(res.content);
             },
             function (error) {
                 alert(error);
             });
     }
-});
+    $("#charge-record-div").css("display","");
+    $("#charge-record-trigger").text("隐藏消费记录");
+    $("#charge-record-trigger").attr("href","javascript:hideChargeRecord()");
+}
+
+function hideChargeRecord() {
+    $("#charge-record-div").css("display","none");
+    $("#charge-record-trigger").text("查看消费记录");
+    $("#charge-record-trigger").attr("href","javascript:showChargeRecord()");
+}
 
 //list中元素为ChargeRecordVO：chargeTime充值时间、chargeSum充值金额、bonusSum赠送金额、balance余额
 function renderChargeRecord(list) {

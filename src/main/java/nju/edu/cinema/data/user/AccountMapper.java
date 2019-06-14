@@ -32,4 +32,9 @@ public interface AccountMapper {
      * @return
      */
     public User getAccountById(@Param("userId") int userId);
+
+    /**
+     * 根据用户id更新密码
+     */
+    public void updatePassword(@Param("userId") int userId, @Param("password") String password);
 }

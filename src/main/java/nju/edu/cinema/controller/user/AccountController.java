@@ -6,9 +6,7 @@ import nju.edu.cinema.vo.UserForm;
 import nju.edu.cinema.vo.ResponseVO;
 import nju.edu.cinema.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -41,4 +39,15 @@ public class AccountController {
         session.removeAttribute(InterceptorConfiguration.SESSION_KEY);
         return "index";
     }
+
+    @PostMapping("/changePassword")
+    public ResponseVO changePassword(@RequestBody UserForm userForm){
+        return accountService.changePassword(userForm);
+    }
+
+    @GetMapping("/getUserInfo/{userId}")
+    public ResponseVO getUserInfo(@PathVariable int userId){
+        return accountService.getUserInfo(userId);
+    }
+
 }

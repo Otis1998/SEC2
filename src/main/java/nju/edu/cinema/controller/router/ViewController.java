@@ -68,9 +68,9 @@ public class ViewController {
         return "userHome";
     }
 
-    @RequestMapping(value = "/user/buy")
+    @RequestMapping(value = "/user/selfPage")
     public String getUserBuy() {
-        return "userBuy";
+        return "userSelfPage";
     }
 
     @RequestMapping(value = "/user/movieDetail")

@@ -2,6 +2,7 @@ package nju.edu.cinema.bl.user;
 
 import nju.edu.cinema.vo.UserForm;
 import nju.edu.cinema.vo.ResponseVO;
+import nju.edu.cinema.vo.UserInfoForm;
 import nju.edu.cinema.vo.UserVO;
 
 /**
@@ -22,4 +23,18 @@ public interface AccountService {
      */
     public UserVO login(UserForm userForm);
 
+    /**
+     * 修改密码
+     */
+    public ResponseVO changePassword(UserForm userForm);
+
+    /**
+     * 根据用户id获取用户个人信息
+     */
+    public ResponseVO getUserInfo(int userId);
+
+    /**
+     * 修改用户个人信息
+     */
+    public ResponseVO changeUserInfo(UserInfoForm userInfoForm);
 }

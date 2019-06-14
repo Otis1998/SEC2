@@ -11,6 +11,9 @@
     <select id="getAccountById" resultMap="User">
         select * from user where id = #{userId}
     </select>
+    <update id="updatePassword">
+        update user set password = #{password} where id = #{userId}
+    </update>
     <resultMap id="User" type="nju.edu.cinema.po.User">
     </resultMap>
 </mapper>

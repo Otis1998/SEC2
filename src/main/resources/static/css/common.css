@@ -80,7 +80,7 @@ ul {
     height: 100%;
     background: #e4e7ea;
     padding: 20px;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 .content-item {
     margin-bottom: 30px;
@@ -136,4 +136,7 @@ ul {
 /*宽度相关*/
 .content-container-padding-justify{
     padding: 100px 0 100px 0;
+}
+.order-list-padding-justify{
+    padding: 0;
 }
