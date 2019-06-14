@@ -51,13 +51,22 @@ function repaintScheduleBody(curDateLoc) {
         $('#date-none-hint').css("display", "none");
     }
     var bodyContent = "";
-    for (var i = 0; i < scheduleItems.length; i++) {
-        bodyContent += "<tr><td>" + scheduleItems[i].startTime.substring(11, 16) + "</td>" +
-            "<td>预计" + scheduleItems[i].endTime.substring(11, 16) + "散场</td>" +
-            "<td>" + scheduleItems[i].hallName + "</td>" +
-            "<td><b>" + scheduleItems[i].fare.toFixed(2) + "</b></td>" +
-            "<td><a class='btn btn-primary' href='/user/movieDetail/buy?id="+movieId+"&scheduleId="+scheduleItems[i].id+"' role='button'>选座购票</a></td></tr>";
+    if (sessionStorage.getItem('id') == null) {
+        for (var i = 0; i < scheduleItems.length; i++) {
+            bodyContent += "<tr><td>" + scheduleItems[i].startTime.substring(11, 16) + "</td>" +
+                "<td>预计" + scheduleItems[i].endTime.substring(11, 16) + "散场</td>" +
+                "<td>" + scheduleItems[i].hallName + "</td>" +
+                "<td><b>" + scheduleItems[i].fare.toFixed(2) + "</b></td>" +
+                "<td><a class='btn btn-primary' onclick='docheck(movieId)' href='/signIn' role='button'>选座购票</a></td></tr>";
+        }
+    } else {
+        for (var i = 0; i < scheduleItems.length; i++) {
+            bodyContent += "<tr><td>" + scheduleItems[i].startTime.substring(11, 16) + "</td>" +
+                "<td>预计" + scheduleItems[i].endTime.substring(11, 16) + "散场</td>" +
+                "<td>" + scheduleItems[i].hallName + "</td>" +
+                "<td><b>" + scheduleItems[i].fare.toFixed(2) + "</b></td>" +
+                "<td><a class='btn btn-primary' href='/user/movieDetail/buy?id="+movieId+"&scheduleId="+scheduleItems[i].id+"' role='button'>选座购票</a></td></tr>";
+        }
     }
-
     $('#schedule-body').html(bodyContent);
 }

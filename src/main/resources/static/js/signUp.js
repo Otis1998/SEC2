@@ -25,6 +25,9 @@ function register() {
                 sessionStorage.setItem('username', formData.username);
                 sessionStorage.setItem('id', res.content.id);
                 alert("注册成功");
+                if (sessionStorage.getItem('curUrl') == null) {
+                    window.location.href = '/index';
+                }
                 window.location.href = sessionStorage.getItem('curUrl');
             } else {
                 alert(res.message);

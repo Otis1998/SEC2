@@ -22,6 +22,7 @@
     <script src="/js/request.js"></script>
     <script src="/js/movieDetail.js"></script>
     <script src="/js/userMovieDetail.js"></script>
+    <script src="/js/common.js"></script>
 </head>
 <body>
 <div class="nav-top-container">
@@ -90,4 +91,11 @@
     </div>
 </div>
 </body>
+<script type="text/javascript">
+    function docheck(movieId)
+    {
+        alert("请先登录");
+        sessionStorage.setItem('curUrl', window.location.pathname + '?id=' + movieId)
+    }
+</script>
 </html>
