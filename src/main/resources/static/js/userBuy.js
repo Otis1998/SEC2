@@ -78,7 +78,7 @@ function showFiveOrder() {
         for(var item in seatFormList){
             seatStr+=seatFormList[item].rowIndex+"排"+seatFormList[item].columnIndex+"座 ";
         }
-        var display=listToShow[i].state?'':'none';
+        var display=listToShow[i].state?'none':'';
         var orderDomStr="<li class='movie-item card'>" +
         "<img class='movie-img' src='" + (listToShow[i].posterUrl || "../images/defaultAvatar.jpg") + "'/>" +
         "<div class='movie-info'>" +
