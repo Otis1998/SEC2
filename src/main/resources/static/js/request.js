@@ -73,7 +73,7 @@ $(document).ready(function () {
         }
     }, true);
 
-    if (sessionStorage.getItem('id') == null && document.getElementsByClassName("dropdown-menu")[0].length !== 0) {
+    if (sessionStorage.getItem('id') == null && document.getElementsByClassName("dropdown-menu")[0] != null) {
         $(".dropdown-menu").html("<li><a href=\"/signIn\">登录</a></li>\n" +
             "                <li><a href=\"/signUp\">注册</a></li>\n");
     }
