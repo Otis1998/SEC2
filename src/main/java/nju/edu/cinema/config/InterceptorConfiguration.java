@@ -15,6 +15,11 @@ public class InterceptorConfiguration implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new SessionInterceptor()).excludePathPatterns("/login", "/index", "/signUp", "/register", "/signIn", "/error", "/user/movie", "/movie/search", "/user/movieDetail", "/schedule/search/audience", "/movie/{id}/{userId}", "/**/*.css", "/**/*.js", "/**/*.png", "/**/*.gif", "/**/*.jpg", "/**/*.jpeg", "/font/**").addPathPatterns("/**");
+        registry.addInterceptor(new SessionInterceptor()).excludePathPatterns(
+                "/login", "/index", "/signUp", "/register", "/signIn", "/error",
+                "/user/movie", "/movie/search", "/user/movieDetail", "/schedule/search/audience",
+                "/movie/{id}/{userId}", "/movie/all/exclude/off", "/statistics/boxOffice/total",
+                "/statistics/popular/movie", 
+                "/**/*.css", "/**/*.js", "/**/*.png", "/**/*.gif", "/**/*.jpg", "/**/*.jpeg", "/font/**").addPathPatterns("/**");
     }
 }

@@ -73,17 +73,28 @@ $(document).ready(function () {
         }
     }, true);
 
+    if (sessionStorage.getItem('id') == null && document.getElementsByClassName("dropdown-menu")[0].length !== 0) {
+        $(".dropdown-menu").html("<li><a href=\"/signIn\">登录</a></li>\n" +
+            "                <li><a href=\"/signUp\">注册</a></li>\n");
+    }
+
     $('.avatar-lg').attr('title','退出登录');
     $('#logout').attr('title','退出登录');
 
     $('.avatar-lg').click(function () {
         confirm('确认要退出登录吗？') && postRequest('/logout',null,function (res) {
+            sessionStorage.removeItem('id');
+            sessionStorage.removeItem('role');
+            sessionStorage.removeItem('username');
             window.location.href='/index';
         });
     });
     $('#logout').click(function () {
         confirm('确认要退出登录吗？') && postRequest('/logout',null,function (res) {
-             window.location.href='/index';
+            sessionStorage.removeItem('id');
+            sessionStorage.removeItem('role');
+            sessionStorage.removeItem('username');
+            window.location.href='/index';
         });
     });
 });
