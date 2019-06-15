@@ -33,7 +33,7 @@ $(document).ready(function () {
                     alert("添加成功！");
                     window.location.reload()
                 }else{
-                    alert("添加失败！")
+                    alert("添加失败！用户名已存在")
                 }
             },
             function(error){
@@ -82,7 +82,47 @@ function updateUser(id){
             });
     });
 }
-
+function updateAdmin(id){
+        var userInfo=[]
+        getRequest(
+            '/people/getInfo?id='+id,
+            function(res){
+                userInfo=res.content;
+                $('#admin-edit-identity').val(userInfo[0].identity)
+                $('#admin-edit-username-input').val(userInfo[0].username)
+                $('#admin-edit-password-input').val(userInfo[0].password)
+            },
+            function(error){
+                alert(error)
+            });
+        $('#admin-edit-form-btn').click(function(){
+        //验证通过后修改用户信息
+        var userForm={
+            id:id,
+            identity:$('#admin-edit-identity').val(),
+            username:$('#admin-edit-username-input').val(),
+            password:$('#admin-edit-password-input').val()
+        };
+        if(!validateUserInfo(userForm)){
+            return;
+        }
+        postRequest(
+            '/people/update',
+            userForm,
+            function(res){
+                $("#adminEditModal").modal('hide');
+                if(res.success){
+                    alert("修改成功！");
+                    window.location.reload()
+                }else{
+                    alert("修改失败！")
+                }
+            },
+            function(error){
+                alert(error)
+            });
+    });
+}
 function deleteUser(id){
     if(confirm("是否确认删除？")){
         postRequest(
@@ -129,22 +169,36 @@ function renderUserList(list){
         }else if(list[i].identity==3){
             identity='管理员'
         }else{
-            identity='观众'
+            alert("身份异常！")
         }
         addInTbody(id,identity,username,password);
     }
 }
 function addInTbody(id,identity,username,password){
-    var UserTableBody=$('#user-list');
-    var UserDomStr=
-        '<tr>' +
-        '<td>'+id+'</td>' +
-        '<td>'+identity+'</td>' +
-        '<td>'+username+'</td>' +
-        '<td>'+password+'</td>' +
-        '<td>'+'<button type="button" class="btn btn-primary" id="modify-btn" onclick="updateUser('+id+')" data-backdrop="static" data-toggle="modal" data-target="#userEditModal"><span>修 改</span></button>'+'<button type="button" class="btn btn-danger" onclick="deleteUser('+id+')">删 除</button>'+'</td>'
-        '</tr>';
-    UserTableBody.append(UserDomStr);
-    return;
+	if(identity!='管理员'){
+		var UserTableBody=$('#user-list');
+    	var UserDomStr=
+        	'<tr>' +
+        	'<td>'+id+'</td>' +
+        	'<td>'+identity+'</td>' +
+        	'<td>'+username+'</td>' +
+        	'<td>'+password+'</td>' +
+        	'<td>'+'<button type="button" class="btn btn-primary" id="modify-btn" onclick="updateUser('+id+')" data-backdrop="static" data-toggle="modal" data-target="#userEditModal"><span>修 改</span></button>'+'<button type="button" class="btn btn-danger" onclick="deleteUser('+id+')">删 除</button>'+'</td>'
+        	'</tr>';
+    	UserTableBody.append(UserDomStr);
+		return;
+	}else{
+		var UserTableBody=$('#user-list');
+    	var UserDomStr=
+        	'<tr>' +
+        	'<td>'+id+'</td>' +
+        	'<td>'+identity+'</td>' +
+        	'<td>'+username+'</td>' +
+        	'<td>'+password+'</td>' +
+        	'<td>'+'<button type="button" class="btn btn-primary" id="modify-btn" onclick="updateAdmin('+id+')" data-backdrop="static" data-toggle="modal" data-target="#adminEditModal"><span>修改信息</span></button>'+'</td>'
+        	'</tr>';
+    	UserTableBody.append(UserDomStr);
+		return;
+	}
 }
 

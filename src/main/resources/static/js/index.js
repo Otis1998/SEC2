@@ -69,7 +69,7 @@ function renderMovieList(list){
 		}else{
 			listBody=$('#movie-off-list'); 
 		}
-		var listDomStr='<div class="movie-item"><a href=""><div class="movie-poster"><img class="movie-img" src="'+list[i].posterUrl+'" /><div class="movie-name">'+list[i].name+'</div></div></a><div>';
+		var listDomStr='<div class="movie-item"><a class="movie-url" href="/user/movieDetail?id='+list[i].id+'"><div class="movie-poster"><img class="movie-img" src="'+list[i].posterUrl+'" /><div class="movie-name">'+list[i].name+'</div></div></a><div>';
 		listBody.append(listDomStr);
 	}
 	return;
