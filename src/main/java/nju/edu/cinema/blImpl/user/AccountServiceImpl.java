@@ -72,6 +72,10 @@ public class AccountServiceImpl implements AccountService, AccountServiceForBl {
     public ResponseVO changePassword(UserForm userForm){
         try{
             //密码加密 TODO
+            User user = new User();
+            user.setId(userForm.getId());
+            user.setPassword(getMD5(userForm.getPassword()));
+            accountMapper.updatePassword(user.getId(),user.getPassword());
             return ResponseVO.buildSuccess();
         }catch (Exception e){
             e.printStackTrace();
