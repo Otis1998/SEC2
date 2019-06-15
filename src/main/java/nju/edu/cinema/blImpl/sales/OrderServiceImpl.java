@@ -175,7 +175,9 @@ public class OrderServiceImpl implements OrderService {
 	}
 	@Override
     public ResponseVO printOrder(int orderId){
-        orderMapper.updateOrderState(orderId,1);
+        Order order = orderMapper.selectByOrderId(orderId);
+        order.setState(1);
+        orderMapper.updateOrderState(order.getOrderId(),order.getState());
         return ResponseVO.buildSuccess();
     }
 }

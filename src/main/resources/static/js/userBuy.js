@@ -118,7 +118,8 @@ function cancelOrder(orderId) {
         '/order/cancel/'+orderId,//退票的url
         function (res) {
             alert("退票成功");
-            location.reload();
+            orderReady=0;
+            orderClick();
         },
         function (error) {
             alert(error);
@@ -130,7 +131,8 @@ function printOrder(orderId) {
         '/order/print/'+orderId,
         function (res) {
             alert("出票成功");
-            location.reload();
+            orderReady=0;
+            orderClick();
         },
         function (error) {
             alert(error);
