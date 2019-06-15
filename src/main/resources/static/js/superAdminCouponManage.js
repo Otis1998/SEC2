@@ -5,7 +5,7 @@ $(document).ready(function () {
         getRequest(
             '/coupon/searchAllCoupons',
             function(res){
-                couponList=res.content;
+				couponList=res.content;
                 renderCouponList(res.content);
             },
             function(error){

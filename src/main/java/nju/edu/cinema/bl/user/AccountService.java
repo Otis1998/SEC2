@@ -2,10 +2,8 @@ package nju.edu.cinema.bl.user;
 
 import nju.edu.cinema.vo.UserForm;
 import nju.edu.cinema.vo.ResponseVO;
+import nju.edu.cinema.vo.UserInfoForm;
 import nju.edu.cinema.vo.UserVO;
-
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  * @author huwen
@@ -26,10 +24,17 @@ public interface AccountService {
     public UserVO login(UserForm userForm);
 
     /**
-     * 用户登录的时候生成验证码
-     * @param session
-     * @param response
+     * 修改密码
      */
-    public void generateVerificationCode(HttpSession session, HttpServletResponse response);
+    public ResponseVO changePassword(UserForm userForm);
 
+    /**
+     * 根据用户id获取用户个人信息
+     */
+    public ResponseVO getUserInfo(int userId);
+
+    /**
+     * 修改用户个人信息
+     */
+    public ResponseVO changeUserInfo(UserInfoForm userInfoForm);
 }

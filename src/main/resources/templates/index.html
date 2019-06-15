@@ -36,55 +36,56 @@
                 <span class="gray-text" style="vertical-align: middle" id="username">用户A&nbsp;<span class="caret"></span></span>
             </button>
             <ul class="dropdown-menu">
-                <li><a href="/user/buy">电影票</a></li>
-                <li><a href="/user/member">卡包</a></li>
+                <li><a href="/user/selfPage">个人中心</a></li>
                 <li id="logout"><a href="#">登出</a></li>
             </ul>
         </div>
     </div>
-    暂时没内容，点击导航 ' 电影 ' 看看吧
-    <!-- 可能不需要的功能 -->
-    <!--<div class="content-container">-->
-        <!--<div class="movie-contianer">-->
-            <!--<p class="title primary-text">热映电影</p>-->
-            <!--<ul class="movie-on-list card">-->
-            <!--</ul>-->
-            <!--<p class="title primary-text">即将上映</p>-->
-            <!--<ul class="movie-off-list card">-->
-            <!--</ul>-->
-        <!--</div>-->
-        <!--<div class="statistic-container">-->
-            <!--<p class="title primary-text">票房统计</p>-->
-            <!--<ul class="top-sell-list card">-->
-                <!--<div class="statistic-item">-->
-                    <!--<span>电影1</span>-->
-                    <!--<span class="error-text">99</span>-->
-                <!--</div>-->
-                <!--<div class="statistic-item">-->
-                    <!--<span>电影1</span>-->
-                    <!--<span class="error-text">99</span>-->
-                <!--</div>-->
-                <!--<div class="statistic-item">-->
-                    <!--<span>电影1</span>-->
-                    <!--<span class="error-text">99</span>-->
-                <!--</div>-->
-            <!--</ul>-->
-            <!--<p class="title primary-text">最受欢迎</p>-->
-            <!--<ul class="top-expectation-list card">-->
-                <!--<div class="statistic-item">-->
-                    <!--<span>电影1</span>-->
-                    <!--<span class="error-text">99</span>-->
-                <!--</div>-->
-                <!--<div class="statistic-item">-->
-                    <!--<span>电影1</span>-->
-                    <!--<span class="error-text">99</span>-->
-                <!--</div>-->
-                <!--<div class="statistic-item">-->
-                    <!--<span>电影1</span>-->
-                    <!--<span class="error-text">99</span>-->
-                <!--</div>-->
-            <!--</ul>-->
-        <!--</div>-->
-    <!--</div>-->
+    <div class="content-container">
+        <div id="myCarousel" class="carousel slide">
+    		<!-- 轮播（Carousel）指标 -->
+    		<ol class="carousel-indicators">
+        		<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        		<li data-target="#myCarousel" data-slide-to="1"></li>
+        		<li data-target="#myCarousel" data-slide-to="2"></li>
+    		</ol>   
+    		<!-- 轮播（Carousel）项目 -->
+    		<div class="carousel-inner">
+        		<div class="item active">
+            		<img class="center-block" src="https://i.loli.net/2019/06/13/5d02122c9e38944366.jpg" />
+        		</div>
+        		<div class="item">
+            		<img class="center-block" src="https://i.loli.net/2019/06/13/5d01fadad06bc61936.jpg" />
+        		</div>
+        		<div class="item">
+            		<img class="center-block" src="https://i.loli.net/2019/06/13/5d01fe24cd74c74464.jpg" />
+        		</div>
+    		</div>
+    		<!-- 轮播（Carousel）导航 -->
+    		<a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev"></a>
+    		<a class="right carousel-control" href="#myCarousel" role="button" data-slide="next"></a>
+		</div>
+			<div class="movie-contianer">
+        
+			<p class="title primary-text">热映电影</p>
+            	<ul id="movie-on-list" class="movie-on-list card">
+
+				</ul>
+            <p class="title primary-text">即将上映</p>
+            <ul id="movie-off-list" class="movie-off-list card">
+                
+            </ul>
+        	</div>
+        <div class="statistic-container">
+            <p class="title primary-text">票房统计<span>单位：元</span></p>
+            <ul id="top-sell-list" class="top-sell-list card">
+                
+            </ul>
+            <p class="title primary-text">最受欢迎<span>根据近7天累计票房排名</span></p>
+            <ul id="top-expectation-list" class="top-expectation-list card">
+                
+            </ul>
+		</div>
+    </div>
 </body>
 </html>

@@ -1,28 +1,10 @@
-let orderList=[];
+let order=[];
 let listToShow=[];
 let numOfPage=0;
 let page=0;
-//初始化界面，展示所有订单
-$(document).ready(function () {
-    $('#username').text(sessionStorage.getItem('username'));
-
-    getOrderList();
-
-    function getOrderList() {
-        getRequest(
-            '/order/get/' + sessionStorage.getItem('id'),
-            function (res) {
-                orderList=res.content;
-                showAllOrder();
-            },
-            function (error) {
-                alert(error);
-            });
-    }
-});
 
 function showAllOrder() {
-    listToShow=orderList;
+    listToShow=order;
     $("#ready").css("background-color","#ffffff");
     $("#all").css("background-color","rgba(173,173,173,0.5)");
     $("#finished").css("background-color","#ffffff");
@@ -31,7 +13,7 @@ function showAllOrder() {
 
 function showSomeOrder(state) {
     listToShow=[];
-    orderList.forEach(function (order) {
+    order.forEach(function (order) {
         if(order.state==state){
             listToShow.push(order);
         }
@@ -87,10 +69,10 @@ function showFiveOrder() {
         "<span class='label'></span>" +
         "<span class='movie-want'></span>" +
         "</div>" +
-        "<div class='movie-description dark-text'><span>" + listToShow[i].hallId + "号厅 "+seatStr+"</span></div>" +
-        "<div>票数：" + listToShow[i].numOfTicket + " 总价："+listToShow[i].cost+"</div>" +
+        "<div class='movie-description dark-text'><span>" + listToShow[i].hallId.toFixed(0) + "号厅 "+seatStr+"</span></div>" +
+        "<div>票数：" + listToShow[i].numOfTicket.toFixed(0) + " 总价："+listToShow[i].cost.toFixed(2)+"</div>" +
         "<div style='display: flex'><span>开始时间：" + formatTime(listToShow[i].startTime) + "</span><span style='margin-left: 30px;'>结束时间：" + formatTime(listToShow[i].endTime) + "</span>" +
-        "<div class='movie-operation' style='display: "+display+"'><a onclick='cancelOrder("+listToShow[i].orderId+")'>退票</a><a onclick='printOrder("+listToShow[i].orderId+")'>出票</a></div></div>" +
+        "<div class='movie-operation' style='display: "+display+"'><span style='margin-left: 30px;'><a onclick='cancelOrder("+listToShow[i].orderId+")'>退票</a></span><span style='margin-left: 30px;'><a onclick='printOrder("+listToShow[i].orderId+")'>出票</a></span></div></div>" +
             "</div>"+
             "</li>";
         orderUl.append(orderDomStr);
