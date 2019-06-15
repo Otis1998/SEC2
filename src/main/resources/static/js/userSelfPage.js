@@ -74,7 +74,7 @@ function renderUserInfo() {
     //TODO 调整格式
     var userInfoDomStr="<div class='filler-container card col-md-8 col-md-offset-2'>" +
         "<div class='input-group' style='width: 100%'>" +
-        "<div>头像：<img src='"+profilePicture+"'></div>" +
+        "<div>头像：<img src='"+profilePicture+"' class='avatar-lg'></div>" +
         "<div>昵称：<label>"+name+"</label></div>" +
         "<a href='javascript:changeInfo()'>修改资料</a>||" +
         "<a href='javascript:changePassword()'>修改密码</a>" +

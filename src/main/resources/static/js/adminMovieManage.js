@@ -13,6 +13,8 @@ $(document).ready(function(){
             function (res) {
                 getMovieList();
                 $("#movieModal").modal('hide');
+                alert("上架成功！")
+                window.location.reload();
             },
              function (error) {
                 alert(error);

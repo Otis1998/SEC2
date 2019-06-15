@@ -21,14 +21,14 @@ function register() {
         formData,
         function (res) {
             if (res.success) {
-                sessionStorage.setItem('role', 'user');
-                sessionStorage.setItem('username', formData.username);
-                sessionStorage.setItem('id', res.content.id);
+                // sessionStorage.setItem('role', 'user');
+                // sessionStorage.setItem('username', formData.username);
+                // sessionStorage.setItem('id', res.content.id);
                 alert("注册成功");
-                if (sessionStorage.getItem('curUrl') == null) {
-                    window.location.href = '/index';
-                }
-                window.location.href = sessionStorage.getItem('curUrl');
+                // if (sessionStorage.getItem('curUrl') == null) {
+                //     window.location.href = '/index';
+                // }
+                window.location.href = "/signIn";
             } else {
                 alert(res.message);
             }

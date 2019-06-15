@@ -33,6 +33,7 @@ public class AccountServiceImpl implements AccountService, AccountServiceForBl {
             user.setUsername(userForm.getUsername());
             user.setPassword(getMD5(userForm.getPassword()));
             accountMapper.createNewAccount(user);
+            userInfoMapper.insertUserInfo(user.getId());
             user.setPassword("");
             return ResponseVO.buildSuccess(user);
         } catch (Exception e) {
