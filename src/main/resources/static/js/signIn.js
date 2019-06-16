@@ -1,4 +1,6 @@
 $(document).ready(function () {
+    //首次获取验证码
+    $("#imgVerify").attr("src","/getVerify?"+Math.random());
 
     $("#login-btn").click(function () {
         login();
@@ -10,6 +12,8 @@ $(document).ready(function () {
             login();
         }
     });
+
+
 
     function login() {
         var formData = getLoginForm();
@@ -39,6 +43,7 @@ $(document).ready(function () {
                     }
                 } else {
                     alert(res.message);
+                    getVerify();
                 }
             },
             function (error) {
@@ -49,7 +54,8 @@ $(document).ready(function () {
     function getLoginForm() {
         return {
             username: $('#index-name').val(),
-            password: $('#index-password').val()
+            password: $('#index-password').val(),
+            verifyCode: $('#index-verify-code').val(),
         };
     }
 
@@ -65,6 +71,15 @@ $(document).ready(function () {
             $('#index-password').parent('.input-group').addClass('has-error');
             $('#index-password-error').css("visibility", "visible");
         }
+//        if(!data.verification){
+//            isValidate = false;
+//            $('#index-verification-code'.parent'.input-group').addClass('has-error');
+//            $('#index-verification-code-error').css("visibility","visible");
+//        }
         return isValidate;
     }
 });
+//获取验证码
+    function getVerify(){
+       $("#imgVerify").attr("src","/getVerify?"+Math.random());
+    }

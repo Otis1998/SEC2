@@ -14,7 +14,7 @@ import java.util.Random;
  * 验证码生成类
  */
 public class RandomValidateCodeServiceImpl{
-    public void Yzm(HttpSession session,HttpServletResponse resp){
+    public void generateVerificationCode(HttpSession session,HttpServletResponse resp){
         // 验证码图片的宽度。
         int width = 60;
 

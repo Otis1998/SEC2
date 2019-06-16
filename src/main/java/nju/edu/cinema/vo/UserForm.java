@@ -21,6 +21,10 @@ public class UserForm {
      * 用户密码
      */
     private String password;
+	/**
+	 * 用户输入的验证码
+	 */
+	private String verifyCode;
 
     public String getUsername() {
         return username;
@@ -52,5 +56,13 @@ public class UserForm {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public String getVerifyCode(){
+    	return verifyCode;
+	}
+
+	public void setVerifyCode(String verifyCode) {
+		this.verifyCode = verifyCode;
 	}
 }
