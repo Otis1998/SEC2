@@ -71,6 +71,7 @@ function renderUserInfo() {
     if(info.name!=null){
         name=info.name;
     }
+    $("#name").text(name);
     //TODO 调整格式
     var userInfoDomStr="<div class='filler-container card col-md-8 col-md-offset-2'>" +
         "<div class='input-group' style='width: 100%'>" +
