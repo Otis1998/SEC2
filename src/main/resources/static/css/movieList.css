@@ -5,12 +5,11 @@
 .movie-item {
     list-style: none;
     display: flex;
-    margin-top: 20px;
+    margin-top: 10px;
     border-bottom: 1px solid #ccc;
 }
 .movie-item .movie-img {
-    height: 159px;
-    width: 110px;
+    height: 160px;
 }
 
 .movie-info {
