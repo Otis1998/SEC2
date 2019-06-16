@@ -9,7 +9,12 @@
     <link rel="stylesheet" type="text/css" href="/css/adminSchedule.css"/>
 
 
-
+    <script>
+        var role = sessionStorage.getItem('role');
+        if ( role == null || role !== "manager") {
+            window.location.href = "/notfound";
+        }
+    </script>
     <script src="/js/jquery.js"></script>
     <script src="/js/bootstrap.js"></script>
     <script src="/js/request.js"></script>

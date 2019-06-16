@@ -13,6 +13,12 @@
 
 
     <!-- 引入js脚本文件 -->
+    <script>
+        var role = sessionStorage.getItem('role');
+        if ( role == null || role !== "manager") {
+            window.location.href = "/notfound";
+        }
+    </script>
     <!-- jquery -->
     <script src="/js/jquery.js"></script>
     <!-- Bootstrap 核心 JavaScript 文件 -->
