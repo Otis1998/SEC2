@@ -55,23 +55,7 @@ public class AccountController {
             e.printStackTrace();
         }
     }
-    /**
-     * 校验验证码
-     */
-    @RequestMapping(value = "/login/checkVerify", method = RequestMethod.POST, headers = "Accept=application/json")
-    public void checkVerify(@RequestBody HttpServletRequest request, String signcode) {
-        HttpSession session=request.getSession();
-        String usercode=request.getParameter("verification_code");  //获取用户输入的验证码
-        String sessioncode=(String) session.getAttribute("validateCode");  //获取保存在session里面的验证码
-        String result="";
-        if( usercode != null && usercode.equals(sessioncode)){   //对比两个code是否正确
-            result = "1";
-        }else{
-            result = "0";
-        }
-//        PrintWriter out = response.getWriter();
-//        out.write(result.toString());   //将数据传到前台
-    }
+
     @PostMapping("/register")
     public ResponseVO registerAccount(@RequestBody UserForm userForm){
         return accountService.registerAccount(userForm);
