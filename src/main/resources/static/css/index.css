@@ -8,21 +8,33 @@
 	/* width: 100%; */
 	padding: 50px 0px;
 }
-body{
-	/*background: linear-gradient(to bottom right, #1caf9a, #1caaaa);*/
-    background: linear-gradient(to bottom, white, #1caaaa);
+.main-content-container{
+    display: flex;
+    justify-content: space-between;
+}
+.movie-container{
+	display: flex;
+    float: left;
+	width: 75%;
+}
+.movie-contianer ul {
+    display: flex;
+    flex-wrap: wrap;
+	min-height: 220px;
+	margin-bottom:40px; 
+	margin-left:20px; 
+	width: 85%
 }
 .movie-item {
-    list-style: none;
-    display: flex;
-    flex-direction: row;
-    margin: 10px 18px -30px 18px;
+    display: flex; 
+    height: 180px;
+    margin: 10px 15px 10px 15px;
 }
-
-.movie-item .movie-img:hover {
-    border: 2px solid #1caf9a;
+.movie-item .movie-img {
+    height: 165px;
+    width: 120px;
+    cursor: pointer;
 }
-
 .movie-item .movie-name {
     position: relative;
     line-height: 30px;
@@ -31,51 +43,30 @@ body{
     color: #fff;
     text-align: center;
 }
-
-.movie-item .movie-img {
+.movie-item .movie-img:hover {
+    border: 2px solid #1caf9a;
+}
+.movie-url{
     height: 165px;
     width: 120px;
-    cursor: pointer;
+    margin: 10px 18px -30px 18px;
 }
-
+.statistic-container {
+	display: flex;
+	flex-direction: column;
+    float: right;
+	width: 25%;
+	margin-right:20px; 
+}
+.statistic-container ul {
+    display: flex;
+    flex-direction: column;
+	min-height: 185px;
+	padding: 10px 20px;
+	width: 100%
+}
 .statistic-item {
     margin: 8px 0;
     display: flex;
     justify-content: space-between;
-}
-
-.movie-contianer {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    height: 100%;
-    max-width: 1450px;
-    justify-content: space-between;
-	float: left;
-	padding: 0px,20px;
-	margin-left: 20px;
-}
-
-.statistic-container {
-    display: flex;
-    flex-direction: column;
-    width: 300px;
-    height: 100%;
-    justify-content: space-between;
-	margin-left: 40px;
-	float: right;
-	padding: 0px,20px;
-}
-
-.movie-contianer ul {
-    display: flex;
-    flex-wrap: wrap;
-    height: 400px;
-}
-
-.statistic-container ul {
-    display: flex;
-    flex-direction: column;
-    height: 400px;
-    padding: 10px 20px;
 }

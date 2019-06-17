@@ -39,16 +39,29 @@
                 <p id="index-password-error" class="notice">密码不能为空</p>
             </div>
 
+            <div class="row">
+                <div class="col-xs-6 pull_left" style="margin-left:115px">
+                    <a href="#" title="点击更换验证码">
+                        <img id="imgVerify" src="" alt="更换验证码" height="36" width="100%" onclick="getVerify()">
+                    </a>
+                </div>
+                <div class="text-info"  style="font-size:15px;float:right;margin-top:15px;margin-right:20px">
+                    <a href="#" onclick="getVerify()">
+                        看不清？
+                    </a>
+                </div>
+            </div>
+
             <div class = "input-interval">
                 <div class="input-group" id = "basic-addon3">
                     <span class = "input-group-addon">验证码</span>
-                    <input id="index-verification-code" type="text" class="form-control" placeholder="请输入验证码" aria-describedby="basic-addon3" >
+                    <input id="index-verify-code" type="text" class="form-control" placeholder="请输入验证码" aria-describedby="basic-addon3" >
                 </div>
                 <p id="index-verification-code-error" class="notice">验证码输入错误</p>
             </div>
 
             <div class="form-group">
-                <p>还未注册过? <a href="/signUp">&nbsp;立即注册</a>
+                <p>还未注册过? <a href="/signUp">&nbsp;立即注册</a></p>
             </div>
 
             <button id="login-btn" type="button" class="btn btn-primary input-interval btn-block">登 录</button>

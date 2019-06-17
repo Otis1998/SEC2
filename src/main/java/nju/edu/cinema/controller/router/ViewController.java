@@ -15,6 +15,11 @@ public class ViewController {
         return "index";
     }
 
+    @RequestMapping(value = "/notfound")
+    public String getNotFound() {
+        return "404";
+    }
+
     @RequestMapping(value = "/signUp")
     public String getSignUp() {
         return "signUp";

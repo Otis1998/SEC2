@@ -20,6 +20,7 @@ public class InterceptorConfiguration implements WebMvcConfigurer {
                 "/user/movie", "/movie/search", "/user/movieDetail", "/schedule/search/audience",
                 "/movie/{id}/{userId}", "/movie/all/exclude/off", "/statistics/boxOffice/total",
                 "/statistics/popular/movie",
-                "/**/*.css", "/**/*.js", "/**/*.png", "/**/*.gif", "/**/*.jpg", "/**/*.jpeg", "/font/**").addPathPatterns("/**");
+                "/**/*.css", "/**/*.js", "/**/*.png", "/**/*.gif", "/**/*.jpg", "/**/*.jpeg", "/font/**",
+                "/getVerify","/login/getVerify").addPathPatterns("/**");
     }
 }

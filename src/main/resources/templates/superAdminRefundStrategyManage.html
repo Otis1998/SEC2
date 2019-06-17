@@ -8,6 +8,12 @@
     <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css"/>
     <link rel="stylesheet" type="text/css" href="/css/superAdminRefund.css"/>
 
+    <script>
+        var role = sessionStorage.getItem('role');
+        if ( role == null || role !== "admin") {
+            window.location.href = "/notfound";
+        }
+    </script>
     <script src="/js/jquery.js"></script>
     <script src="/js/bootstrap.js"></script>
     <script src="/js/request.js"></script>

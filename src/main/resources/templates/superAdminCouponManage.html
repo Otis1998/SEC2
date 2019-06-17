@@ -8,6 +8,12 @@
     <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css"/>
     <link rel="stylesheet" type="text/css" href=""/>
 
+    <script>
+        var role = sessionStorage.getItem('role');
+        if ( role == null || role !== "admin") {
+            window.location.href = "/notfound";
+        }
+    </script>
     <script src="/js/jquery.js"></script>
     <script src="/js/bootstrap.js"></script>
     <script src="/js/request.js"></script>
@@ -31,6 +37,9 @@
         </ul>
     </div>
 <div class="content-container">
+	<div class="content-header">
+        <span class="title gray-text">优惠券赠送</span>
+        </div>
     <div class="input-group col-lg-3" style="float:right;">
 					<span class="input-group-btn">
 						<label>选择优惠券：</label>

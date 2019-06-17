@@ -70,7 +70,7 @@ function showFiveOrder() {
         "<span class='movie-want'></span>" +
         "</div>" +
         "<div class='movie-description dark-text'><span>" + listToShow[i].hallId.toFixed(0) + "号厅 "+seatStr+"</span></div>" +
-        "<div>票数：" + listToShow[i].numOfTicket.toFixed(0) + " 总价："+listToShow[i].cost.toFixed(2)+"</div>" +
+        "<div>订单号："+ listToShow[i].orderId +" | 票数：" + listToShow[i].numOfTicket.toFixed(0) + " | 总价："+listToShow[i].cost.toFixed(2)+" 元</div>" +
         "<div style='display: flex'><span>开始时间：" + formatTime(listToShow[i].startTime) + "</span><span style='margin-left: 30px;'>结束时间：" + formatTime(listToShow[i].endTime) + "</span>" +
         "<div class='movie-operation' style='display: "+display+"'><span style='margin-left: 30px;'><a onclick='cancelOrder("+listToShow[i].orderId+")'>退票</a></span><span style='margin-left: 30px;'><a onclick='printOrder("+listToShow[i].orderId+")'>出票</a></span></div></div>" +
             "</div>"+

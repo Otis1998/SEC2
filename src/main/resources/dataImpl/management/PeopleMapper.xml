@@ -6,7 +6,7 @@
         values(#{identity},#{username}, #{password})
     </insert>
     <select id="selectAllPeople" resultMap="People">
-        select * from user order by identity desc
+        select * from user where identity!=0 order by identity desc
     </select>
     <select id="selectUserById" resultMap="People">
         select * from user where id=#{id}
