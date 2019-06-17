@@ -68,7 +68,8 @@ function renderUserInfo() {
     var profilePicture="/images/defaultAvatar.jpg";
     var name=sessionStorage.getItem("username");
     if(info.profilePicture!=null){
-        profilePicture=info.profilePicture;
+        profilePicture="data:image/jpeg;base64,"+info.profilePicture;
+        console.log(profilePicture);
     }
     if(info.name!=null){
         name=info.name;

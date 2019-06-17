@@ -93,8 +93,12 @@ public class AccountServiceImpl implements AccountService, AccountServiceForBl {
     @Override
     public ResponseVO getUserInfo(int userId){
         UserInfoForm userInfoForm=userInfoMapper.getUserInfo(userId);
-        userInfoForm.setProfilePicture(imageToBase64(userInfoForm.getProfilePicture()));
-        return ResponseVO.buildSuccess(userInfoForm);
+        try{
+            userInfoForm.setProfilePicture(imageToBase64(userInfoForm.getProfilePicture()));
+        }catch (Exception e){
+        }finally {
+            return ResponseVO.buildSuccess(userInfoForm);
+        }
     }
 
     public static String imageToBase64(String path) {// 将图片文件转化为字节数组字符串，并对其进行Base64编码处理
