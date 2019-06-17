@@ -28,13 +28,13 @@ function showChargeRecord(){
             });
     }
     $("#charge-record-div").css("display","");
-    $("#charge-record-trigger").text("隐藏消费记录");
+    $("#charge-record-trigger").text("隐藏充值记录");
     $("#charge-record-trigger").attr("href","javascript:hideChargeRecord()");
 }
 
 function hideChargeRecord() {
     $("#charge-record-div").css("display","none");
-    $("#charge-record-trigger").text("查看消费记录");
+    $("#charge-record-trigger").text("查看充值记录");
     $("#charge-record-trigger").attr("href","javascript:showChargeRecord()");
 }
 
