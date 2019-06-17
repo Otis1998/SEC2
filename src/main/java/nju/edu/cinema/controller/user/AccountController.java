@@ -4,6 +4,7 @@ import nju.edu.cinema.blImpl.user.AccountServiceImpl;
 import nju.edu.cinema.config.InterceptorConfiguration;
 import nju.edu.cinema.vo.UserForm;
 import nju.edu.cinema.vo.ResponseVO;
+import nju.edu.cinema.vo.UserInfoForm;
 import nju.edu.cinema.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -57,6 +58,11 @@ public class AccountController {
     @PostMapping("/changePassword")
     public ResponseVO changePassword(@RequestBody UserForm userForm){
         return accountService.changePassword(userForm);
+    }
+
+    @PostMapping("/changeUserInfo")
+    public ResponseVO changeUserInfo(@RequestBody UserInfoForm userInfoForm){
+        return accountService.changeUserInfo(userInfoForm);
     }
 
     @GetMapping("/getUserInfo/{userId}")

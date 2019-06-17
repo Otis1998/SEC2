@@ -10,8 +10,11 @@ import nju.edu.cinema.vo.ResponseVO;
 import nju.edu.cinema.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
 import java.awt.image.BufferedImage;
+import java.io.*;
 import java.security.MessageDigest;
 import java.awt.*;
 import java.util.Random;
@@ -19,7 +22,6 @@ import javax.imageio.ImageIO;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 
 /**
  * @author huwen
@@ -72,7 +74,6 @@ public class AccountServiceImpl implements AccountService, AccountServiceForBl {
     @Override
     public ResponseVO changePassword(UserForm userForm){
         try{
-            //密码加密 TODO
             User user = new User();
             user.setId(userForm.getId());
             user.setPassword(getMD5(userForm.getPassword()));
@@ -86,12 +87,62 @@ public class AccountServiceImpl implements AccountService, AccountServiceForBl {
 
     @Override
     public ResponseVO getUserInfo(int userId){
-        return ResponseVO.buildSuccess(userInfoMapper.getUserInfo(userId));
+        UserInfoForm userInfoForm=userInfoMapper.getUserInfo(userId);
+        userInfoForm.setProfilePicture(imageToBase64(userInfoForm.getProfilePicture()));
+        return ResponseVO.buildSuccess(userInfoForm);
+    }
+
+    public static String imageToBase64(String path) {// 将图片文件转化为字节数组字符串，并对其进行Base64编码处理
+        byte[] data = null;
+        // 读取图片字节数组
+        try {
+            System.out.println(path);
+            InputStream in = new FileInputStream(path);
+            data = new byte[in.available()];
+            in.read(data);
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // 对字节数组Base64编码
+        BASE64Encoder encoder = new BASE64Encoder();
+        return encoder.encode(data);// 返回Base64编码过的字节数组字符串
     }
 
     @Override
     public ResponseVO changeUserInfo(UserInfoForm userInfoForm){
-        return ResponseVO.buildSuccess(userInfoMapper.updateUserInfo(userInfoForm));
+        String path="/"+userInfoForm.getId()+".jpg";
+
+        if(base64ToImage(userInfoForm.getProfilePicture(),path)) {
+            userInfoForm.setProfilePicture(path);
+            return ResponseVO.buildSuccess(userInfoMapper.updateUserInfo(userInfoForm));
+        }else{
+            return ResponseVO.buildFailure("保存失败");
+        }
+    }
+
+    public static boolean base64ToImage(String base64, String path) {// 对字节数组字符串进行Base64解码并生成图片
+        if (base64 == null){ // 图像数据为空
+            return false;
+        }
+        BASE64Decoder decoder = new BASE64Decoder();
+        try {
+            // Base64解码
+            byte[] bytes = decoder.decodeBuffer(base64);
+            for (int i = 0; i < bytes.length; ++i) {
+                if (bytes[i] < 0) {// 调整异常数据
+                    bytes[i] += 256;
+                }
+            }
+            // 生成jpeg图片
+            OutputStream out = new FileOutputStream(path);
+            out.write(bytes);
+            out.flush();
+            out.close();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     /**
