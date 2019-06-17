@@ -58,7 +58,7 @@ function showFiveOrder() {
         var seatStr="";
         var seatFormList=listToShow[i].seatFormList;
         for(var item in seatFormList){
-            seatStr+=seatFormList[item].rowIndex+"排"+seatFormList[item].columnIndex+"座 ";
+            seatStr+=(seatFormList[item].rowIndex+1)+"排"+(seatFormList[item].columnIndex+1)+"座 ";
         }
         var display=listToShow[i].state?'none':'';
         var orderDomStr="<li class='movie-item card'>" +
