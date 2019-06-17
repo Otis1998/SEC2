@@ -257,7 +257,11 @@ function postPayRequest(useVIP) {
             '/ticket/vip/buy',
             order,
             function (res) {
-                renderNewCoupon(res.content);
+                if(res.success==true) {
+                    renderNewCoupon(res.content);
+                }else {
+                    showFailure(res.message);
+                }
             },
             function (error) {
                 alert(error);
@@ -268,7 +272,11 @@ function postPayRequest(useVIP) {
             '/ticket/buy',
             order,
             function (res) {
-                renderNewCoupon(res.content);
+                if(res.success==true) {
+                    renderNewCoupon(res.content);
+                }else {
+                    showFailure(res.message);
+                }
             },
             function (error) {
                 alert(error);
@@ -292,6 +300,12 @@ function postPayRequest(useVIP) {
         }else{
             successPanel.append('<img src="/images/success.png"/>');
         }
+    }
+
+    function showFailure(message) {
+        var messageDomStr="<div class=\"hint\">"+message+"</div>";
+        $("#success-panel").empty();
+        $("#success-panel").append(messageDomStr);
     }
 }
 
