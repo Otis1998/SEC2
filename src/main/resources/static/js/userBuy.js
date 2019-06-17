@@ -119,6 +119,9 @@ function cancelOrder(orderId) {
         function (res) {
             alert("退票成功");
             orderReady=0;
+            cardReady=0;
+            $("#card-div").empty();
+            $("#order-div").empty();
             orderClick();
         },
         function (error) {
@@ -132,6 +135,7 @@ function printOrder(orderId) {
         function (res) {
             alert("出票成功");
             orderReady=0;
+            $("#order-div").empty();
             orderClick();
         },
         function (error) {
