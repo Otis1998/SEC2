@@ -12,5 +12,7 @@
         update user_info set profile_picture = #{profilePicture} , name = #{name} where id = #{id}
     </update>
     <parameterMap id="UserInfoForm" type="nju.edu.cinema.vo.UserInfoForm"></parameterMap>
-    <resultMap id="UserInfoForm" type="nju.edu.cinema.vo.UserInfoForm"></resultMap>
+    <resultMap id="UserInfoForm" type="nju.edu.cinema.vo.UserInfoForm">
+        <result column="profile_picture" property="profilePicture"></result>
+    </resultMap>
 </mapper>
