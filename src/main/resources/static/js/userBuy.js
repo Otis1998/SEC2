@@ -61,7 +61,7 @@ function showFiveOrder() {
             seatStr+=(seatFormList[item].rowIndex+1)+"排"+(seatFormList[item].columnIndex+1)+"座 ";
         }
         var display=listToShow[i].state?'none':'';
-        var orderDomStr="<li class='movie-item card'>" +
+        var orderDomStr="<li class='movie-item card' style='margin-bottom: 0'>" +
         "<img class='movie-img' src='" + (listToShow[i].posterUrl || "../images/defaultAvatar.jpg") + "'/>" +
         "<div class='movie-info'>" +
         "<div class='movie-title'>" +
@@ -79,12 +79,12 @@ function showFiveOrder() {
     }
     if(page==0){//第一页
         lastBtn.css("display","none");
+    }else {
+        lastBtn.css("display","");
     }
     if(page==numOfPage){//最后一页
         nextBtn.css("display","none");
-    }
-    if(page!=0&&page!=numOfPage){
-        lastBtn.css("display","");
+    }else{
         nextBtn.css("display","");
     }
     if(numOfPage>0){

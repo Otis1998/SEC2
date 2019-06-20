@@ -105,7 +105,6 @@ public class AccountServiceImpl implements AccountService, AccountServiceForBl {
         byte[] data = null;
         // 读取图片字节数组
         try {
-            System.out.println(path);
             InputStream in = new FileInputStream(path);
             data = new byte[in.available()];
             in.read(data);
@@ -120,14 +119,18 @@ public class AccountServiceImpl implements AccountService, AccountServiceForBl {
 
     @Override
     public ResponseVO changeUserInfo(UserInfoForm userInfoForm){
-        String path="src/main/resources/static/images/userPic/"+userInfoForm.getId()+".jpg";
-        int comma=userInfoForm.getProfilePicture().indexOf(",");
-        String base64Str=userInfoForm.getProfilePicture().substring(comma+1);
-        if(base64ToImage(base64Str,path)) {
-            userInfoForm.setProfilePicture(path);
+        if(userInfoForm.getProfilePicture()==null||userInfoForm.getProfilePicture().equals("")){
             return ResponseVO.buildSuccess(userInfoMapper.updateUserInfo(userInfoForm));
-        }else{
-            return ResponseVO.buildFailure("保存失败");
+        }else {
+            String path = "src/main/resources/static/images/userPic/" + userInfoForm.getId() + ".jpg";
+            int comma = userInfoForm.getProfilePicture().indexOf(",");
+            String base64Str = userInfoForm.getProfilePicture().substring(comma + 1);
+            if (base64ToImage(base64Str, path)) {
+                userInfoForm.setProfilePicture(path);
+                return ResponseVO.buildSuccess(userInfoMapper.updateUserInfo(userInfoForm));
+            } else {
+                return ResponseVO.buildFailure("保存失败");
+            }
         }
     }
 
