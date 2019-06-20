@@ -60,7 +60,6 @@ function showFiveOrder() {
         for(var item in seatFormList){
             seatStr+=(seatFormList[item].rowIndex+1)+"排"+(seatFormList[item].columnIndex+1)+"座 ";
         }
-        var display=listToShow[i].state?'none':'';
         var orderDomStr="<li class='movie-item card' style='margin-bottom: 0'>" +
         "<img class='movie-img' src='" + (listToShow[i].posterUrl || "../images/defaultAvatar.jpg") + "'/>" +
         "<div class='movie-info'>" +
@@ -71,10 +70,15 @@ function showFiveOrder() {
         "</div>" +
         "<div class='movie-description dark-text'><span>" + listToShow[i].hallId.toFixed(0) + "号厅 "+seatStr+"</span></div>" +
         "<div>订单号："+ listToShow[i].orderId +" | 票数：" + listToShow[i].numOfTicket.toFixed(0) + " | 总价："+listToShow[i].cost.toFixed(2)+" 元</div>" +
-        "<div style='display: flex'><span>开始时间：" + formatTime(listToShow[i].startTime) + "</span><span style='margin-left: 30px;'>结束时间：" + formatTime(listToShow[i].endTime) + "</span>" +
-        "<div class='movie-operation' style='display: "+display+"'><span style='margin-left: 30px;'><a onclick='cancelOrder("+listToShow[i].orderId+")'>退票</a></span><span style='margin-left: 30px;'><a onclick='printOrder("+listToShow[i].orderId+")'>出票</a></span></div></div>" +
-            "</div>"+
-            "</li>";
+        "<div style='display: flex'><span>开始时间：" + formatTime(listToShow[i].startTime) + "</span><span style='margin-left: 30px;'>结束时间：" + formatTime(listToShow[i].endTime) + "</span>";
+
+        if(listToShow[i].state==1){//不能退票&出票
+            orderDomStr+="</li>";
+        }else {
+            orderDomStr+="<div class='movie-operation'><span style='margin-left: 30px;'><a onclick='cancelOrder("+listToShow[i].orderId+")'>退票</a></span><span style='margin-left: 30px;'><a onclick='printOrder("+listToShow[i].orderId+")'>出票</a></span></div></div>" +
+                "</div>"+
+                "</li>";
+        }
         orderUl.append(orderDomStr);
     }
     if(page==0){//第一页
