@@ -4,13 +4,15 @@ var infoReady=0;
 var orderReady=0;
 var cardReady=0;
 //初始化页面时，加载用户的名字和头像，并切入个人信息页
-$(document).ready(function () {
-    id=sessionStorage.getItem('id');
+$(document).ready(getInfo());
+
+function getInfo() {
+    id = sessionStorage.getItem('id');
     getRequest(
-        '/getUserInfo/'+id,
+        '/getUserInfo/' + id,
         function (res) {
-            info=res.content;
-            infoReady=1;
+            info = res.content;
+            infoReady = 1;
             renderLeftBar();
             renderUserInfo();
             infoClick();
@@ -19,18 +21,8 @@ $(document).ready(function () {
             alert(error);
         }
     );
+}
 
-    function renderLeftBar(){
-        if(info.profilePicture!=null){
-            $("#profile-picture").attr("src",info.profilePicture);
-        }
-        if(info.name!=null){
-            $("#name").text(info.name);
-        }else {
-            $("#name").text(sessionStorage.getItem("username"));
-        }
-    }
-});
 
 /**
  * 个人信息页相关方法
@@ -63,13 +55,23 @@ function infoClick() {
     $("#card-div").css("display","none");
 }
 
+function renderLeftBar() {
+    if (info.profilePicture != null) {
+        $("#profile-picture").attr("src", info.profilePicture);
+    }
+    if (info.name != null) {
+        $("#name").text(info.name);
+    } else {
+        $("#name").text(sessionStorage.getItem("username"));
+    }
+}
+
 //加载个人信息页内的个人信息
 function renderUserInfo() {
     var profilePicture="/images/defaultAvatar.jpg";
     var name=sessionStorage.getItem("username");
     if(info.profilePicture!=null){
-        profilePicture="data:image/jpeg;base64,"+info.profilePicture;
-        console.log(profilePicture);
+        profilePicture=info.profilePicture;
     }
     if(info.name!=null){
         name=info.name;
@@ -127,8 +129,7 @@ function changeInfoConfirm() {
         var reader=new FileReader();
         reader.readAsDataURL(imageList[0]);
         reader.onloadend = function(){
-            var comma=reader.result.indexOf(",");
-            profilePircture=reader.result.substring(comma+1).replace(/\+/g,"%2B");
+            profilePircture=reader.result;
             saveUserInfo();
         }
     }
@@ -138,18 +139,23 @@ function changeInfoConfirm() {
             "profilePicture":profilePircture,
             "name":name
         };
+        console.log(profilePircture);
         postRequest(
             '/changeUserInfo',
             userInfoForm,
             function (res) {
                 alert("修改成功");
-                location.reload();
+                reloadInfo();
             },
             function (error) {
                 alert(error);
             }
         );
     }
+}
+
+function reloadInfo() {
+    getInfo();
 }
 
 //修改密码链接的相应方法：1.显示修改密码模块 2.使修改密码连接失效
@@ -270,6 +276,11 @@ function renderUserOrder() {
     showAllOrder();
 }
 
+function reloadOrder() {
+    orderReady=0;
+    orderClick();
+}
+
 //切入卡包页：判断卡包是否已获取，未获取则获取并载入页面，已获取则直接显示卡包页
 function cardClick() {
     if(cardReady==0){
@@ -363,3 +374,8 @@ function renderUserCard() {
     $("#card-div").append(userCardDomStr);
 }
 
+function reloadCard() {
+    cardReady=0;
+    chargeRecordReady=0;
+    cardClick();
+}

@@ -94,7 +94,7 @@ public class AccountServiceImpl implements AccountService, AccountServiceForBl {
     public ResponseVO getUserInfo(int userId){
         UserInfoForm userInfoForm=userInfoMapper.getUserInfo(userId);
         try{
-            userInfoForm.setProfilePicture(imageToBase64(userInfoForm.getProfilePicture()));
+            userInfoForm.setProfilePicture("data:image/jpeg;base64,"+imageToBase64(userInfoForm.getProfilePicture()));
         }catch (Exception e){
         }finally {
             return ResponseVO.buildSuccess(userInfoForm);
@@ -121,8 +121,9 @@ public class AccountServiceImpl implements AccountService, AccountServiceForBl {
     @Override
     public ResponseVO changeUserInfo(UserInfoForm userInfoForm){
         String path="./"+userInfoForm.getId()+".jpg";
-
-        if(base64ToImage(userInfoForm.getProfilePicture(),path)) {
+        int comma=userInfoForm.getProfilePicture().indexOf(",");
+        String base64Str=userInfoForm.getProfilePicture().substring(comma+1);
+        if(base64ToImage(base64Str,path)) {
             userInfoForm.setProfilePicture(path);
             return ResponseVO.buildSuccess(userInfoMapper.updateUserInfo(userInfoForm));
         }else{

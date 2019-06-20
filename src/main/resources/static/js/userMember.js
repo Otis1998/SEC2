@@ -72,6 +72,7 @@ function confirmCommit() {
                         $('#buyModal').modal('hide');
                         alert("购买会员卡成功");
                         getVIP();
+                        reloadCard();
                     },
                     function (error) {
                         alert(error);
@@ -84,6 +85,7 @@ function confirmCommit() {
                         $('#buyModal').modal('hide');
                         alert("充值成功");
                         getVIP();
+                        reloadCard();
                     },
                     function (error) {
                         alert(error);
