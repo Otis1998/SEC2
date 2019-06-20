@@ -5,7 +5,6 @@ import nju.edu.cinema.bl.sales.OrderService;
 import nju.edu.cinema.bl.sales.TicketService;
 import nju.edu.cinema.blImpl.management.hall.HallServiceForBl;
 import nju.edu.cinema.blImpl.management.schedule.ScheduleServiceForBl;
-import nju.edu.cinema.data.promotion.VIPCardMapper;
 import nju.edu.cinema.data.sales.OrderMapper;
 import nju.edu.cinema.data.sales.TicketMapper;
 import nju.edu.cinema.po.*;
@@ -41,7 +40,7 @@ public class TicketServiceImpl implements TicketService, TicketServiceForBl {
     @Autowired
     ScheduleServiceForBl scheduleServiceForBl;
     @Autowired
-    VIPCardMapper vipCardMapper;
+    VIPServiceForBl vipServiceForBl;
 
     @Override
     @Transactional
@@ -73,15 +72,14 @@ public class TicketServiceImpl implements TicketService, TicketServiceForBl {
     @Transactional
     public ResponseVO completeTicket(OrderForm orderForm) {
         try {
-            ResponseVO responseVO = buyTicket(orderForm,0);
-            return responseVO;
+            return buyTicket(orderForm,0);
         }catch(Exception e){
             e.printStackTrace();
             return ResponseVO.buildFailure("失败");
         }
     }
 
-    String getTicketsId(List<Integer> ticketsId){
+    private String getTicketsId(List<Integer> ticketsId){
         StringBuilder s = new StringBuilder();
         for(Iterator<Integer> it = ticketsId.iterator();it.hasNext();){
             s.append(String.valueOf(it.next())).append("&");
@@ -97,7 +95,7 @@ public class TicketServiceImpl implements TicketService, TicketServiceForBl {
      * @Param date
      * @Param time
      */
-    Date getAfterTime(Date date, int time){
+    private Date getAfterTime(Date date, int time){
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         cal.add(Calendar.MINUTE, time);
@@ -113,7 +111,7 @@ public class TicketServiceImpl implements TicketService, TicketServiceForBl {
      * @param userId
      * @return
      */
-    List<CouponVO> giveCoupons(int movieId, int userId){
+    private List<CouponVO> giveCoupons(int movieId, int userId){
         List<Coupon> coupons = new ArrayList<>();
         List<CouponVO> couponVOs=new ArrayList<>();
         List<Activity> activities1 = activityServiceForBl.selectActivitiesWithoutMovie();
@@ -176,8 +174,7 @@ public class TicketServiceImpl implements TicketService, TicketServiceForBl {
     @Transactional
     public ResponseVO completeByVIPCard(OrderForm orderForm) {
         try{
-            ResponseVO responseVO = buyTicket(orderForm,1);
-            return responseVO;
+            return buyTicket(orderForm,1);
         }catch(Exception e){
             e.printStackTrace();
             return ResponseVO.buildFailure("失败");
@@ -263,12 +260,12 @@ public class TicketServiceImpl implements TicketService, TicketServiceForBl {
                 isBuySuccess = true;
             }
             if(method == 1) {
-                VIPCard vipCard = vipCardMapper.selectCardByUserId(userId);
+                VIPCard vipCard = vipServiceForBl.getCardByUserIdForBl(userId);
                 if (vipCard.getBalance() < totalPrice) {
                     return ResponseVO.buildFailure("余额不足");
                 } else {
                     vipCard.setBalance(vipCard.getBalance() - totalPrice);
-                    vipCardMapper.updateCardBalance(vipCard.getId(), vipCard.getBalance());
+                    vipServiceForBl.updateVIPCardBalance(vipCard.getId(), vipCard.getBalance());
                     if (isCouponCanUse) {
                         couponServiceForBl.deleteCoupon(couponId, userId);
                     }
