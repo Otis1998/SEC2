@@ -53,13 +53,9 @@ public class RandomValidateCodeServiceImpl{
         // 设置字体。
         g.setFont(font);
 
-        // 画边框。
-//        g.setColor(Color.BLACK);
-//        g.drawRect(0, 0, width - 1, height - 1);
-
-        // 随机产生160条干扰线，使图象中的认证码不易被其它程序探测到。
+        // 随机产生5条干扰线，使图象中的认证码不易被其它程序探测到。
         g.setColor(Color.BLACK);
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 5; i++) {
             int x2 = random.nextInt(width);
             int y2 = random.nextInt(height);
             int xl = random.nextInt(12);
