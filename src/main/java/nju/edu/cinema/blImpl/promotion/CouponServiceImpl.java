@@ -1,6 +1,7 @@
 package nju.edu.cinema.blImpl.promotion;
 
 import nju.edu.cinema.bl.promotion.CouponService;
+import nju.edu.cinema.blImpl.sales.CouponServiceForBl;
 import nju.edu.cinema.data.promotion.CouponMapper;
 import nju.edu.cinema.po.Coupon;
 import nju.edu.cinema.vo.CouponForm;
@@ -16,7 +17,7 @@ import org.springframework.stereotype.Service;
  * Created by liying on 2019/4/17.
  */
 @Service
-public class CouponServiceImpl implements CouponService {
+public class CouponServiceImpl implements CouponService, CouponServiceForBl {
 
     @Autowired
     CouponMapper couponMapper;
@@ -78,4 +79,19 @@ public class CouponServiceImpl implements CouponService {
         }
         return couponVOList;
 	}
+
+	@Override
+    public Coupon selectCouponById(int couponId){
+        return couponMapper.selectById(couponId);
+    }
+
+    @Override
+    public void deleteCoupon(int couponId, int userId){
+        couponMapper.deleteCouponUser(couponId,userId);
+    }
+
+    @Override
+    public void insertCoupon(int couponId,int userId){
+        couponMapper.insertCouponUser(couponId,userId);
+    }
 }

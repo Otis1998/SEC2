@@ -2,6 +2,7 @@ package nju.edu.cinema.blImpl.promotion;
 
 import nju.edu.cinema.bl.promotion.ActivityService;
 import nju.edu.cinema.bl.promotion.CouponService;
+import nju.edu.cinema.blImpl.sales.ActivityServiceForBl;
 import nju.edu.cinema.data.promotion.ActivityMapper;
 import nju.edu.cinema.po.Activity;
 import nju.edu.cinema.po.Coupon;
@@ -11,11 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created by liying on 2019/4/20.
  */
 @Service
-public class ActivityServiceImpl implements ActivityService {
+public class ActivityServiceImpl implements ActivityService, ActivityServiceForBl {
 
     @Autowired
     ActivityMapper activityMapper;
@@ -53,6 +56,16 @@ public class ActivityServiceImpl implements ActivityService {
             e.printStackTrace();
             return ResponseVO.buildFailure("失败");
         }
+    }
+
+    @Override
+    public List<Activity> selectActivitiesByMovie(int movieId){
+        return activityMapper.selectActivitiesByMovie(movieId);
+    }
+
+    @Override
+    public List<Activity> selectActivitiesWithoutMovie(){
+        return activityMapper.selectActivitiesWithoutMovie();
     }
 
 }
