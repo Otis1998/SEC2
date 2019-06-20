@@ -117,14 +117,9 @@ public class OrderServiceImpl implements OrderService {
                     Ticket ticket = ticketMapper.selectTicketById(Integer.parseInt(ticketsId[i]));
                     seatForm.setColumnIndex(ticket.getColumnIndex());
                     seatForm.setRowIndex(ticket.getRowIndex());
-                    int state = ticket.getState();
-                    if (state == 1) {
-                        orderVO.setState(0);
-                    } else {
-                        orderVO.setState(1);
-                    }
                     seatForms.add(seatForm);
                 }
+                orderVO.setState(order.getState());
                 orderVO.setSeatFormList(seatForms);
                 orderVOList.add(orderVO);
             }
@@ -178,6 +173,12 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderMapper.selectByOrderId(orderId);
         order.setState(1);
         orderMapper.updateOrderState(order.getOrderId(),order.getState());
+        List<Integer> ticketsId = order.getTicketsIdList();
+        for(Iterator<Integer> it =ticketsId.iterator();it.hasNext(); ){
+            Ticket t = ticketMapper.selectTicketById(it.next());
+            t.setState(3);
+            ticketMapper.updateTicketState(t.getId(),t.getState());
+        }
         return ResponseVO.buildSuccess();
     }
 }
