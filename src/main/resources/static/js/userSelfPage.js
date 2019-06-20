@@ -133,9 +133,11 @@ function changeInfoConfirm() {
         reader.readAsDataURL(imageList[0]);
         reader.onloadend = function () {
             profilePircture = reader.result;
+            saveUserInfo();
         }
+    }else {
+        saveUserInfo();
     }
-    saveUserInfo();
     function saveUserInfo() {
         var userInfoForm={
             "id":id,

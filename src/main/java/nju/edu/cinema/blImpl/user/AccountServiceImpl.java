@@ -122,7 +122,12 @@ public class AccountServiceImpl implements AccountService, AccountServiceForBl {
         if(userInfoForm.getProfilePicture()==null||userInfoForm.getProfilePicture().equals("")){
             return ResponseVO.buildSuccess(userInfoMapper.updateUserInfo(userInfoForm));
         }else {
-            String path = "src/main/resources/static/images/userPic/" + userInfoForm.getId() + ".jpg";
+            String dir="src/main/resources/static/images/userPic/";
+            File file=new File(dir);
+            if(!file.exists()){
+                file.mkdir();
+            }
+            String path = dir + userInfoForm.getId()+ ".jpg";
             int comma = userInfoForm.getProfilePicture().indexOf(",");
             String base64Str = userInfoForm.getProfilePicture().substring(comma + 1);
             if (base64ToImage(base64Str, path)) {
