@@ -276,6 +276,7 @@ function postPayRequest(useVIP) {
             order,
             function (res) {
                 if(res.success==true) {
+                    paid=1;
                     renderNewCoupon(res.content);
                 }else {
                     showFailure(res.message);
@@ -291,6 +292,7 @@ function postPayRequest(useVIP) {
             order,
             function (res) {
                 if(res.success==true) {
+                    paid=1;
                     renderNewCoupon(res.content);
                 }else {
                     showFailure(res.message);
