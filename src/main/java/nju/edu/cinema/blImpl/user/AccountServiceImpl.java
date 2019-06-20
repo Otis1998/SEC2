@@ -120,7 +120,7 @@ public class AccountServiceImpl implements AccountService, AccountServiceForBl {
 
     @Override
     public ResponseVO changeUserInfo(UserInfoForm userInfoForm){
-        String path="./"+userInfoForm.getId()+".jpg";
+        String path="src/main/resources/static/images/userPic/"+userInfoForm.getId()+".jpg";
         int comma=userInfoForm.getProfilePicture().indexOf(",");
         String base64Str=userInfoForm.getProfilePicture().substring(comma+1);
         if(base64ToImage(base64Str,path)) {
