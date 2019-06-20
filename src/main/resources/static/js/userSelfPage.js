@@ -90,16 +90,19 @@ function renderUserInfo() {
 
 //修改资料个人信息的相应方法：1.显示修改个人信息模块 2.使修改个人信息连接失效
 function changeInfo() {
-    var changeInfoDomStr="<div class='filler-container card col-md-8 col-md-offset-2' id='change-info-div'>" +
+    var changeInfoDomStr="<div class='filler-container card col-md-8 col-md-offset-2' style='padding: 50px;' id='change-info-div'>" +
         "<div>新头像："+
         "<input type='file' accept=\".jpg\" id='image-input'>" +
         "<small>只允许上传jpg格式的头像...</small>"+
         "<div id='image-preview'></div>"+
         "</div>"+
-        "<div>新昵称："+
-        "<input type='text' id='name-input'>"+
-        "</div>"+
-        "<button onclick='changeInfoConfirm()'>确认修改</button>"
+        "<div class=\"input-interval\" style='margin: 20px 0;'>\n" +
+    "                <div class=\"input-group \" id=\"basic-addon3\">\n" +
+    "                    <span class=\"input-group-addon\">新昵称</i></span>\n" +
+    "                    <input id=\"name-input\" type=\"text\" class=\"form-control\">\n" +
+    "                </div>\n" +
+    "            </div>"+
+        "<button class=\"btn btn-primary input-interval btn-block\" onclick='changeInfoConfirm()'>确认修改</button>"
         "</div>";
     $("#info-div").append(changeInfoDomStr);
     $("#change-info-a").attr("href","#");
