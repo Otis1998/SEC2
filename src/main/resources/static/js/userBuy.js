@@ -11,14 +11,22 @@ function showAllOrder() {
     renderOrderList();
 }
 
-function showSomeOrder(state) {
+function showSomeOrder(finished) {
     listToShow=[];
-    order.forEach(function (order) {
-        if(order.state==state){
-            listToShow.push(order);
-        }
-    });
-    if(state==0){
+    if(finished==0) {
+        order.forEach(function (order) {
+            if (new Date(order.startTime) > new Date()) {//即将开始
+                listToShow.push(order);
+            }
+        });
+    }else{
+        order.forEach(function (order) {
+            if (new Date(order.startTime) <= new Date()) {//已完成
+                listToShow.push(order);
+            }
+        });
+    }
+    if(finished==0){
         $("#ready").css("background-color","rgba(173,173,173,0.5)");
         $("#all").css("background-color","#ffffff");
         $("#finished").css("background-color","#ffffff");
