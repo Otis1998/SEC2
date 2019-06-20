@@ -43,7 +43,8 @@ function showPopularMovie(list){
 	for(var i in list){
 		if(list[i].recentFare!=0){
 			var listBody=$('#top-expectation-list');
-			var listDomStr='<div class="statistic-item"><span>'+list[i].name+'</span><span class="error-text">No.'+i+1+'</span></div>';
+			var rank=Number(i)+1;
+			var listDomStr='<div class="statistic-item"><span>'+list[i].name+'</span><span class="error-text">No.'+rank+'</span></div>';
 			listBody.append(listDomStr);
 		}
 	}
