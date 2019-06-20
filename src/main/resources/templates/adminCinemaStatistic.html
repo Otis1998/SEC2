@@ -10,7 +10,7 @@
 
     <script>
         var role = sessionStorage.getItem('role');
-        if ( role == null || role !== "admin") {
+        if ( role == null || role === "user") {
             window.location.href = "/notfound";
         }
     </script>
