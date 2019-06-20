@@ -124,7 +124,7 @@ function changeInfoConfirm() {
     var profilePircture=info.profilePicture;
     var name=info.name;
     var nameInput=$("#name-input").val();
-    if(nameInput!=null||nameInput!=""){
+    if(nameInput!=null&&nameInput!=""){
         name=nameInput;
     }
     var imageList=$("#image-input")[0].files;
