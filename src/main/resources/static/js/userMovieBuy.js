@@ -333,11 +333,10 @@ function validateForm() {
 }
 
 function unlockSeats() {
-    console.log("beforeunload");
     if(paid==2){
         postRequest(
             '/ticket/cancel',
-            order.ticketId,
+            order,
             function (res) {
             },
             function (error) {

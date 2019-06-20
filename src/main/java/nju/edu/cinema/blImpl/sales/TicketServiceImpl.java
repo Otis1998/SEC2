@@ -191,13 +191,12 @@ public class TicketServiceImpl implements TicketService, TicketServiceForBl {
                 }else{
                     return ResponseVO.buildFailure(TICKET_STATE_ERROR_MESSAGE);
                 }
-                return ResponseVO.buildSuccess();
             }
+            return ResponseVO.buildSuccess();
         }catch(Exception e){
             e.printStackTrace();
             return ResponseVO.buildFailure("失败");
         }
-        return null;
     }
 
     @Override
