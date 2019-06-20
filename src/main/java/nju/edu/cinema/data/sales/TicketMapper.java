@@ -13,7 +13,7 @@ import java.util.List;
 @Mapper
 public interface TicketMapper {
 
-    int insertTicket(Ticket ticket);
+    void insertTicket(Ticket ticket);
 
     int insertTickets(List<Ticket> tickets);
 

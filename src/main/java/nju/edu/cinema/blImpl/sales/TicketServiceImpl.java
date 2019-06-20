@@ -5,14 +5,9 @@ import nju.edu.cinema.bl.sales.OrderService;
 import nju.edu.cinema.bl.sales.TicketService;
 import nju.edu.cinema.blImpl.management.hall.HallServiceForBl;
 import nju.edu.cinema.blImpl.management.schedule.ScheduleServiceForBl;
-import nju.edu.cinema.data.management.ScheduleMapper;
-import nju.edu.cinema.data.promotion.ActivityMapper;
-import nju.edu.cinema.data.promotion.CouponMapper;
 import nju.edu.cinema.data.promotion.VIPCardMapper;
 import nju.edu.cinema.data.sales.OrderMapper;
 import nju.edu.cinema.data.sales.TicketMapper;
-import nju.edu.cinema.po.*;
-import nju.edu.cinema.vo.*;
 import nju.edu.cinema.po.*;
 import nju.edu.cinema.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +21,7 @@ import java.util.*;
  * Changed by Wang Youxin
  */
 @Service
-public class TicketServiceImpl implements TicketService {
+public class TicketServiceImpl implements TicketService, TicketServiceForBl {
     private static final String TICKET_STATE_ERROR_MESSAGE = "相应电影票已完成支付或已失效";
     private static final String COUPON_DATE_ERROR_MESSAGE = "不在优惠券可用期间内";
     private static final String BEYOND_PAY_TIME = "超出支付时间";
@@ -51,7 +46,6 @@ public class TicketServiceImpl implements TicketService {
     @Override
     @Transactional
     public ResponseVO addTicket(TicketForm ticketForm) {
-        //TODO:锁座【增加票但状态为未付款】
         try{
             List<Integer> ticketIdList = new ArrayList<>();
             int userId = ticketForm.getUserId();
@@ -78,58 +72,9 @@ public class TicketServiceImpl implements TicketService {
     @Override
     @Transactional
     public ResponseVO completeTicket(OrderForm orderForm) {
-        //TODO:完成购票【不使用会员卡】流程包括校验优惠券和根据优惠活动赠送优惠券
         try {
             ResponseVO responseVO = buyTicket(orderForm,0);
             return responseVO;
-//            List<Integer> ticketId = orderForm.getTicketId();
-//            int couponId = orderForm.getCouponId();
-//            String ticketsId = getTicketsId(ticketId);
-//            int userId = ticketMapper.selectTicketById(ticketId.get(0)).getUserId();
-//            int scheduleId = ticketMapper.selectTicketById(ticketId.get(0)).getScheduleId();
-//            ScheduleItem scheduleItem = scheduleServiceForBl.getScheduleItemById(scheduleId);
-//            int movieId = scheduleItem.getMovieId();
-//            double originalPrice = scheduleItem.getFare();
-//            double totalPrice = originalPrice * ticketId.size();
-//            boolean isBeyondPayTime = false;
-//            boolean isCouponCanUse = false;
-//            Date now = new Date();
-//            if(couponId>0) {
-//                Coupon coupon = couponServiceForBl.selectCouponById(couponId);
-//                if (coupon.getStartTime().before(now) && coupon.getEndTime().after(now) && totalPrice >= coupon.getTargetAmount()) {
-//                    isCouponCanUse = true;
-//                    totalPrice = totalPrice - coupon.getDiscountAmount();
-//                }
-//            }
-//            for(int id:ticketId){
-//                Ticket ticket = ticketMapper.selectTicketById(id);
-//                Date endTime = getAfterTime(ticket.getTime(), 15);//假定等待支付时间为15分钟
-//                if(endTime.before(new Date())){
-//                    ticket.setState(2);
-//                    ticketMapper.updateTicketState(ticket.getId(),ticket.getState());
-//                    isBeyondPayTime = true;
-//                }else{
-//                    ticket.setState(1);
-//                    ticketMapper.updateTicketState(ticket.getId(),ticket.getState());
-//                }
-//            }
-//            if(isBeyondPayTime){
-//                return  ResponseVO.buildFailure(BEYOND_PAY_TIME);
-//            }else{
-//                if(isCouponCanUse){
-//                    couponServiceForBl.deleteCoupon(couponId,userId);
-//                }
-//                //添加Order对象
-//                Order order = new Order();
-//                order.setUserId(userId);
-//                order.setMovieId(movieId);
-//                order.setTicketsId(ticketsId);
-//                order.setCost(totalPrice);
-//                order.setPaymentMode(0);
-//                order.setState(0);
-//                orderMapper.insertOrder(order);
-//                return ResponseVO.buildSuccess(giveCoupons(movieId, userId));
-//            }
         }catch(Exception e){
             e.printStackTrace();
             return ResponseVO.buildFailure("失败");
@@ -212,7 +157,6 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public ResponseVO getTicketByUser(int userId) {
-        //TODO:获得用户买过的票
         try{
             List<TicketVO> ticketVOs = getTicketVOList(userId);
             for(Iterator<TicketVO> it = ticketVOs.iterator();it.hasNext();){
@@ -231,71 +175,47 @@ public class TicketServiceImpl implements TicketService {
     @Override
     @Transactional
     public ResponseVO completeByVIPCard(OrderForm orderForm) {
-        //TODO:完成购票【使用会员卡】流程包括会员卡扣费、校验优惠券和根据优惠活动赠送优惠券
         try{
             ResponseVO responseVO = buyTicket(orderForm,1);
             return responseVO;
-//            List<Integer> ticketId = orderForm.getTicketId();
-//            int couponId = orderForm.getCouponId();
-//            String ticketsId = getTicketsId(ticketId);
-//            int userId = ticketMapper.selectTicketById(ticketId.get(0)).getUserId();
-//            int scheduleId = ticketMapper.selectTicketById(ticketId.get(0)).getScheduleId();
-//            ScheduleItem scheduleItem = scheduleServiceForBl.getScheduleItemById(scheduleId);
-//            int movieId = scheduleItem.getMovieId();
-//            double originalPrice = scheduleItem.getFare();
-//            double totalPrice = originalPrice * ticketId.size();
-//            boolean isBeyondPayTime = false;
-//            boolean isCouponCanUse = false;
-//
-//            VIPCard vipCard = vipCardMapper.selectCardByUserId(userId);
-//            if(couponId>0) {
-//                Coupon coupon = couponServiceForBl.selectCouponById(couponId);
-//                Date now = new Date();
-//                //判断优惠券是否可用并计算需要支付的金额
-//                if (coupon.getStartTime().before(now) && coupon.getEndTime().after(now) && totalPrice >= coupon.getTargetAmount()) {
-//                    isCouponCanUse = true;
-//                    totalPrice = totalPrice - coupon.getDiscountAmount();
-//                }
-//            }
-//            for(int id:ticketId){
-//                Ticket ticket = ticketMapper.selectTicketById(id);
-//                Date endTime = getAfterTime(ticket.getTime(), 15);//假定等待支付时间为15分钟
-//                if(endTime.before(new Date())){
-//                    ticket.setState(2);
-//                    ticketMapper.updateTicketState(ticket.getId(),ticket.getState());
-//                    isBeyondPayTime = true;
-//                }else{
-//                    ticket.setState(1);
-//                    ticketMapper.updateTicketState(ticket.getId(),ticket.getState());
-//                }
-//            }
-//            if(isBeyondPayTime){
-//                return  ResponseVO.buildFailure(BEYOND_PAY_TIME);
-//            }else{
-//                if(vipCard.getBalance() < totalPrice){
-//                    return ResponseVO.buildFailure("余额不足");
-//                }else {
-//                    vipCard.setBalance(vipCard.getBalance() - totalPrice);
-//                    vipCardMapper.updateCardBalance(vipCard.getId(), vipCard.getBalance());
-//                    if (isCouponCanUse) {
-//                        couponServiceForBl.deleteCoupon(couponId, userId);
-//                    }
-//                    //添加Order对象
-//                    Order order = new Order();
-//                    order.setUserId(userId);
-//                    order.setMovieId(movieId);
-//                    order.setTicketsId(ticketsId);
-//                    order.setCost(totalPrice);
-//                    order.setPaymentMode(1);
-//                    order.setState(0);
-//                    orderMapper.insertOrder(order);
-//                    return ResponseVO.buildSuccess(giveCoupons(movieId, userId));
-//                }
-//            }
         }catch(Exception e){
             e.printStackTrace();
             return ResponseVO.buildFailure("失败");
         }
+    }
+
+    @Override
+    public ResponseVO cancelTicket(List<Integer> ticketId) {
+        try{
+            for(int id:ticketId) {
+                Ticket ticket = ticketMapper.selectTicketById(id);
+                if(ticket.getState() == 0){
+                    ticketMapper.deleteTicket(id);
+                }else{
+                    return ResponseVO.buildFailure(TICKET_STATE_ERROR_MESSAGE);
+                }
+                return ResponseVO.buildSuccess();
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+            return ResponseVO.buildFailure("失败");
+        }
+        return null;
+    }
+
+    @Override
+    public Ticket getTicketByIdForBl(int ticketId) {
+        return ticketMapper.selectTicketById(ticketId);
+    }
+
+    @Override
+    public void updateTicketState(int ticketId, int state) {
+        ticketMapper.updateTicketState(ticketId,state);
+    }
+
+    @Override
+    public void deleteTicket(int ticketId) {
+        ticketMapper.deleteTicket(ticketId);
     }
 
     private ResponseVO buyTicket(OrderForm orderForm, int method){
@@ -371,27 +291,6 @@ public class TicketServiceImpl implements TicketService {
         }
     }
 
-
-    @Override
-    public ResponseVO cancelTicket(List<Integer> ticketId) {
-        //TODO:取消锁座（只有状态是"锁定中"的可以取消）
-        try{
-            for(int id:ticketId) {
-                Ticket ticket = ticketMapper.selectTicketById(id);
-                if(ticket.getState() == 0){
-                    ticketMapper.deleteTicket(id);
-                }else{
-                    return ResponseVO.buildFailure(TICKET_STATE_ERROR_MESSAGE);
-                }
-                return ResponseVO.buildSuccess();
-            }
-        }catch(Exception e){
-            e.printStackTrace();
-            return ResponseVO.buildFailure("失败");
-        }
-        return null;
-    }
-
     List<TicketVO> getTicketVOList(int userId){
         List<TicketVO> ticketVOList = new ArrayList<TicketVO>();
         List<Ticket> ticketList = ticketMapper.selectTicketByUser(userId);
@@ -399,10 +298,6 @@ public class TicketServiceImpl implements TicketService {
             ticketVOList.add(new TicketVO(t));
         }
         return ticketVOList;
-    }
-
-    void updateTicket(int ticketId,int state){
-        ticketMapper.updateTicketState(ticketId,state);
     }
 
 }

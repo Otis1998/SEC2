@@ -4,7 +4,6 @@ import nju.edu.cinema.bl.sales.OrderService;
 import nju.edu.cinema.blImpl.management.schedule.MovieServiceForBl;
 import nju.edu.cinema.blImpl.management.schedule.ScheduleServiceForBl;
 import nju.edu.cinema.data.sales.OrderMapper;
-import nju.edu.cinema.data.sales.TicketMapper;
 import nju.edu.cinema.po.*;
 import nju.edu.cinema.vo.CumulativeVO;
 import nju.edu.cinema.vo.OrderVO;
@@ -21,7 +20,7 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     OrderMapper orderMapper;
     @Autowired
-    TicketMapper ticketMapper;
+    TicketServiceForBl ticketServiceForBl;
     @Autowired
     ScheduleServiceForBl scheduleServiceForBl;
     @Autowired
@@ -50,7 +49,7 @@ public class OrderServiceImpl implements OrderService {
                 double refundedMoney = order.getCost() - refundStrategy.getCharge();
                 List<Integer> ticketsIdList = order.getTicketsIdList();
                 for(Iterator<Integer> it = ticketsIdList.iterator();it.hasNext();){
-                    ticketMapper.deleteTicket(it.next());
+                    ticketServiceForBl.deleteTicket(it.next());
                 }
                 orderMapper.deleteOrderById(orderId);
                 int userId = order.getUserId();
@@ -102,7 +101,7 @@ public class OrderServiceImpl implements OrderService {
                 orderVO.setMovieName(movie.getName());
                 orderVO.setPosterURL(movie.getPosterUrl());
                 String[] ticketsId = order.getTicketsId().split("&");
-                int scheduleId = ticketMapper.selectTicketById(Integer.parseInt(ticketsId[0])).getScheduleId();
+                int scheduleId = ticketServiceForBl.getTicketByIdForBl(Integer.parseInt(ticketsId[0])).getScheduleId();
                 ScheduleItem scheduleItem = scheduleServiceForBl.getScheduleItemById(scheduleId);
                 orderVO.setHallId(scheduleItem.getHallId());
                 orderVO.setStartTime(scheduleItem.getStartTime());
@@ -114,7 +113,7 @@ public class OrderServiceImpl implements OrderService {
                 List<SeatForm> seatForms = new ArrayList<>();
                 for (int i = 0; i < ticketsId.length; i++) {
                     SeatForm seatForm = new SeatForm();
-                    Ticket ticket = ticketMapper.selectTicketById(Integer.parseInt(ticketsId[i]));
+                    Ticket ticket = ticketServiceForBl.getTicketByIdForBl(Integer.parseInt(ticketsId[i]));
                     seatForm.setColumnIndex(ticket.getColumnIndex());
                     seatForm.setRowIndex(ticket.getRowIndex());
                     seatForms.add(seatForm);
@@ -134,7 +133,7 @@ public class OrderServiceImpl implements OrderService {
      */
     ResponseVO preCheck(Order order,int availableHour){
         List<Integer> ticketsId = order.getTicketsIdList();
-        Ticket ticket = ticketMapper.selectTicketById(ticketsId.get(0));
+        Ticket ticket = ticketServiceForBl.getTicketByIdForBl(ticketsId.get(0));
         ScheduleItem scheduleItem = scheduleServiceForBl.getScheduleItemById(ticket.getScheduleId());
         Date now = new Date();
         ResponseVO responseVO = ResponseVO.buildSuccess();
@@ -144,7 +143,7 @@ public class OrderServiceImpl implements OrderService {
                 Ticket t = new Ticket();
                 t.setId(ticketsId.get(i));
                 t.setState(3);
-                ticketMapper.updateTicketState(t.getId(),t.getState());
+                ticketServiceForBl.updateTicketState(t.getId(),t.getState());
             }
             order.setState(1);
             orderMapper.updateOrderState(order.getOrderId(),order.getState());

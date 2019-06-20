@@ -14,6 +14,10 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Wang Yuxiao
+ * @Date 2019/06/11　13:00
+ */
 @Service
 public class RefundServiceImpl implements RefundService, RefundServiceForBl {
 
@@ -23,6 +27,11 @@ public class RefundServiceImpl implements RefundService, RefundServiceForBl {
     @Autowired
     private RefundMapper refundMapper;
 
+    /**
+     * 添加退票策略
+     * @param strategy
+     * @return
+     */
     @Override
     public ResponseVO addStrategy(RefundStrategyForm strategy) {
         try {
@@ -38,6 +47,10 @@ public class RefundServiceImpl implements RefundService, RefundServiceForBl {
         }
     }
 
+    /**
+     * 获取所有退票策略
+     * @return
+     */
     @Override
     public ResponseVO searchAllStrategies() {
         try {
@@ -48,6 +61,11 @@ public class RefundServiceImpl implements RefundService, RefundServiceForBl {
         }
     }
 
+    /**
+     * 根据id获取退票策略
+     * @param strategyId
+     * @return
+     */
     @Override
     public ResponseVO searchStrategyById(Integer strategyId) {
         try {
@@ -59,6 +77,10 @@ public class RefundServiceImpl implements RefundService, RefundServiceForBl {
         }
     }
 
+    /**
+     * 获取当前退票策略
+     * @return
+     */
     @Override
     public ResponseVO getCurrentStrategy() {
         try {
@@ -130,9 +152,9 @@ public class RefundServiceImpl implements RefundService, RefundServiceForBl {
             return ResponseVO.buildFailure(WRONG_CHARGE_NUMBER_ERROR_MESSAGE);
         }
 
-        /*else if (strategy.getAvailableHour().getTime() < new Time(0).getTime()) {
+        else if (strategy.getAvailableHour() < 0) {
             return ResponseVO.buildFailure(WRONG_TIME_ERROR_MESSAGE);
-        }*/
+        }
 
         else {
             return ResponseVO.buildSuccess();
@@ -150,12 +172,4 @@ public class RefundServiceImpl implements RefundService, RefundServiceForBl {
         return strategy1;
     }
 
-    private List<RefundStrategyForm> refundStrategyList2RefundStrategyFormList(List<RefundStrategy> strategyList) {
-        List<RefundStrategyForm> strategyList1 = new ArrayList<>();
-        for (RefundStrategy strategy : strategyList){
-            strategyList1.add(new RefundStrategyForm(strategy.getId(), strategy.getName(),
-                    strategy.getRefundable(), strategy.getAvailableHour(), strategy.getCharge(), strategy.getState()));
-        }
-        return strategyList1;
-    }
 }

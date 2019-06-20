@@ -24,7 +24,6 @@ public interface RechargePresentService {
 	public ResponseVO updatePresent(PresentForm presentForm);
 	/**
 	 * 查询所有充值优惠
-	 * @param presentForm
 	 * @return
 	 */
 	public ResponseVO searchAllPresents();

@@ -5,7 +5,6 @@ import nju.edu.cinema.vo.ResponseVO;
 
 public interface OrderService {
     /**
-     * TODO:完成退票（根据购票的订单号进行退票）
      * @author Wang Youxin
      * @Date 2019/06/06 23:00
      * @param orderId
