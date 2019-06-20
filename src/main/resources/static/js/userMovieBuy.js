@@ -5,25 +5,7 @@ var coupons = [];
 var isVIP = false;
 var useVIP = true;
 var price = 0;
-var paid=0;
-
-$(document).onbeforeunload(function () {
-    if(paid){
-        return;
-    }else{
-        postRequest(
-            '/ticket/cancel',
-            order.ticketId,
-            function (res) {
-
-            },
-            function (error) {
-                alert(error);
-            }
-
-        );
-    }
-})
+var paid=0;//0表示未锁座，1表示锁座并支付成功，2表示锁座但为支付
 
 //加载购票界面，根据scheduleId获取当前的影片信息、影厅信息、已经锁定的座位，并显示。
 $(document).ready(function () {
@@ -147,6 +129,7 @@ function orderConfirmClick() {
         function (res) {
             if (res.success) {
                 order.ticketId=res.content;
+                paid=2;
             }
         },
         function (error) {
@@ -347,4 +330,18 @@ function validateForm() {
         $('#userBuy-cardPwd-error').css("visibility", "visible");
     }
     return isValidate;
+}
+
+function unlockSeats() {
+    console.log("beforeunload");
+    if(paid==2){
+        postRequest(
+            '/ticket/cancel',
+            order.ticketId,
+            function (res) {
+            },
+            function (error) {
+            }
+        );
+    }
 }
