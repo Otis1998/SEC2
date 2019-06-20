@@ -174,9 +174,9 @@ public class OrderServiceImpl implements OrderService {
         orderMapper.updateOrderState(order.getOrderId(),order.getState());
         List<Integer> ticketsId = order.getTicketsIdList();
         for(Iterator<Integer> it =ticketsId.iterator();it.hasNext(); ){
-            Ticket t = ticketMapper.selectTicketById(it.next());
+            Ticket t = ticketServiceForBl.getTicketByIdForBl(it.next());
             t.setState(3);
-            ticketMapper.updateTicketState(t.getId(),t.getState());
+            ticketServiceForBl.updateTicketState(t.getId(),t.getState());
         }
         return ResponseVO.buildSuccess();
     }

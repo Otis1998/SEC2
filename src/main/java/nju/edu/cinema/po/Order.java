@@ -39,7 +39,7 @@ public class Order {
      */
     private int paymentMode;
     /**
-     * 订单是否可退的状态
+     * 订单状态
      * 0: 可退  1：不可退
      */
     private int state;
