@@ -2,8 +2,6 @@ var dates;
 var movieId;
 
 $(document).ready(function () {
-    $('#username').text(sessionStorage.getItem('username'));
-
     movieId = parseInt(window.location.href.split('?')[1].split('&')[0].split('=')[1]);
 
     getSchedule();

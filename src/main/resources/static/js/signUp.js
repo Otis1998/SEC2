@@ -1,8 +1,10 @@
 $(document).ready(function () {
+    getVerify();
+
     $("#signUp-btn").click(function () {
         register();
     });
-    $('#signUp-second-password').keypress(function (e) {
+    $('#index-verify-code').keypress(function (e) {
         var eCode = e.keyCode ? e.keyCode : e.which ? e.which : e.charCode;
         if (eCode == 13){
             register();
@@ -31,6 +33,7 @@ function register() {
                 window.location.href = "/signIn";
             } else {
                 alert(res.message);
+                getVerify();
             }
         },
         function (error) {
@@ -42,7 +45,8 @@ function getSignUpForm() {
     return {
         username: $('#signUp-name').val(),
         password: $('#signUp-password').val(),
-        secondPassword: $('#signUp-second-password').val()
+        secondPassword: $('#signUp-second-password').val(),
+        verifyCode:$("#index-verify-code").val()
     };
 }
 
@@ -72,4 +76,8 @@ function validateSignUpForm(data) {
     }
 
     return isValidate;
+}
+
+function getVerify(){
+    $("#imgVerify").attr("src","/getVerify?"+Math.random());
 }

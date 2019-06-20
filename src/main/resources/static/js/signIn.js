@@ -6,7 +6,7 @@ $(document).ready(function () {
         login();
     });
 
-    $('#index-password').keypress(function (e) {
+    $('#index-verify-code').keypress(function (e) {
         var eCode = e.keyCode ? e.keyCode : e.which ? e.which : e.charCode;
         if (eCode == 13){
             login();

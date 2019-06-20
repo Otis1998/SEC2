@@ -58,8 +58,14 @@ public class AccountController {
     }
 
     @PostMapping("/register")
-    public ResponseVO registerAccount(@RequestBody UserForm userForm){
-        return accountService.registerAccount(userForm);
+    public ResponseVO registerAccount(@RequestBody UserForm userForm,HttpSession session){
+        //校验验证码
+        ResponseVO responseVO = accountService.check(session,userForm.getVerifyCode());
+        if(responseVO.getSuccess()) {
+            return accountService.registerAccount(userForm);
+        } else{
+            return ResponseVO.buildFailure(VERIFICATION_CODE_ERROR);
+        }
     }
 
     @PostMapping("/logout")

@@ -8,7 +8,6 @@ var price = 0;
 
 //加载购票界面，根据scheduleId获取当前的影片信息、影厅信息、已经锁定的座位，并显示。
 $(document).ready(function () {
-    $('#username').text(sessionStorage.getItem('username'));
     //根据url得到scheduleId
     scheduleId = parseInt(window.location.href.split('?')[1].split('&')[1].split('=')[1]);
 
